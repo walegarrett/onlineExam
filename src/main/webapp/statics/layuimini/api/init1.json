@@ -1,0 +1,71 @@
+{
+  "homeInfo": {
+    "title": "教师端-首页",
+    "href": "toWhere?where=welcome"
+  },
+  "logoInfo": {
+    "title": "系统管理-教师端",
+    "image": "statics/layuimini/images/logo.png",
+    "href": "toWhere?where=teacher"
+  },
+  "menuInfo": [
+    {
+      "title": "考试管理",
+      "icon": "fa fa-address-book",
+      "href": "toWhere?where=welcome",
+      "target": "_self",
+      "child": [
+        {
+          "title": "教师端首页",
+          "href": "toWhere?where=welcome",
+          "icon": "fa fa-home",
+          "target": "_self"
+        },
+        {
+          "title": "题目管理",
+          "href": "toWhere?where=problem",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "试卷管理",
+          "href": "toWhere?where=paper",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "我的判卷",
+          "href": "toWhere?where=judge",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "成绩管理",
+          "href": "toWhere?where=grade",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        }
+      ]
+    },
+    {
+      "title": "消息管理",
+      "icon": "fa fa-slideshare",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "查看消息记录",
+          "href": "toWhere?where=message",
+          "icon": "fa fa-meetup",
+          "target": ""
+        },
+        {
+          "title": "发送消息",
+          "href": "toWhere?where=addMessage",
+          "icon": "fa fa-superpowers",
+          "target": "_self"
+        }
+      ]
+    }
+  ]
+}
