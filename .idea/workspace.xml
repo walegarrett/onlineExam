@@ -7,8 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27918287-696e-4928-9649-11f4080e31c9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index2.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/index2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/index2.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -394,7 +393,7 @@
       <workItem from="1599568681849" duration="3593000" />
       <workItem from="1599575466280" duration="645000" />
       <workItem from="1599613286831" duration="1956000" />
-      <workItem from="1599695008968" duration="10288000" />
+      <workItem from="1599695008968" duration="10594000" />
     </task>
     <task id="LOCAL-00001" summary="测试wale分支">
       <created>1599747270426</created>
@@ -403,7 +402,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599747270427</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="消除主页显示bug">
+      <created>1599747904948</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1599747904948</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,6 +428,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="测试wale分支" />
-    <option name="LAST_COMMIT_MESSAGE" value="测试wale分支" />
+    <MESSAGE value="消除主页显示bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="消除主页显示bug" />
   </component>
 </project>

@@ -59,6 +59,9 @@
             color: #FFF;
             z-index: 99999;
         }
+        .img-circles{
+            border-radius: 100%;
+        }
     </style>
 </head>
 <body>
@@ -184,7 +187,7 @@
             <div class="blog-main-right">
                 <div class="blogerinfo shadow">
                     <div class="blogerinfo-figure">
-                        <img class="img-circle" src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" width="150px" height="150px"/>
+                        <img class="img-circles" src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" width="150px" height="150px"/>
                     </div>
                     <p class="blogerinfo-nickname">在线考试系统</p>
                     <p class="blogerinfo-introduce">南昌大学-专业实训项目-面向学校老师和学生的在线考试及管理系统</p>
