@@ -230,7 +230,7 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
 
             var blankAndShort=$("<div class=\"blankAndShort\"></div>");
@@ -265,7 +265,7 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var blankAndShort=$("<div class=\"blankAndShort\"></div>");
             var optionA=$("<input type=\"text\" class=\"form-control\" name=\"answer"+item.id+"\" id=\"3_answer_"+item.id+"_option_1\" value=\""+lastAnswer+"\" disabled/>");
@@ -305,19 +305,19 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
             if(A==true)
                 var optionA=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_1\" value=\"A\" mtype=\"judge\" checked disabled/>" +
-                    "<label for=\"2_answer_"+item.id+"_option_1\">是. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
+                    "<label for=\"2_answer_"+item.id+"_option_1\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
             else var optionA=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_1\" value=\"A\" mtype=\"judge\" disabled/>" +
-                "<label for=\"2_answer_"+item.id+"_option_1\">是. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_1\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
             if(B==true)
                 var optionB=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_2\" value=\"B\" mtype=\"judge\" checked disabled/>" +
-                    "<label for=\"2_answer_"+item.id+"_option_2\">否. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
+                    "<label for=\"2_answer_"+item.id+"_option_2\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
             else var optionB=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_2\" value=\"B\" mtype=\"judge\" disabled/>" +
-                "<label for=\"2_answer_"+item.id+"_option_2\">否. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_2\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
             ul.append(optionA).append(optionB);
             nr_main.append(ul);
             li1.append(nr_main);
@@ -359,7 +359,7 @@
             //转换String为Json格式
             var proItem = JSON.parse(obj);
 
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
 
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
@@ -421,7 +421,7 @@
             //转换String为Json格式
             var proItem = JSON.parse(obj);
 
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
 
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
