@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="score_update_input" class="col-sm-2 control-label">试卷名称</label>
+                        <label for="score_update_input" class="col-sm-2 control-label">最终分数</label>
                         <div class="col-sm-10">
                             <input type="number" class="form-control" name="paperName" id="score_update_input" placeholder="请输入你要修改后的试卷名称">
                         </div>
@@ -280,21 +280,24 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-toolbar clearfix">
-                                <form class="pull-right search-bar" method="get" action="#!" role="form">
+                                <div class="pull-right search-bar">
                                     <div class="input-group">
                                         <div class="input-group-btn">
-                                            <input type="hidden" name="search_field" id="search-field" value="title">
+                                            <input type="hidden" name="search_field" id="search-field" value="paperName">
                                             <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
-                                                标题 <span class="caret"></span>
+                                                试卷名称 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
-                                                <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                                                <li> <a tabindex="-1" href="javascript:void(0)" data-field="paperName">试卷名称</a> </li>
+                                                <li> <a tabindex="-1" href="javascript:void(0)" data-field="studentAccount">学生账号</a> </li>
                                             </ul>
                                         </div>
-                                        <input type="text" class="form-control" value="" name="keyword" placeholder="请输入名称">
+                                        <input type="text" class="form-control" value="" id="keyword" name="keyword" placeholder="请输入名称">
                                     </div>
-                                </form>
+                                    <button class="pull-right btn btn-cyan" id="submit-btn" type="button">
+                                        搜索
+                                    </button>
+                                </div>
                                 <div class="toolbar-btn-action">
 <%--                                    <a class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>--%>
 <%--                                    <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>--%>
@@ -371,13 +374,29 @@
     });
     //1.页面加载请完成后，直接发送一个ajax求，拿到分页信息
     $(function(){
+        $('.search-bar .dropdown-menu a').click(function() {
+            var field = $(this).data('field') || '';
+            $('#search-field').val(field);
+            $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
+        });
         to_page(1);//首次加载页面时显示第一页
+    });
+    $("#submit-btn").click(function () {
+        to_page(1);
     });
     //跳转到页面
     function to_page(pn){
+        var searchField=$('#search-field').val();
+        var keyword=$("#keyword").val();
+        // alert(searchField+" "+keyword);
+        var data={
+            "pn":pn,
+            "field":searchField,
+            "keyword":keyword
+        };
         $.ajax({
-            url:"${APP_PATH}/adminGradeManage",
-            data:"pn="+pn,
+            url:"${APP_PATH}/adminGradeManageSearch",
+            data:data,
             type:"get",
             success:function (result) {
                 //console.log(result);
@@ -560,7 +579,7 @@
         // var uUserid=$("#uUserid_update_input").val();
         var score=$("#score_update_input").val();
         score=parseInt(score);
-        alert($(this).attr("edit-id"));
+        // alert($(this).attr("edit-id"));
         // alert(uUserid);
         var data={
             "id":parseInt($(this).attr("edit-id")),

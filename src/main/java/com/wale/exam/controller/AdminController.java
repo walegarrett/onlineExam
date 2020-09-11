@@ -4,8 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.wale.exam.bean.*;
+import com.wale.exam.bean.question.QuestionItemObject;
+import com.wale.exam.bean.question.QuestionObject;
 import com.wale.exam.service.*;
+import com.wale.exam.util.JsonDateValueProcessor;
 import com.wale.exam.util.MyPageInfo;
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author WaleGarrett
@@ -166,11 +168,13 @@ public class AdminController {
      */
     @RequestMapping("/adminPaperManageSearch")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminPaperManageSearch(String field, String keyword, HttpSession session){
+    public Msg adminPaperManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn,String field, String keyword, HttpSession session){
         List<Paper> list=new ArrayList<>();
-        list=paperService.findPaperWithKeyword(field,keyword);
+        if(keyword==null||keyword.equals(""))
+            list=paperService.findAllPaper();
+        else list=paperService.findPaperWithKeyword(field,keyword);
         //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
-        PageInfo page= MyPageInfo.getPageInfo(1,list.size()+1,list);
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
     }
 
@@ -196,7 +200,7 @@ public class AdminController {
         Date start = formatter.parse(startTimes);
         paper.setStartTime(start);
         paper.setDurationTime(durationTime);
-        paper.setEndTime(new Date((new Date()).getTime()+start.getTime()));
+        paper.setEndTime(new Date(start.getTime()+1000*60*durationTime));
         paperService.updatePaper(paper);
         return Msg.success();
     }
@@ -223,7 +227,92 @@ public class AdminController {
         PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
     }
+    /**
+     * 带模糊搜索的查找
+     * @param pn
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminProblemManageSearch")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminProblemManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn, String field, String keyword, HttpSession session){
+        List<Problem> list=new ArrayList<>();
+        if(keyword==null||keyword.equals("")){
+            list=problemService.findAllProblem();
+        }else{
+            list=problemService.findProblemsWithKeyword(field,keyword);
+        }
 
+        //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
+        return Msg.success().add("pageInfo",page);
+    }
+    /**
+     * 根据题目id获取题目
+     * @param problemId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminGetProblem")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminGetProblem(Integer problemId, HttpSession session){
+        Problem problem=new Problem();
+        problem=problemService.findProblemByProblemId(problemId);
+        return Msg.success().add("problem",problem);
+    }
+
+    /**
+     * 更新题目
+     * @param problemId
+     * @param titleContent
+     * @param answer
+     * @param score
+     * @param type
+     * @param analysis
+     * @param optionA
+     * @param optionB
+     * @param optionC
+     * @param optionD
+     * @param session
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/adminUpdateProblem")
+    @ResponseBody
+    public Msg adminUpdateProblem(Integer problemId, String titleContent, String answer, Integer score, Integer type, String analysis, String optionA, String optionB, String optionC, String optionD, HttpSession session) throws ParseException {
+        System.out.println("更新题目："+" "+titleContent+" "+answer+" "+type+" "+score+" "+analysis);
+
+        Map<String,Object> map=new HashMap<>();//用来存储错误的字段
+        Problem problem=new Problem();
+        problem.setAnswer(answer);
+        problem.setType(type);
+        problem.setScore(score);
+//        problem.setCreateTime(new Date());
+        problem.setAnalysis(analysis);
+        String content;
+        QuestionObject questionObject=new QuestionObject();
+        questionObject.setTitleContent(titleContent);
+        questionObject.setAnalyze(analysis);
+        questionObject.setCorrect(answer);
+        List<QuestionItemObject>questionItemObjectList=new ArrayList<>();
+        questionItemObjectList.add(new QuestionItemObject("A",optionA,0));
+        questionItemObjectList.add(new QuestionItemObject("B",optionB,0));
+        questionItemObjectList.add(new QuestionItemObject("C",optionC,0));
+        questionItemObjectList.add(new QuestionItemObject("D",optionD,0));
+        questionObject.setQuestionItemObjects(questionItemObjectList);
+        //用json来传值
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.registerJsonValueProcessor(Date.class , new JsonDateValueProcessor());
+        JSONArray json = JSONArray.fromObject(questionObject, jsonConfig);
+        String js = json.toString();
+        String jso = js.substring(1,js.length()-1);
+        System.out.println(jso);
+        problem.setContent(jso);
+        problem.setId(problemId);
+
+        problemService.updateProblem(problem);
+        return Msg.success();
+    }
     /**
      * 成绩管理
      * @param pn
@@ -239,7 +328,18 @@ public class AdminController {
         PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
     }
-
+    @RequestMapping("/adminGradeManageSearch")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminGradeManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn, String field, String keyword,HttpSession session){
+        System.out.println(field+" "+keyword);
+        List<Sheet> list=new ArrayList<>();
+        if(keyword==null||keyword.equals(""))
+            list=sheetService.findAllSheetWithJudged();
+        else list=sheetService.findSheetWithJudgedAndKeyword(field,keyword);
+        //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
+        return Msg.success().add("pageInfo",page);
+    }
     @RequestMapping("/adminGetGrade")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminGetGrade(Integer sheetId, HttpSession session){
@@ -385,11 +485,14 @@ public class AdminController {
 
     @RequestMapping("/adminUserManageSearch")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminUserManageSearch(String field, String keyword, HttpSession session){
+    public Msg adminUserManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn,String field, String keyword, HttpSession session){
         List<User> list=new ArrayList<>();
-        list=userService.searchUserByKeyword(field,keyword);
+        if(keyword==null||keyword.equals(""))
+            list=userService.findAllUser();
+        else
+            list=userService.searchUserByKeyword(field,keyword);
         //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
-        PageInfo page= MyPageInfo.getPageInfo(1,list.size()+1,list);
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
     }
 }

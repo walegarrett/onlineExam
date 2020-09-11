@@ -457,4 +457,38 @@ public class SheetServiceImpl implements SheetService {
         }
         return true;
     }
+
+    @Override
+    public List<Sheet> findSheetWithJudgedAndKeyword(String field, String keyword) {
+        SheetExample sheetExample=new SheetExample();
+        SheetExample.Criteria criteria=sheetExample.createCriteria();
+        criteria.andStatusEqualTo(2);
+
+        List<Sheet>sheetList=new ArrayList<>();
+        sheetExample.setOrderByClause("submit_time desc");
+        sheetList=sheetMapper.selectByExample(sheetExample);
+        List<Sheet>list=new ArrayList<>();
+        for(Sheet sheet:sheetList){
+            int userId=sheet.getUserId();
+            int paperId=sheet.getPaperId();
+            User doUser=new User();
+            doUser=userService.findUserByUserId(userId);
+            User judgeUser=new User();
+            Paper paper=new Paper();
+            paper=paperService.findPaperByPaperId(paperId);
+            judgeUser=userService.findUserByUserId(paper.getCreaterId());
+            if(field.equals("paperName")){
+                if(!paper.getPaperName().contains(keyword))
+                    continue;
+            }else{
+                if(!doUser.getUserName().contains(keyword))
+                    continue;
+            }
+            sheet.setUserName(doUser.getUserName());
+            sheet.setPaperName(paper.getPaperName());
+            sheet.setJudgerName(judgeUser.getUserName());
+            list.add(sheet);
+        }
+        return list;
+    }
 }

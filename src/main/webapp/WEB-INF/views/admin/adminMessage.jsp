@@ -542,7 +542,7 @@
         // var uUserid=$("#uUserid_update_input").val();
         var title=$("#messageTitle_update_input").val();
         var content=$("#messageContent_update_input").val();
-        alert($(this).attr("edit-id"));
+        // alert($(this).attr("edit-id"));
         // alert(uUserid);
         var data={
             "id":parseInt($(this).attr("edit-id")),

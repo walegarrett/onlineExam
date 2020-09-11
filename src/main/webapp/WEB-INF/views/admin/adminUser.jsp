@@ -452,44 +452,8 @@
 <!--图表插件-->
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/Chart.js"></script>
 <script>
-    $(function () {
-        $('.search-bar .dropdown-menu a').click(function() {
-            var field = $(this).data('field') || '';
-            $('#search-field').val(field);
-            $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
-        });
-
-    });
     $("#submit-btn").click(function () {
-        var searchField=$('#search-field').val();
-        var keyword=$("#keyword").val();
-        if(keyword===""||keyword==null){
-            to_page(1);
-            return false;
-        }
-        // alert(searchField+" "+keyword);
-        var data=
-            {
-                "field":searchField,
-                "keyword":keyword
-            };
-        $.ajax({
-            url:"${APP_PATH}/adminUserManageSearch",
-            // data:"pn="+pn,
-            data:data,
-            type:"get",
-            success:function (result) {
-                //console.log(result);
-                //1.解析并且显示员工数据
-                build_users_table(result);
-                // //2.解析并且显示分页信息
-                // build_page_info(result);
-                // //3.分页条的显示
-                // build_page_nav(result);
-                $("#page_info_area").empty();
-                $("#page_nav_area").empty();
-            }
-        });
+        to_page(1);
     });
 </script>
 <script type="text/javascript">
@@ -497,13 +461,26 @@
     var currentPage;//当前页
     //1.页面加载请完成后，直接发送一个ajax求，拿到分页信息
     $(function(){
+        $('.search-bar .dropdown-menu a').click(function() {
+            var field = $(this).data('field') || '';
+            $('#search-field').val(field);
+            $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
+        });
         to_page(1);//首次加载页面时显示第一页
     });
     //跳转到页面
     function to_page(pn){
+        var searchField=$('#search-field').val();
+        var keyword=$("#keyword").val();
+        // alert(searchField+" "+keyword);
+        var data={
+            "pn":pn,
+            "field":searchField,
+            "keyword":keyword
+        };
         $.ajax({
-            url:"${APP_PATH}/adminUserManage",
-            data:"pn="+pn,
+            url:"${APP_PATH}/adminUserManageSearch",
+            data:data,
             type:"get",
             success:function (result) {
                 //console.log(result);

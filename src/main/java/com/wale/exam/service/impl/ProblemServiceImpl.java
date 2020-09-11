@@ -352,4 +352,56 @@ public class ProblemServiceImpl implements ProblemService {
         }
         return problemList;
     }
+
+    @Override
+    public List<Problem> findProblemsWithKeyword(String field, String keyword) {
+        ProblemExample problemExample=new ProblemExample();
+        ProblemExample.Criteria criteria=problemExample.createCriteria();
+        criteria.andIdIsNotNull();
+        if(field.equals("type")){
+            Integer types=0;
+            if(keyword.equals("单选")||keyword.equals("单选题")){
+                types=1;
+            }else if(keyword.equals("多选")||keyword.equals("多选题")){
+                types=2;
+            }else if(keyword.equals("判断")||keyword.equals("判断题")){
+                types=3;
+            }else if(keyword.equals("填空")||keyword.equals("填空题")){
+                types=4;
+            }else if(keyword.equals("简答")||keyword.equals("简答题")){
+                types=5;
+            }
+            if(types!=0){
+                criteria.andTypeEqualTo(types);
+            }
+        }
+        problemExample.setOrderByClause("create_time desc");
+        List<Problem>list=new ArrayList<>();
+        list=problemMapper.selectByExampleWithBLOBs(problemExample);
+        List<Problem>problemList=new ArrayList<>();
+        for(Problem problem:list){
+            Integer userId=problem.getCreaterId();
+            Integer type=problem.getType();
+            String content=problem.getContent();
+            switch (type){
+                case 1: problem.setTypeName("单选题");
+                    break;
+                case 2: problem.setTypeName("多选题");
+                    break;
+                case 3:problem.setTypeName("判断题");
+                    break;
+                case 4:problem.setTypeName("填空题");
+                    break;
+                case 5:problem.setTypeName("简答题");
+                default:break;
+            }
+            int start=content.indexOf("titleContent");
+            String titleContent=content.substring(start+15,content.length()-2);
+            problem.setTitleContent(titleContent);
+            User user=userService.findUserByUserId(userId);
+            problem.setCreaterUserName(user.getUserName());
+            problemList.add(problem);
+        }
+        return problemList;
+    }
 }

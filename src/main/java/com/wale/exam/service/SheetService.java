@@ -52,4 +52,6 @@ public interface SheetService {
     int searchGradeCount(Integer sheetId, String paperName, String userName, Integer teacherId);
 
     boolean checkIsAnbswered(Integer userId, Integer paperId);
+
+    List<Sheet> findSheetWithJudgedAndKeyword(String field, String keyword);
 }

@@ -280,7 +280,7 @@ public class PaperController {
         Date endTime=new Date(start.getTime()+1000*60*durationTime);
         paper.setEndTime(endTime);
         paper.setPaperName(paperName);
-        paper.setCreateTime(new Date());
+//        paper.setCreateTime(new Date());
         paper.setIsEncry(isEncry);
         paperService.updatePaper(paper,problems);
         return Msg.success();

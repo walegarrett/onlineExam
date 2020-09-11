@@ -328,6 +328,7 @@
                                                 <th>邀请码</th>
                                                 <th>创建时间</th>
                                                 <th>开始时间</th>
+                                                <th>结束时间</th>
                                                 <th>创建人</th>
                                                 <th>操作</th>
                                             </tr>
@@ -378,35 +379,7 @@
 
     });
     $("#submit-btn").click(function () {
-        var searchField=$('#search-field').val();
-        var keyword=$("#keyword").val();
-        if(keyword===""||keyword==null){
-            to_page(1);
-            return false;
-        }
-        // alert(searchField+" "+keyword);
-        var data=
-            {
-                "field":searchField,
-                "keyword":keyword
-            };
-        $.ajax({
-            url:"${APP_PATH}/adminPaperManageSearch",
-            // data:"pn="+pn,
-            data:data,
-            type:"get",
-            success:function (result) {
-                //console.log(result);
-                //1.解析并且显示员工数据
-                build_users_table(result);
-                // //2.解析并且显示分页信息
-                // build_page_info(result);
-                // //3.分页条的显示
-                // build_page_nav(result);
-                $("#page_info_area").empty();
-                $("#page_nav_area").empty();
-            }
-        });
+        to_page(1);
     });
 </script>
 <script type="text/javascript">
@@ -426,9 +399,17 @@
     });
     //跳转到页面
     function to_page(pn){
+        var searchField=$('#search-field').val();
+        var keyword=$("#keyword").val();
+        // alert(searchField+" "+keyword);
+        var data={
+            "pn":pn,
+            "field":searchField,
+            "keyword":keyword
+        };
         $.ajax({
-            url:"${APP_PATH}/adminPaperManage",
-            data:"pn="+pn,
+            url:"${APP_PATH}/adminPaperManageSearch",//adminPaperManage
+            data:data,
             type:"get",
             success:function (result) {
                 //console.log(result);
@@ -460,6 +441,9 @@
             var startTime1=formatDate(item.startTime);
             var startTime2=formatDateHourAndMinute(item.startTime);
             var uStartTimeTd = $("<td></td>").append(startTime1+" "+startTime2);
+            var endTime1=formatDate(item.endTime);
+            var endTime2=formatDateHourAndMinute(item.endTime);
+            var uEndTimeTd = $("<td></td>").append(endTime1+" "+endTime2);
             var uCreaterUserName=$("<td></td>").append(item.createrUserName);
             var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
@@ -480,6 +464,7 @@
                 .append(uInviCode)
                 .append(uCreateTimeTd)
                 .append(uStartTimeTd)
+                .append(uEndTimeTd)
                 .append(uCreaterUserName)
                 .append(btnTd)
                 .appendTo("#users_table tbody");
@@ -582,6 +567,7 @@
         //alert("");
         //-------------注意以下的逻辑关系，先后次序不能改变
         getUser($(this).attr("edit-id"));
+        // alert($(this).attr("edit-id"));
         $("#userUpdateModal").modal({
             backdrop:"static"
         });
@@ -633,7 +619,7 @@
         var inviCode=$("#inviCode_update_input").val();
         var isEncry=$("input[name='encry']:checked").val();
         isEncry=parseInt(isEncry);
-        alert($(this).attr("edit-id"));
+        // alert($(this).attr("edit-id"));
         // alert(uUserid);
         var data={
             "id":parseInt($(this).attr("edit-id")),

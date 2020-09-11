@@ -7,7 +7,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27918287-696e-4928-9649-11f4080e31c9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/index2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/index2.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/PaperController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/PaperController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/ProblemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/ProblemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/ProblemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/ProblemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/SheetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/SheetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/ProblemServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/ProblemServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/SheetServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/SheetServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminGrade.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminGrade.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminMessage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminPaper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminPaper.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminProblem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminUser.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/editProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/editProblem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminGrade.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminGrade.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminMessage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminPaper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminPaper.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminProblem.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -393,7 +410,8 @@
       <workItem from="1599568681849" duration="3593000" />
       <workItem from="1599575466280" duration="645000" />
       <workItem from="1599613286831" duration="1956000" />
-      <workItem from="1599695008968" duration="10594000" />
+      <workItem from="1599695008968" duration="11496000" />
+      <workItem from="1599782549824" duration="13691000" />
     </task>
     <task id="LOCAL-00001" summary="测试wale分支">
       <created>1599747270426</created>
@@ -409,7 +427,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599747904948</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="分支合并">
+      <created>1599748122117</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1599748122117</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -420,7 +445,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -429,6 +456,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="测试wale分支" />
     <MESSAGE value="消除主页显示bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="消除主页显示bug" />
+    <MESSAGE value="分支合并" />
+    <option name="LAST_COMMIT_MESSAGE" value="分支合并" />
   </component>
 </project>

@@ -230,7 +230,7 @@ public class ProblemController {
         problem.setAnswer(answer);
         problem.setType(type);
         problem.setScore(score);
-        problem.setCreateTime(new Date());
+//        problem.setCreateTime(new Date());
         problem.setCreaterId(teacherId);
         problem.setAnalysis(analysis);
         String content;
@@ -253,7 +253,6 @@ public class ProblemController {
         System.out.println(jso);
         problem.setContent(jso);
         problem.setId(problemId);
-
         problemService.updateProblem(problem);
         return Msg.success();
     }
