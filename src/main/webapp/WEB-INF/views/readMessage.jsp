@@ -82,7 +82,7 @@
                 <a href="${APP_PATH}/index2.jsp"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
             </li>
             <li class="layui-nav-item">
-                <a href="${APP_PATH}/toWhere?where=wrongRecord"><i class="fa fa-file-text fa-fw"></i>&nbsp;试卷中心</a>
+                <a href="${APP_PATH}/toWhere?where=paperCenter"><i class="fa fa-file-text fa-fw"></i>&nbsp;试卷中心</a>
             </li>
             <li class="layui-nav-item">
                 <a href="${APP_PATH}/toWhere?where=examRecord"><i class="fa fa-tags fa-fw"></i>&nbsp;考试记录</a>

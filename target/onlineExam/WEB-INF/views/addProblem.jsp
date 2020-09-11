@@ -232,7 +232,7 @@
                 optionB=data.judgeB;
             }
             var type=data.type;
-            alert(type+" "+optionA+" "+optionB);
+            // alert(type+" "+optionA+" "+optionB);
             // return false;/////////////////测试
             var datas={
                 "teacherId":${userid},//
