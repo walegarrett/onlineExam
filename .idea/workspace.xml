@@ -7,140 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27918287-696e-4928-9649-11f4080e31c9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/addrbar/bootstrap-table-addrbar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/addrbar/bootstrap-table-addrbar.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/auto-refresh/bootstrap-table-auto-refresh.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/auto-refresh/bootstrap-table-auto-refresh.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/cookie/bootstrap-table-cookie.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/cookie/bootstrap-table-cookie.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/copy-rows/bootstrap-table-copy-rows.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/copy-rows/bootstrap-table-copy-rows.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/custom-view/bootstrap-table-custom-view.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/custom-view/bootstrap-table-custom-view.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/defer-url/bootstrap-table-defer-url.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/defer-url/bootstrap-table-defer-url.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/editable/bootstrap-table-editable.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/export/bootstrap-table-export.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/export/bootstrap-table-export.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/filter-control/utils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/filter-control/utils.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/group-by-v2/bootstrap-table-group-by.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/group-by-v2/bootstrap-table-group-by.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/group-by-v2/bootstrap-table-group-by.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/group-by-v2/bootstrap-table-group-by.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/i18n-enhance/bootstrap-table-i18n-enhance.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/i18n-enhance/bootstrap-table-i18n-enhance.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/key-events/bootstrap-table-key-events.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/key-events/bootstrap-table-key-events.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/mobile/bootstrap-table-mobile.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/page-jump-to/bootstrap-table-page-jump-to.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/page-jump-to/bootstrap-table-page-jump-to.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/page-jump-to/bootstrap-table-page-jump-to.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/page-jump-to/bootstrap-table-page-jump-to.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/pipeline/bootstrap-table-pipeline.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/pipeline/bootstrap-table-pipeline.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/print/bootstrap-table-print.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/print/bootstrap-table-print.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/reorder-rows/bootstrap-table-reorder-rows.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/reorder-rows/bootstrap-table-reorder-rows.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/reorder-rows/bootstrap-table-reorder-rows.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/reorder-rows/bootstrap-table-reorder-rows.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/resizable/bootstrap-table-resizable.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/resizable/bootstrap-table-resizable.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/sticky-header/bootstrap-table-sticky-header.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/sticky-header/bootstrap-table-sticky-header.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/sticky-header/bootstrap-table-sticky-header.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/sticky-header/bootstrap-table-sticky-header.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-it-IT.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-ja-JP.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-ka-GE.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-ko-KR.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-ms-MY.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-nb-NO.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-nl-BE.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-nl-NL.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-pl-PL.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-pt-BR.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-pt-PT.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-ro-RO.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-ru-RU.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-sk-SK.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-sr-Cyrl-RS.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-sr-Cyrl-RS.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-sr-Latn-RS.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-sr-Latn-RS.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-sv-SE.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-th-TH.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-tr-TR.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-uk-UA.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-ur-PK.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-uz-Latn-UZ.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-uz-Latn-UZ.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-vi-VN.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/locale/bootstrap-table-zh-TW.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bootstrap-table/bootstrap-table.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bootstrap-table/bootstrap-table.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bootstrap-table/bootstrap-table.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bootstrap-table/bootstrap-table.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bootstrap-table/fonts/bootstrap-table.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bootstrap-table/fonts/bootstrap-table.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bootstrap-table/fonts/bootstrap-table.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bootstrap-table/fonts/bootstrap-table.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bulma/bootstrap-table-bulma.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bulma/bootstrap-table-bulma.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bulma/bootstrap-table-bulma.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/bulma/bootstrap-table-bulma.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/foundation/bootstrap-table-foundation.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/foundation/bootstrap-table-foundation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/foundation/bootstrap-table-foundation.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/foundation/bootstrap-table-foundation.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/materialize/bootstrap-table-materialize.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/materialize/bootstrap-table-materialize.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/materialize/bootstrap-table-materialize.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/materialize/bootstrap-table-materialize.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/semantic/bootstrap-table-semantic.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/semantic/bootstrap-table-semantic.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/semantic/bootstrap-table-semantic.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/themes/semantic/bootstrap-table-semantic.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/admin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/admin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminGrade.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminGrade.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminMessage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminPaper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminPaper.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminProblem.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminUser.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/service/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/addMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/addMessage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/addProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/addProblem.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/admin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/admin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminGrade.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminGrade.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminMessage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminPaper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminPaper.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminProblem.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminUser.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/editProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/editProblem.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/paper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/paper.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/problem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/problem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examRecord.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examRecord.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/paperCenter.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/paperCenter.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/personalCenter.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/personalCenter.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/readMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/readMessage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/wrongRecord.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/wrongRecord.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index2.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/statics/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/statics/js/common.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -268,7 +142,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/statics/bootstrap-table/extensions/export" />
+    <property name="last_opened_file_path" value="E:/IDEA/IdeaProjects/bbs" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -544,7 +418,7 @@
       <workItem from="1599782549824" duration="16749000" />
       <workItem from="1599830643340" duration="3983000" />
       <workItem from="1599872421746" duration="12153000" />
-      <workItem from="1599913465386" duration="5032000" />
+      <workItem from="1599913465386" duration="7555000" />
     </task>
     <task id="LOCAL-00001" summary="测试wale分支">
       <created>1599747270426</created>
@@ -630,7 +504,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599885096027</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="修改admin页面显示bug">
+      <created>1599918879280</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1599918879280</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -670,6 +551,7 @@
     <MESSAGE value="普通最热考试排序（前20）" />
     <MESSAGE value="使用Redis实现最热考试排序" />
     <MESSAGE value="修改删除试卷和用户bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改删除试卷和用户bug" />
+    <MESSAGE value="修改admin页面显示bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改admin页面显示bug" />
   </component>
 </project>

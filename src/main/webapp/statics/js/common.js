@@ -27,4 +27,37 @@ function getJsonLength(jsonData){
     }
     return jsonLength;
 }
+function showNoReadCount(apppath,userid){
+    if(userid==""){
+        $("#msgNum").text("");
+        $("#msgNum").hide();
+        $("#msgNum1").text("");
+        $("#msgNum1").hide();
+    }else{
+        userid=parseInt(userid);
+        var data={
+            "userId":userid
+        };
+        $.ajax({
+            url:apppath+"/findNoReadCount",
+            data:data,
+            type:"get",
+            success:function (result) {
+                //console.log(result);
+                var noReadCount=result.extend.noReadCount;
+                if(noReadCount==0){
+                    $("#msgNum").text("");
+                    $("#msgNum").hide();
+                    $("#msgNum1").text("");
+                    $("#msgNum1").hide();
+                }else{
+                    $("#msgNum").text(""+noReadCount);
+                    $("#msgNum").show();
+                    $("#msgNum1").text(""+noReadCount);
+                    $("#msgNum1").show();
+                }
+            }
+        });
+    }
+}
 

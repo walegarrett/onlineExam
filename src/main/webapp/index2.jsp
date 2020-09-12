@@ -95,9 +95,9 @@
 <nav class="blog-nav layui-header">
     <div class="blog-container">
         <!-- QQ互联登陆 -->
-<%--        <a href="javascript:;" class="blog-user layui-hide">--%>
-<%--            <img src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" title="Absolutely" />--%>
-<%--        </a>--%>
+        <%--        <a href="javascript:;" class="blog-user layui-hide">--%>
+        <%--            <img src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" title="Absolutely" />--%>
+        <%--        </a>--%>
         <!-- 不落阁 -->
         <a class="blog-logo" href="index2.jsp">在线考试系统</a>
         <!-- 导航菜单 -->
@@ -271,6 +271,9 @@
                 <img src="${userheadpic}" alt='头像' class="img-circle" width=30px height=30px><span> ${username}</span><span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="${APP_PATH}/toWhere?where=personalCenter">个人主页</a></li>
+                <li id="message1">
+                    <a href="${APP_PATH}/toReadMessage?userId=${userid}">
+                        个人消息<span id="msgNum1" class="ii">4</span></a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="${APP_PATH}/userExit">退出登录</a></li>
             </ul>
@@ -306,34 +309,7 @@
 <script src="${APP_PATH}/statics/main/js/home.js"></script>
 <script src="${APP_PATH}/statics/js/common.js"></script>
 <script>
-    function showNoReadCount(){
-        if("${userid}"==""){
-            $("#msgNum").text("");
-            $("#msgNum").hide();
-        }else{
-            var userid="${userid}";
-            userid=parseInt(userid);
-            var data={
-                "userId":userid
-            };
-            $.ajax({
-                url:"${APP_PATH}/findNoReadCount",
-                data:data,
-                type:"get",
-                success:function (result) {
-                    //console.log(result);
-                    var noReadCount=result.extend.noReadCount;
-                    if(noReadCount==0){
-                        $("#msgNum").text("");
-                        $("#msgNum").hide();
-                    }else{
-                        $("#msgNum").text(""+noReadCount);
-                        $("#msgNum").show();
-                    }
-                }
-            });
-        }
-    }
+
     /*
     显示主页的考试
      */
@@ -483,7 +459,7 @@
                 buildRecentExam(result);
             }
         });
-        showNoReadCount();
+        showNoReadCount("${APP_PATH}","${userid}");
     });
 </script>
 </body>
