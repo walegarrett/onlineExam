@@ -210,7 +210,7 @@ public class PaperController {
      * @return
      */
     @RequestMapping("/theSheetRecord")
-    public String theSheetRecord(@RequestParam("paperId")Integer paperId, Model model){
+    public String theSheetRecord(@RequestParam("paperId")Integer paperId,@RequestParam("userId")Integer userId, Model model){
         Paper paper=new Paper();
         paper=paperService.findPaperByPaperId(paperId);
         model.addAttribute("paper",paper);
@@ -223,6 +223,7 @@ public class PaperController {
         long min = diff /60/1000;// 计算差多少分钟
         model.addAttribute("avaHour",min/60);
         model.addAttribute("avaMinute",min%60);
+        model.addAttribute("userId",userId);
         return "examDetail";
     }
     @RequestMapping("/checkInviCode")

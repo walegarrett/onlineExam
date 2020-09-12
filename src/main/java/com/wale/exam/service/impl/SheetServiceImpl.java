@@ -228,6 +228,10 @@ public class SheetServiceImpl implements SheetService {
         sheetMapper.deleteByExample(sheetExample);
     }
 
+    /**
+     * 查找所有批改了的试卷
+     * @return
+     */
     @Override
     public List<Sheet> findAllSheetWithJudged() {
         SheetExample sheetExample=new SheetExample();
@@ -517,5 +521,75 @@ public class SheetServiceImpl implements SheetService {
         Map<Integer, Integer> result = new LinkedHashMap<>();
         st.sorted((p1, p2) -> p2.getValue().compareTo(p1.getValue())).forEach(e -> result.put(e.getKey(), e.getValue()));//Comparator.comparing(e -> e.getValue())
         return result;//
+    }
+
+    @Override
+    public List<Sheet> findAllSheet() {
+        SheetExample sheetExample=new SheetExample();
+        SheetExample.Criteria criteria=sheetExample.createCriteria();
+        criteria.andIdIsNotNull();
+        List<Sheet>sheetList=new ArrayList<>();
+        sheetExample.setOrderByClause("submit_time desc");
+        sheetList=sheetMapper.selectByExample(sheetExample);
+        List<Sheet>list=new ArrayList<>();
+        for(Sheet sheet:sheetList){
+            int userId=sheet.getUserId();
+            int paperId=sheet.getPaperId();
+            User doUser=new User();
+            doUser=userService.findUserByUserId(userId);
+            User judgeUser=new User();
+            Paper paper=new Paper();
+            paper=paperService.findPaperByPaperId(paperId);
+            judgeUser=userService.findUserByUserId(paper.getCreaterId());
+            sheet.setUserName(doUser.getUserName());
+            sheet.setPaperName(paper.getPaperName());
+            sheet.setJudgerName(judgeUser.getUserName());
+            list.add(sheet);
+        }
+        return list;
+    }
+
+    /**
+     * 通过关键字查找答卷
+     * @param field
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<Sheet> findSheetWithKeyword(String field, String keyword) {
+        SheetExample sheetExample=new SheetExample();
+        SheetExample.Criteria criteria=sheetExample.createCriteria();
+        criteria.andIdIsNotNull();
+        List<Sheet>sheetList=new ArrayList<>();
+        sheetExample.setOrderByClause("submit_time desc");
+        sheetList=sheetMapper.selectByExample(sheetExample);
+        List<Sheet>list=new ArrayList<>();
+        for(Sheet sheet:sheetList){
+            int userId=sheet.getUserId();
+            int paperId=sheet.getPaperId();
+            User doUser=new User();
+            doUser=userService.findUserByUserId(userId);
+            User judgeUser=new User();
+            Paper paper=new Paper();
+            paper=paperService.findPaperByPaperId(paperId);
+            judgeUser=userService.findUserByUserId(paper.getCreaterId());
+            if(field.equals("paperName")){
+                if(!paper.getPaperName().contains(keyword))
+                    continue;
+            }else{
+                if(!doUser.getUserName().contains(keyword))
+                    continue;
+            }
+            sheet.setUserName(doUser.getUserName());
+            sheet.setPaperName(paper.getPaperName());
+            sheet.setJudgerName(judgeUser.getUserName());
+            list.add(sheet);
+        }
+        return list;
+    }
+
+    @Override
+    public void deleteSheet(Integer sheetId) {
+        sheetMapper.deleteByPrimaryKey(sheetId);
     }
 }

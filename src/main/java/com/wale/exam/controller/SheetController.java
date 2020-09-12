@@ -148,7 +148,6 @@ public class SheetController {
         Integer totalScore;
         totalScore=answerService.computeTotalScore(userId,paperId);
         model.addAttribute("totalScore",totalScore);
-
         return "examScoreDetail";
     }
 

@@ -89,10 +89,9 @@
                 <form action="" method="post" id="onlineForm">
 
                     <div class="test_title">
-                        <p class="test_time">
-<%--                            <i class="glyphicon glyphicon-time"></i>--%>
-                            <b class="alt-1">${avaHour}:${avaMinute}</b>
-                        </p>
+<%--                        <p class="test_time">--%>
+<%--                            <b class="alt-1">${avaHour}:${avaMinute}</b>--%>
+<%--                        </p>--%>
                         <font><input type="button" name="test_jiaojuan" value="交卷" onclick="doPaper()"></font>
                     </div>
 
@@ -183,9 +182,9 @@
         $('.alt-1').countDown({
             css_class: 'countdown-alt-1'
         });
-        $('.alt-2').countDown({
-            css_class: 'countdown-alt-2'
-        });
+        // $('.alt-2').countDown({
+        //     css_class: 'countdown-alt-2'
+        // });
     });
     function submitAnswer(questionId, answer) {
         $.ajax({

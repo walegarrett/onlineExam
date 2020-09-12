@@ -274,14 +274,18 @@
             var uJudgerNameTd = $("<td></td>").append(item.judgerName);
 
             var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
-                .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
+                .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("查看");
             var editBtn=$("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
             //为编辑按钮添加一个自定义的属性
             editBtn.attr("edit-id",item.id);
+
             //为删除按钮添加一个自定义的属性来表示当前删除的员工id
             delBtn.attr("delete-id",item.id);
-            var btnTd = $("<td></td>").append(editBtn);//.append(" ").append(delBtn);
+            editBtn.attr("paperId",item.paperId);
+            editBtn.attr("userId",item.userId);
+            editBtn.attr("status",item.status);
+            var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
             $("<tr></tr>")
                 .append(uIdTd)
                 .append(uPaperIdTd)
@@ -363,28 +367,16 @@
     $(document).on("click",".delete_btn",function () {
         //弹出是否确认删除的对话框
         // alert($(this).parents("tr").find("td:eq(0)").text());
-        var paperName=$(this).parents("tr").find("td:eq(1)").text();
-        var uId=$(this).attr("delete-id");
-        var data=
-            {
-                "paperId":uId
-            };
-        if(confirm("确认删除"+paperName+"吗？")){
-            //确认，发送ajax请求删除
-            $.ajax({
-                url:"${APP_PATH}/adminDeletePaper",
-                type:"POST",
-                data:data,
-                success:function (result) {
-                    if(result.code==100) {
-                        alert("删除成功");
-                        to_page(currentPage);
-                    }else{
-                        alert("删除失败");
-                        to_page(currentPage);
-                    }
-                }
-            });
+        var sheetid=$(this).attr("delete-id");
+        var status=$(this).attr("status");
+        var userid=$(this).attr("userId");
+        var paperid=$(this).attr("paperId");
+        if(status==1){
+            window.open("${APP_PATH}/theSheetRecord?paperId="+paperid+"&userId="+userid+"","_blank");
+            <%--top.location.href="${APP_PATH}/theSheetRecord?paperId="+paperid+"&userId="+userid+"";--%>
+        }else{
+            window.open("${APP_PATH}/theScoreSheetRecord?sheetId="+sheetid+"","_blank");
+            <%--top.location.href="${APP_PATH}/theScoreSheetRecord?sheetId="+sheetid+"";--%>
         }
     });
 

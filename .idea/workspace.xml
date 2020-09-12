@@ -8,13 +8,24 @@
   <component name="ChangeListManager">
     <list default="true" id="27918287-696e-4928-9649-11f4080e31c9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/PaperController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/PaperController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/ProblemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/ProblemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/SheetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/SheetController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/SheetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/SheetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/SheetServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/SheetServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminGrade.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminGrade.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examDetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examDetail.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examRecord.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examRecord.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/paperCenter.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/paperCenter.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/personalCenter.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/personalCenter.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/readMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/readMessage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/wrongRecord.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/wrongRecord.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index2.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/statics/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/statics/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/online.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/online.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/examRecord.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/examRecord.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/online.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/online.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/paperCenter.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/paperCenter.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/personalCenter.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/personalCenter.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/readMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/readMessage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/wrongRecord.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/wrongRecord.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/index2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/index2.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/statics/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/statics/js/common.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -418,7 +429,9 @@
       <workItem from="1599782549824" duration="16749000" />
       <workItem from="1599830643340" duration="3983000" />
       <workItem from="1599872421746" duration="12153000" />
-      <workItem from="1599913465386" duration="7555000" />
+      <workItem from="1599913465386" duration="8627000" />
+      <workItem from="1599922757941" duration="1298000" />
+      <workItem from="1599950417483" duration="3726000" />
     </task>
     <task id="LOCAL-00001" summary="测试wale分支">
       <created>1599747270426</created>
@@ -511,7 +524,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599918879280</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="添加公共js显示未读信息代码">
+      <created>1599921315264</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1599921315264</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -552,6 +572,7 @@
     <MESSAGE value="使用Redis实现最热考试排序" />
     <MESSAGE value="修改删除试卷和用户bug" />
     <MESSAGE value="修改admin页面显示bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改admin页面显示bug" />
+    <MESSAGE value="添加公共js显示未读信息代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加公共js显示未读信息代码" />
   </component>
 </project>

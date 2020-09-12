@@ -57,4 +57,10 @@ public interface SheetService {
     List<Sheet> findSheetWithJudgedAndKeyword(String field, String keyword);
 
     Map<Integer, Integer> findHottestPaperInSheets();
+
+    List<Sheet> findAllSheet();
+
+    List<Sheet> findSheetWithKeyword(String field, String keyword);
+
+    void deleteSheet(Integer sheetId);
 }

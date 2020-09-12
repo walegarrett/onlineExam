@@ -162,13 +162,13 @@ public class ProblemController {
      */
     @RequestMapping("/theAllProblem")
     @ResponseBody
-    public Msg theAllProblem(@RequestParam("paperId") Integer paperId, HttpSession session,Model model) throws ParseException {
+    public Msg theAllProblem(@RequestParam("paperId") Integer paperId, @RequestParam("userId") Integer userId, HttpSession session,Model model) throws ParseException {
         List<Problem>radioProList=new ArrayList<>();
         List<Problem>mulProList=new ArrayList<>();
         List<Problem>judgeProList=new ArrayList<>();
         List<Problem>blankProList=new ArrayList<>();//填空题
         List<Problem>shortProList=new ArrayList<>();//简答题
-        Integer userid=(Integer)session.getAttribute("userid");
+        Integer userid=userId;
         radioProList=problemService.findProblemByPaperIdAndType(paperId,1,userid);
         mulProList=problemService.findProblemByPaperIdAndType(paperId,2,userid);
         judgeProList=problemService.findProblemByPaperIdAndType(paperId,3,userid);

@@ -171,7 +171,7 @@
                 var sectionC=$("<a class='layui-btn layui-btn-small layui-btn-primary'>未批改</a>")
                     .append($("<i class='fa fa-eye fa-fw'></i>"));
                 sectionC.attr("inviCode",item.inviCode);
-                var sectionD=$("<a class='layui-btn layui-btn-small layui-btn-primary' target='_blank'  href=\"${APP_PATH}/theSheetRecord?paperId="+item.paperId+"\">查看详情</a>")
+                var sectionD=$("<a class='layui-btn layui-btn-small layui-btn-primary' target='_blank'  href=\"${APP_PATH}/theSheetRecord?paperId="+item.paperId+"&userId=${userid}\">查看详情</a>")
                     .append($("<i class='fa fa-download fa-fw'></i>"));
             } else {//已批改
                 var sectionC=$("<a class='layui-btn layui-btn-small layui-btn-primary' id='"+item.id+"'>已批改</a>")

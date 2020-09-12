@@ -339,6 +339,15 @@ public class AdminController {
         PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
     }
+
+    /**
+     * 带模糊搜索的成绩管理查找
+     * @param pn
+     * @param field
+     * @param keyword
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminGradeManageSearch")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminGradeManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn, String field, String keyword,HttpSession session){
@@ -505,5 +514,43 @@ public class AdminController {
         //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
         PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
+    }
+    /**
+     * 带模糊搜索的成绩管理查找
+     * @param pn
+     * @param field
+     * @param keyword
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminSheetManageSearch")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminSheetManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn, String field, String keyword,HttpSession session){
+        System.out.println(field+" "+keyword);
+        List<Sheet> list=new ArrayList<>();
+        if(keyword==null||keyword.equals(""))
+            list=sheetService.findAllSheet();
+        else list=sheetService.findSheetWithKeyword(field,keyword);
+        //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
+        return Msg.success().add("pageInfo",page);
+    }
+    /**
+     * 删除答卷
+     * @param sheetId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminDeleteSheet")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminDeleteSheet(Integer sheetId, HttpSession session){
+        System.out.println(sheetId);
+        Sheet sheet=sheetService.findSheetById(sheetId);
+        //最热考试的score-1
+        String hottestkey="hottest:papers";
+        RedisUtil.zSetincrementScore(hottestkey,sheet.getPaperId(),-1.0);
+        //删除答卷
+        sheetService.deleteSheet(sheetId);
+        return Msg.success();
     }
 }
