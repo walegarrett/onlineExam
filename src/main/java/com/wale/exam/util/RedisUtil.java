@@ -241,10 +241,11 @@ public class RedisUtil {
     public static boolean setExp(String key, long seconds) {
         LOG.debug(" setExp key :{}, seconds: {}", key, seconds);
         try {
-            if (isClose() || isEmpty(key) || seconds > 0) {
+            if (isClose() || isEmpty(key) || seconds < 0) {
                 return false;
             }
             key = buildKey(key);
+
             return redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
@@ -909,6 +910,26 @@ public class RedisUtil {
     }
 
     /**
+     * score+1
+     * @param key
+     * @param value
+     * @return
+     */
+    public static boolean zSetincrementScore(String key, Object value,Double increment) {
+        LOG.debug(" incrementScore key :{},value:{},increment:{}", key, value,increment);
+        try {
+            if (isClose() || isEmpty(key) || isEmpty(value)) {
+                return false;
+            }
+            key = buildKey(key);
+            redisTemplate.opsForZSet().incrementScore(key,value,increment);
+            return true;
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return false;
+    }
+    /**
      * 从有序集合中删除指定值
      * @param key   缓存key
      * @param value 缓存value
@@ -971,5 +992,25 @@ public class RedisUtil {
         }
         return Collections.emptySet();
     }
+    /**
+     * 从有序集合中获取指定位置的值,倒叙
+     * @param key   缓存key
+     * @param start 起始位置
+     * @param end   结束为止
+     * @return
+     */
+    public static <T> Set<T> getZSetReverse(String key, long start, long end) {
+        LOG.debug(" getZSet key :{},start:{}, end:{}", key, start, end);
+        try {
+            if (isClose() || isEmpty(key)) {
+                return Collections.emptySet();
+            }
+            key = buildKey(key);
 
+            return (Set<T>) redisTemplate.opsForZSet().reverseRange(key, start, end);
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return Collections.emptySet();
+    }
 }

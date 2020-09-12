@@ -382,6 +382,7 @@
                 href.attr("paperId",item.id);
                 href.attr("startTime",item.startTime);
                 href.attr("endTime",item.endTime);
+                href.attr("inviCode",item.inviCode);
                 li.append(href);
                 li.appendTo(".blog-module-ul");
             }

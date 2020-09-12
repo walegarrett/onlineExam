@@ -8,6 +8,7 @@ import com.wale.exam.service.PaperService;
 import com.wale.exam.service.ProblemService;
 import com.wale.exam.util.JsonDateValueProcessor;
 import com.wale.exam.util.MyPageInfo;
+import com.wale.exam.util.RedisUtil;
 import com.wale.exam.util.dateUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -306,9 +307,11 @@ public class PaperController {
     @RequestMapping("/findPaperHottest")
     @ResponseBody//记得一定要加上这个注解
     public Msg findPaperHottest(HttpSession session){
-        List<Paper> list=paperService.findHottestPaper();
+//        List<Paper> list=paperService.findHottestPaper();
+        List<Paper> list=paperService.findHottestPaperWithRedis();
         return Msg.success().add("paperlist",list);
     }
+
     @RequestMapping(value="/searchPaper",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchPaper(Integer teacherId, Integer id, String title,int page, int limit){
@@ -330,10 +333,21 @@ public class PaperController {
         String jso = "{\"code\":0,\"msg\":\"\",\"count\":"+count+",\"data\":"+js+"}";
         return jso;
     }
+
+    /**
+     * 删除试卷
+     * @param paperId
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/deletePaper")
     @ResponseBody
     public Msg deletePaper(Integer paperId, HttpSession session) throws ParseException {
         System.out.println("删除试卷："+paperId);
+        //删除最热考试缓存
+        String hottestkey="hottest:papers";
+        RedisUtil.removeZSet(hottestkey,paperId);
         paperService.deletePaper(paperId);
         return Msg.success();
     }

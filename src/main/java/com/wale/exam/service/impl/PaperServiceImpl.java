@@ -3,6 +3,7 @@ package com.wale.exam.service.impl;
 import com.wale.exam.bean.*;
 import com.wale.exam.dao.PaperMapper;
 import com.wale.exam.service.*;
+import com.wale.exam.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -465,6 +466,7 @@ public class PaperServiceImpl implements PaperService {
     @Override
     public List<Paper> findHottestPaper() {
         //paperId - 人数
+
         Map<Integer,Integer> map=sheetService.findHottestPaperInSheets();
         List<Paper> paperList=new ArrayList<>();
         int index=0;
@@ -476,6 +478,38 @@ public class PaperServiceImpl implements PaperService {
             paperList.add(paper);
             if(++index>20)
                 break;
+        }
+        return paperList;
+    }
+
+    @Override
+    public List<Paper> findHottestPaperWithRedis() {
+        List<Paper> paperList=new ArrayList<>();
+        String hottestkey="hottest:papers";
+        //paperId - 人数
+        if(RedisUtil.hasKey(hottestkey)){
+            //取出最热考试试卷
+            Set<Integer> hottestSet=RedisUtil.getZSetReverse(hottestkey,0,20);
+            for(Integer paperId:hottestSet){
+                Paper paper=new Paper();
+                paper=paperMapper.selectByPrimaryKey(paperId);
+                paperList.add(paper);
+            }
+        }else{
+            Map<Integer,Integer> map=sheetService.findHottestPaperInSheets();
+            int index=0;
+            for (Map.Entry<Integer, Integer> detail:map.entrySet()){
+                Integer paperId=detail.getKey();
+                Integer num=detail.getValue();
+                Paper paper=new Paper();
+                paper=paperMapper.selectByPrimaryKey(paperId);
+                paperList.add(paper);
+                RedisUtil.addZSet(hottestkey,paperId,num);
+                if(++index>20)
+                    break;
+            }
+            //设置过期时间
+            RedisUtil.setExp(hottestkey,7*24*60*60);//一个礼拜的过期时间7*24*60*60
         }
         return paperList;
     }

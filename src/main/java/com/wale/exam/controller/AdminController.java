@@ -9,6 +9,7 @@ import com.wale.exam.bean.question.QuestionObject;
 import com.wale.exam.service.*;
 import com.wale.exam.util.JsonDateValueProcessor;
 import com.wale.exam.util.MyPageInfo;
+import com.wale.exam.util.RedisUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,6 +209,9 @@ public class AdminController {
     @ResponseBody//记得一定要加上这个注解
     public Msg adminDeletePaper(Integer paperId, HttpSession session){
         System.out.println(paperId);
+        //删除最热考试
+        String hottestkey="hottest:papers";
+        RedisUtil.removeZSet(hottestkey,paperId);
         paperService.deletePaper(paperId);
         return Msg.success();
     }

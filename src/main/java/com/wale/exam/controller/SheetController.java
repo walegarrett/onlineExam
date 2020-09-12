@@ -5,6 +5,7 @@ import com.wale.exam.bean.*;
 import com.wale.exam.service.*;
 import com.wale.exam.util.JsonDateValueProcessor;
 import com.wale.exam.util.MyPageInfo;
+import com.wale.exam.util.RedisUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class SheetController {
     @ResponseBody
     public Msg submitPaper(Integer userId, Integer paperId, HttpSession session){
         System.out.println(userId+" "+paperId);
+        //加入缓存
+        String hottestkey="hottest:papers";
+        RedisUtil.zSetincrementScore(hottestkey,paperId,1.0);
         sheetService.addSheet(userId,paperId);
         return Msg.success();
     }

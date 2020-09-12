@@ -62,4 +62,6 @@ public interface PaperService {
     List<Paper> findPaperWithKeyword(String field,String keyword);
 
     List<Paper> findHottestPaper();
+
+    List<Paper> findHottestPaperWithRedis();
 }
