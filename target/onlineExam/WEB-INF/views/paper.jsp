@@ -196,7 +196,9 @@
                             //执行有错误时候的判断
                             layer.msg('删除试卷失败！');
                         }else{
-                            layer.msg('删除试卷成功！');
+                            layer.msg('删除试卷成功！', {icon:1,time:1000},function(){
+                                setTimeout('window.location.reload()',1000);
+                            });
                         }
                     }
                 });

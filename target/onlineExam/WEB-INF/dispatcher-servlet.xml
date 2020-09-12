@@ -35,6 +35,7 @@
     <mvc:resources mapping="/main/**" location="/statics/main/"/>
     <mvc:resources mapping="/bootstrapValidator/**" location="/statics/bootstrapValidator/"/>
     <mvc:resources mapping="/ckeditor/**" location="/statics/ckeditor/"/>
+    <mvc:resources mapping="/bootstrap-table/**" location="/statics/bootstrap-table/"/>
     <!--两个标准配置-->
     <!--将springmvc不能处理的请求交给tomcat-->
     <mvc:default-servlet-handler />
