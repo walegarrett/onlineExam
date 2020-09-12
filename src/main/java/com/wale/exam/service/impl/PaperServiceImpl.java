@@ -6,10 +6,7 @@ import com.wale.exam.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author WaleGarrett
@@ -459,5 +456,27 @@ public class PaperServiceImpl implements PaperService {
             list.add(paper);
         }
         return list;
+    }
+
+    /**
+     * 查找答卷人数最多的试卷
+     * @return
+     */
+    @Override
+    public List<Paper> findHottestPaper() {
+        //paperId - 人数
+        Map<Integer,Integer> map=sheetService.findHottestPaperInSheets();
+        List<Paper> paperList=new ArrayList<>();
+        int index=0;
+        for (Map.Entry<Integer, Integer> detail:map.entrySet()){
+            Integer paperId=detail.getKey();
+            Integer num=detail.getValue();
+            Paper paper=new Paper();
+            paper=paperMapper.selectByPrimaryKey(paperId);
+            paperList.add(paper);
+            if(++index>20)
+                break;
+        }
+        return paperList;
     }
 }

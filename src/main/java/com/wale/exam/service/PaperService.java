@@ -60,4 +60,6 @@ public interface PaperService {
     List<Paper> findPaperByCreaterIdBlur(Integer teacherId, String paperName);
 
     List<Paper> findPaperWithKeyword(String field,String keyword);
+
+    List<Paper> findHottestPaper();
 }

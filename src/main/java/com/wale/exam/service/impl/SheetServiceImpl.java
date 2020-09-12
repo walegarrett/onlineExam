@@ -9,9 +9,9 @@ import com.wale.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Author WaleGarrett
@@ -490,5 +490,32 @@ public class SheetServiceImpl implements SheetService {
             list.add(sheet);
         }
         return list;
+    }
+
+    /**
+     * 在答卷中查找考试人数最多的试卷
+     * @return
+     */
+    @Override
+    public Map<Integer, Integer> findHottestPaperInSheets() {
+        SheetExample sheetExample=new SheetExample();
+        SheetExample.Criteria criteria=sheetExample.createCriteria();
+        criteria.andIdIsNotNull();
+        List<Sheet>sheetList=new ArrayList<>();
+        sheetList=sheetMapper.selectByExample(sheetExample);
+        //根据试卷分组
+        Map<Integer, List<Sheet>> dateListMap = sheetList.stream()
+                .collect(Collectors.groupingBy(Sheet::getPaperId));
+        // 遍历map,求出回答该套试卷的人数
+        HashMap<Integer, Integer> resMap = new HashMap<>();
+        for (Map.Entry<Integer, List<Sheet>> detailEntry:dateListMap.entrySet()){
+            int daySize = detailEntry.getValue().size();
+            resMap.put(detailEntry.getKey(),daySize);
+        }
+        // 按照人数排序
+        Stream<Map.Entry<Integer, Integer>> st = resMap.entrySet().stream();
+        Map<Integer, Integer> result = new LinkedHashMap<>();
+        st.sorted((p1, p2) -> p2.getValue().compareTo(p1.getValue())).forEach(e -> result.put(e.getKey(), e.getValue()));//Comparator.comparing(e -> e.getValue())
+        return result;//
     }
 }

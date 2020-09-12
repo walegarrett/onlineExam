@@ -286,13 +286,29 @@ public class PaperController {
         return Msg.success();
     }
 
+    /**
+     * 查找最近创建的帖子
+     * @param session
+     * @return
+     */
     @RequestMapping("/findPaperInIndex")
     @ResponseBody//记得一定要加上这个注解
     public Msg findPaperInIndex(HttpSession session){
-        List<Paper> list=paperService.findAllPaperWithNoEncry();
+        List<Paper> list=paperService.findAllPaper();
+//        List<Paper> list=paperService.findAllPaperWithNoEncry();
         return Msg.success().add("paperlist",list);
     }
-
+    /**
+     * 查找最热的帖子
+     * @param session
+     * @return
+     */
+    @RequestMapping("/findPaperHottest")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg findPaperHottest(HttpSession session){
+        List<Paper> list=paperService.findHottestPaper();
+        return Msg.success().add("paperlist",list);
+    }
     @RequestMapping(value="/searchPaper",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchPaper(Integer teacherId, Integer id, String title,int page, int limit){

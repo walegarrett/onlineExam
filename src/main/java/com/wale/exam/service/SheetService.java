@@ -5,6 +5,7 @@ import com.wale.exam.bean.Sheet;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author WaleGarrett
@@ -54,4 +55,6 @@ public interface SheetService {
     boolean checkIsAnbswered(Integer userId, Integer paperId);
 
     List<Sheet> findSheetWithJudgedAndKeyword(String field, String keyword);
+
+    Map<Integer, Integer> findHottestPaperInSheets();
 }

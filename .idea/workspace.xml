@@ -8,14 +8,15 @@
   <component name="ChangeListManager">
     <list default="true" id="27918287-696e-4928-9649-11f4080e31c9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examDetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examDetail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examScoreDetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/examScoreDetail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/onJudge.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/onJudge.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/online.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/online.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/examDetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/examDetail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/examScoreDetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/examScoreDetail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/onJudge.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/onJudge.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/online.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/online.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/PaperController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/PaperController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/PaperService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/PaperService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/SheetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/SheetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/PaperServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/PaperServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/SheetServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/SheetServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index2.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/PaperController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/PaperController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/PaperController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/PaperController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/index2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/index2.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -137,12 +138,12 @@
     <property name="settings.editor.selected.configurable" value="spring" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\main\images" />
-      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\online" />
-      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\WEB-INF\views" />
-      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp" />
-      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\resources" />
+      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\lightYear" />
+      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\layuimini\lib\layui-v2.5.5\lay\modules" />
+      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\layuimini\lib\layui-v2.5.5" />
+      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\layuimini\lib\layui-v2.5.5\lay" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.wale.exam.util" />
@@ -151,12 +152,12 @@
       <recent name="" />
       <recent name="com.wale.exam.filter" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\main\images" />
-      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\lightYear" />
-      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\layuimini\lib\layui-v2.5.5\lay\modules" />
-      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\layuimini\lib\layui-v2.5.5" />
-      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\layuimini\lib\layui-v2.5.5\lay" />
+      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\statics\online" />
+      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp\WEB-INF\views" />
+      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\webapp" />
+      <recent name="E:\wps\专业实训\exam\onlineExam\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -403,7 +404,8 @@
       <workItem from="1599613286831" duration="1956000" />
       <workItem from="1599695008968" duration="11496000" />
       <workItem from="1599782549824" duration="16749000" />
-      <workItem from="1599830643340" duration="2388000" />
+      <workItem from="1599830643340" duration="3983000" />
+      <workItem from="1599872421746" duration="2131000" />
     </task>
     <task id="LOCAL-00001" summary="测试wale分支">
       <created>1599747270426</created>
@@ -454,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599830730923</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="修改考试题目编号显示bug">
+      <created>1599833112944</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1599833112944</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,6 +499,7 @@
     <MESSAGE value="修改搜索bug,新增管理员编辑题目功能" />
     <MESSAGE value="bug修改" />
     <MESSAGE value="添加读消息及修改点击bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加读消息及修改点击bug" />
+    <MESSAGE value="修改考试题目编号显示bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改考试题目编号显示bug" />
   </component>
 </project>
