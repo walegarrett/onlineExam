@@ -205,6 +205,13 @@ public class AdminController {
         paperService.updatePaper(paper);
         return Msg.success();
     }
+
+    /**
+     * 删除试卷
+     * @param paperId
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminDeletePaper")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminDeletePaper(Integer paperId, HttpSession session){

@@ -202,10 +202,12 @@
             var ans="";
             if($("#ordAns").is(":hidden")){
                 if($("#mulAns").is(":hidden")){
-                    if($("#judAns").is(":hidden"))
+                    if($("#judAns").is(":hidden")){
                         ans=$('input[name="sinAns"]:checked').val();
-                    else
+                    }
+                    else{
                         ans=$('input[name="judgeAns"]:checked').val();
+                    }
                     // alert(ans);
                 }else{
                     var chk_value =[];//定义一个数组
@@ -216,9 +218,19 @@
                         ind++;
                         ans+=$(this).val();
                     });
+                    if(ind==0){
+                        layer.msg('您还未选择复选框',{
+                            time: 10000
+                        });
+                        return false;
+                    }
                 }
             }else{
                     ans=data.ordiAns;
+                    if(ans.length<=0||ans.length>1000){
+                        layer.msg('标准答案的长度不为空且字数必须在1-1000之内！');
+                        return false;
+                    }
             }
             //alert(ans);
             var optionA="",optionB="",optionC="",optionD="";
@@ -227,9 +239,17 @@
                 optionB=data.optionsB;
                 optionC=data.optionsC;
                 optionD=data.optionsD;
+                if(optionA.length<=0||optionA.length>50||optionB.length<=0||optionB.length>50||optionC.length<=0||optionC.length>50||optionD.length<=0||optionD.length>50){
+                    layer.msg('选项的长度不为空且字数必须在1-50之内！');
+                    return false;
+                }
             }else if($("#judgeOpts").is(":visible")){
                 optionA=data.judgeA;
                 optionB=data.judgeB;
+                if(optionA.length<=0||optionA.length>50||optionB.length<=0||optionB.length>50){
+                    layer.msg('选项的长度不为空且字数必须在1-50之内！');
+                    return false;
+                }
             }
             var type=data.type;
             // alert(type+" "+optionA+" "+optionB);

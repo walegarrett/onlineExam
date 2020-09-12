@@ -506,7 +506,15 @@
             var uSexTd = $("<td></td>").append(item.sex);
             var uNameTd = $("<td></td>").append(item.realName);
             var uEmailTd = $("<td></td>").append(item.email);
-            var uWorkplaceTd = $("<td></td>").append(item.role);
+            var role=item.role;
+            if(role==1){
+                role="学生";
+            }else if(role==2){
+                role="教师";
+            }else{
+                role="管理员";
+            }
+            var uWorkplaceTd = $("<td></td>").append(role);
             var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
             var editBtn=$("<button></button>").addClass("btn btn-primary btn-sm edit_btn")

@@ -513,4 +513,26 @@ public class PaperServiceImpl implements PaperService {
         }
         return paperList;
     }
+
+    /**
+     * 根据创建者id来删除试卷
+     * @param userId
+     * @return
+     */
+    @Override
+    public boolean deletePaperByCreaterId(Integer userId) {
+
+        PaperExample paperExample=new PaperExample();
+        PaperExample.Criteria criteria=paperExample.createCriteria();
+        criteria.andCreaterIdEqualTo(userId);
+        List<Paper>list=paperMapper.selectByExample(paperExample);
+        for(Paper paper:list){
+            int paperId=paper.getId();
+            //删除最热考试
+            String hottestkey="hottest:papers";
+            RedisUtil.removeZSet(hottestkey,paperId);
+        }
+        paperMapper.deleteByExample(paperExample);
+        return true;
+    }
 }

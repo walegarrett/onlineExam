@@ -94,10 +94,10 @@
                 var NEWJSON = []
                 layui.each(data.data, function (index, item) {
                     NEWJSON.push(item.id)
-                })
+                });
                 elem.val(NEWJSON.join(","))
             }
-        })
+        });
 
         //加载页面时初始化
         $(function () {
@@ -127,9 +127,10 @@
                         //执行有错误时候的判断
                         layer.msg('新建消息失败！！！！');
                     }else{
+                        // layer.msg('新建消息成功！', {icon:1,time:1000},function(){
+                        //     setTimeout('window.location.reload()',1000);
+                        // });
                         layer.msg('新建消息成功');
-                        // var iframeIndex = parent.layer.getFrameIndex(window.name);
-                        // parent.layer.close(iframeIndex);
                         top.layui.element.tabDelete("tab", top.jQuery(".layui-tab-title .layui-this").attr("lay-id"));
                         window.location.href="${APP_PATH}/toWhere?where=message";
                     }

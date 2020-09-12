@@ -64,4 +64,6 @@ public interface PaperService {
     List<Paper> findHottestPaper();
 
     List<Paper> findHottestPaperWithRedis();
+
+    boolean deletePaperByCreaterId(Integer userId);
 }

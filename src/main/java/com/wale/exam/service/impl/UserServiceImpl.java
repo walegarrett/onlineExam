@@ -3,6 +3,7 @@ package com.wale.exam.service.impl;
 import com.wale.exam.bean.User;
 import com.wale.exam.bean.UserExample;
 import com.wale.exam.dao.UserMapper;
+import com.wale.exam.service.PaperService;
 import com.wale.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
-
+    @Autowired
+    PaperService paperService;
     @Override
     public User login(String username, String pwd) {
         User user=new User();
@@ -102,7 +104,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Integer userId) {
-        userMapper.deleteByPrimaryKey(userId);
+        //先删除该用户创建的所有试卷
+        if(paperService.deletePaperByCreaterId(userId)){
+            userMapper.deleteByPrimaryKey(userId);
+        }
     }
 
     @Override
