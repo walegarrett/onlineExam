@@ -346,7 +346,7 @@
     $(document).on("click",".delete_btn",function () {
         //弹出是否确认删除的对话框
         // alert($(this).parents("tr").find("td:eq(0)").text());
-        var paperName=$(this).parents("tr").find("td:eq(1)").text();
+        var paperName=$(this).parents("tr").find("td:eq(2)").text();
         var uId=$(this).attr("delete-id");
         var data=
             {

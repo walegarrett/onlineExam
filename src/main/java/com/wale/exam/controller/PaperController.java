@@ -355,12 +355,25 @@ public class PaperController {
      */
     @RequestMapping("/deletePaper")
     @ResponseBody
-    public Msg deletePaper(Integer paperId, HttpSession session) throws ParseException {
+    public Msg deletePaper(String paperId, HttpSession session) throws ParseException {
         System.out.println("删除试卷："+paperId);
-        //删除最热考试缓存
-        String hottestkey="hottest:papers";
-        RedisUtil.removeZSet(hottestkey,paperId);
-        paperService.deletePaper(paperId);
+//        //删除最热考试缓存
+//        String hottestkey="hottest:papers";
+//        RedisUtil.removeZSet(hottestkey,paperId);
+//        paperService.deletePaper(paperId);
+        if(paperId.contains("-")){
+            String[] str_ids=paperId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            paperService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(paperId);
+            paperService.deletePaper(id);
+        }
         return Msg.success();
     }
 }

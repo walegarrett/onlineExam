@@ -138,9 +138,22 @@ public class AdminController {
     }
     @RequestMapping("/adminDeleteUser")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminDeleteUser(Integer userId, HttpSession session){
+    public Msg adminDeleteUser(String userId, HttpSession session){
         System.out.println(userId);
-        userService.deleteUser(userId);
+//        userService.deleteUser(userId);
+        if(userId.contains("-")){
+            String[] str_ids=userId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            userService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(userId);
+            userService.deleteUser(id);
+        }
         return Msg.success();
     }
 
@@ -216,11 +229,6 @@ public class AdminController {
     @ResponseBody//记得一定要加上这个注解
     public Msg adminDeletePaper(String paperId, HttpSession session){
         System.out.println(paperId);
-//        //删除最热考试
-//        String hottestkey="hottest:papers";
-//        RedisUtil.removeZSet(hottestkey,paperId);
-//        paperService.deletePaper(paperId);
-//        return Msg.success();
 
         if(paperId.contains("-")){
             String[] str_ids=paperId.split("-");

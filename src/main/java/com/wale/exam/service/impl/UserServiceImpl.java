@@ -110,6 +110,19 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        for(Integer userId:del_ids){
+            //先删除该用户创建的所有试卷
+            if(paperService.deletePaperByCreaterId(userId)){
+                userMapper.deleteByPrimaryKey(userId);
+            }
+        }
+    }
     @Override
     public int findAllUserCount() {
         UserExample userExample=new UserExample();
@@ -179,4 +192,6 @@ public class UserServiceImpl implements UserService {
         List<User>list=userMapper.selectByExample(userExample);
         return list;
     }
+
+
 }

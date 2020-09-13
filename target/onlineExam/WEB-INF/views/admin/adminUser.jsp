@@ -190,8 +190,7 @@
                                     <a class="btn btn-primary m-r-5 add_btn" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
 <%--                                    <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>--%>
 <%--                                    <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>--%>
-<%--                                    <a class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i> 删除</a>--%>
-                                </div>
+                                    <a class="btn btn-danger" id="emp_delete_all"><i class="mdi mdi-window-close"></i> 删除</a>                                </div>
                             </div>
                             <div class="card-body">
                                 <!--显示表格数据-->
@@ -200,6 +199,9 @@
                                         <table class="table table-hover table-bordered" id="users_table">
                                             <thead>
                                             <tr>
+                                                <th>
+                                                    <input type="checkbox" id="check_all">
+                                                </th>
                                                 <th>序号</th>
                                                 <th>账号</th>
                                                 <th>密码</th>
@@ -296,6 +298,7 @@
         $("table tbody").empty();
         var users=result.extend.pageInfo.list;
         $.each(users,function (index,item) {
+            var checkBoxTd=$("<td><input type='checkbox' class='check_item'/></td>" );
             var uIdTd = $("<td></td>").append(item.id);
             var uUseridTd = $("<td></td>").append(item.userName);
             var uPasswordTd = $("<td></td>").append(item.password);
@@ -322,6 +325,7 @@
             delBtn.attr("delete-id",item.id);
             var btnTd = $("<td></td>").append(delBtn).append(" ").append(editBtn);
             $("<tr></tr>")
+                .append(checkBoxTd)
                 .append(uIdTd)
                 .append(uUseridTd)
                 .append(uPasswordTd)
@@ -401,12 +405,11 @@
     $(document).on("click",".delete_btn",function () {
         //弹出是否确认删除的对话框
         // alert($(this).parents("tr").find("td:eq(0)").text());
-        var uUserid=$(this).parents("tr").find("td:eq(1)").text();
+        var uUserid=$(this).parents("tr").find("td:eq(2)").text();
         var uId=$(this).attr("delete-id");
-        var data=
-            {
-                "userId":uId
-            };
+        var data={
+            "userId":uId
+        };
         if(confirm("确认删除"+uUserid+"吗？")){
             //确认，发送ajax请求删除
             $.ajax({
@@ -425,7 +428,41 @@
             });
         }
     });
-
+    //点击全部删除就批量删除
+    $("#emp_delete_all").click(function () {
+        var empNames="";
+        var del_idstr="";
+        $.each($(".check_item:checked"),function () {
+            //当前遍历的元素
+            //$(this).parents("tr").find("td:eq(2)").text();
+            empNames+=$(this).parents("tr").find("td:eq(2)").text()+" ,";
+            //组装员工id的字符串
+            del_idstr+=$(this).parents("tr").find("td:eq(1)").text()+"-";
+        });
+        //去除empNames多余的逗号
+        empNames=empNames.substring(0,empNames.length-1);
+        del_idstr=del_idstr.substring(0,del_idstr.length-1);
+        var data={
+            "userId":del_idstr
+        };
+        if(confirm("确认删除【"+empNames+"】这些用户吗？")){
+            //确认，发送ajax请求删除
+            $.ajax({
+                url:"${APP_PATH}/adminDeleteUser",
+                type:"POST",
+                data:data,
+                success:function (result) {
+                    if(result.code==100) {
+                        alert("删除成功");
+                        to_page(currentPage);
+                    }else{
+                        alert("删除失败");
+                        to_page(currentPage);
+                    }
+                }
+            });
+        }
+    });
     //点击编辑用户
     $(document).on("click",".edit_btn",function () {
         //alert("");
@@ -557,7 +594,7 @@
                     //1.关闭对话框
                     $("#userAddModal").modal("hide");
                     //2.回到本页面
-                    to_page(currentPage);
+                    to_page(1);
                 }else{
                     alert("添加用户失败");
                     to_page(currentPage);

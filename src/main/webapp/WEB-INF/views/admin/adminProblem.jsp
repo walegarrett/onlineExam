@@ -201,7 +201,8 @@
 <%--                                    <a class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>--%>
 <%--                                    <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>--%>
 <%--                                    <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>--%>
-                                    <a class="btn btn-danger" id="emp_delete_all"><i class="mdi mdi-window-close"></i> 删除</a>                                </div>
+                                    <a class="btn btn-danger" id="emp_delete_all"><i class="mdi mdi-window-close"></i> 删除</a>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <!--显示表格数据-->
@@ -419,7 +420,7 @@
     $(document).on("click",".delete_btn",function () {
         //弹出是否确认删除的对话框
         // alert($(this).parents("tr").find("td:eq(0)").text());
-        var paperName=$(this).parents("tr").find("td:eq(2)").text();
+        var paperName=$(this).parents("tr").find("td:eq(1)").text();
         var uId=$(this).attr("delete-id");
         var data=
             {
