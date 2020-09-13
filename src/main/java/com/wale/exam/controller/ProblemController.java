@@ -292,6 +292,15 @@ public class ProblemController {
         return Msg.success();
     }
 
+    /**
+     * 模糊查找问题
+     * @param teacherId
+     * @param id
+     * @param type
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping(value="/searchProblem",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchProblem(Integer teacherId, Integer id, Integer type,int page, int limit){
@@ -313,11 +322,33 @@ public class ProblemController {
         String jso = "{\"code\":0,\"msg\":\"\",\"count\":"+count+",\"data\":"+js+"}";
         return jso;
     }
+
+    /**
+     * 批量或者单独删除题目
+     * @param problemId
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/deleteProblem")
     @ResponseBody
-    public Msg deleteProblem(Integer problemId, HttpSession session) throws ParseException {
+    public Msg deleteProblem(String problemId, HttpSession session) throws ParseException {
         System.out.println("删除题目："+problemId);
-        problemService.deleteProblem(problemId);
+//        problemService.deleteProblem(problemId);
+//        return Msg.success();
+        if(problemId.contains("-")){
+            String[] str_ids=problemId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            problemService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(problemId);
+            problemService.deleteProblem(id);
+        }
         return Msg.success();
     }
 }

@@ -131,8 +131,10 @@
                         //     setTimeout('window.location.reload()',1000);
                         // });
                         layer.msg('新建消息成功');
-                        top.layui.element.tabDelete("tab", top.jQuery(".layui-tab-title .layui-this").attr("lay-id"));
-                        window.location.href="${APP_PATH}/toWhere?where=message";
+                        <%--top.layui.element.tabDelete("tab", top.jQuery(".layui-tab-title .layui-this").attr("lay-id"));--%>
+                        <%--window.parent.href="${APP_PATH}/toWhere?where=message";--%>
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);//关闭当前页
                     }
                 }
             });

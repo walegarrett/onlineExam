@@ -33,19 +33,13 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">标题</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">接收人</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="sex" autocomplete="off" class="layui-input">
+                                <input type="text" name="title" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">内容</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="city" autocomplete="off" class="layui-input">
+                                <input type="text" name="content" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -56,19 +50,19 @@
             </div>
         </fieldset>
 
-<%--        <script type="text/html" id="toolbarDemo">--%>
-<%--            <div class="layui-btn-container">--%>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
 <%--                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>--%>
-<%--                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>--%>
-<%--            </div>--%>
-<%--        </script>--%>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+            </div>
+        </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
-<%--        <script type="text/html" id="currentTableBar">--%>
+        <script type="text/html" id="currentTableBar">
 <%--            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>--%>
-<%--            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>--%>
-<%--        </script>--%>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
 
     </div>
 </div>
@@ -97,7 +91,8 @@
                 {field: 'receiveUserCount', width: 120, title: '接收人数'},
                 {field: 'receiverAccounts', width: 200, title: '接收人'},
                 {field: 'readCount', width: 100, title: '已读数'},
-                {field: 'createTime', width: 160, title: '创建时间'}
+                {field: 'createTime', width: 160, title: '创建时间'},
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
                 ]],
             limits: [1, 4, 7, 10, 13, 16],//数据分页条
             limit: 10,//默认十条数据一页
@@ -108,18 +103,23 @@
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
+
+            var title=$("input[name='title']").val();
+            var content=$("input[name='content']").val();
 
             //执行搜索重载
             table.reload('currentTableId', {
                 page: {
                     curr: 1
-                }
-                , where: {
-                    searchParams: result
-                }
+                },
+                where: {
+                    title:title,
+                    content:content,
+                    teacherId:${userid}
+                    // searchParams: result
+                },
+                url: '${APP_PATH}/searchMessage'//后台做模糊搜索接口路径
+                , method: 'post'
             }, 'data');
 
             return false;

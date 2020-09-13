@@ -96,4 +96,24 @@ public class MessageController {
         }
         return Msg.success();
     }
+    @RequestMapping(value="/searchMessage",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String searchMessage(String title, String content, Integer teacherId,int page, int limit){
+        System.out.println(title+" "+content+" "+page+" "+limit);
+        int before = limit * (page - 1);
+        int after = limit;//page * limit
+
+        //带参数从数据库里查询出来放到eilist的集合里
+        List<Message> eilist = messageService.searchMessage(teacherId, title,content,before, after);
+        int count = messageService.searchMessageCount(teacherId, title,content);
+        //用json来传值
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.registerJsonValueProcessor(Date.class , new JsonDateValueProcessor());
+
+        JSONArray json = JSONArray.fromObject(eilist, jsonConfig);
+        String js = json.toString();
+        //*****转为layui需要的json格式，必须要这一步，博主也是没写这一步，在页面上数据就是数据接口异常
+        String jso = "{\"code\":0,\"msg\":\"\",\"count\":"+count+",\"data\":"+js+"}";
+        return jso;
+    }
 }
