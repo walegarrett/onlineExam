@@ -26,6 +26,15 @@ public class AnswerServiceImpl implements AnswerService {
     SheetService sheetService;
     @Autowired
     ProblemService problemService;
+
+    /**
+     * 更新试卷答案
+     * @param userid
+     * @param questionId
+     * @param paperId
+     * @param answer
+     * @return
+     */
     @Override
     public int insertOrUpdateAnswer(Integer userid, Integer questionId, Integer paperId, String answer) {
         AnswerExample answerExample=new AnswerExample();
@@ -40,7 +49,12 @@ public class AnswerServiceImpl implements AnswerService {
         answer1.setPaperId(paperId);
         answer1.setQuestionId(questionId);
         answer1.setUserId(userid);
-        answer1.setScore(0);//分数设置为0
+        //自动判卷
+        Problem problem=problemService.findProblemByProblemId(questionId);
+        if(answer.equals(problem.getAnswer())){
+            answer1.setScore(problem.getScore());//分数设置为0
+        }else
+            answer1.setScore(0);//分数设置为0
         answer1.setStatus(1);//设置为未批改
         if(list==null||list.size()==0){
             //插入
@@ -220,7 +234,7 @@ public class AnswerServiceImpl implements AnswerService {
         criteria.andPaperIdEqualTo(paperId);
         Answer answer=new Answer();
         answer.setStatus(1);
-        answer.setScore(0);
+//        answer.setScore(0);
         answer.setComment("");
         answerMapper.updateByExampleSelective(answer,answerExample);
     }

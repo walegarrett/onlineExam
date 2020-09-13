@@ -163,7 +163,40 @@
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var empNames="";
+                var del_idstr="";
+                // layer.alert(JSON.stringify(data));
+                for(i=0;i<data.length;i++){
+                    //alert(data[i].id);
+                    empNames+=data[i].paperName+" ,";
+                    //组装员工id的字符串
+                    del_idstr+=data[i].id+"-";
+                }
+
+                //去除empNames多余的逗号
+                empNames=empNames.substring(0,empNames.length-1);
+                del_idstr=del_idstr.substring(0,del_idstr.length-1);
+                var data=
+                    {
+                        "problemId":del_idstr
+                    };
+                if(confirm("确认删除【"+del_idstr+"】吗？")){
+                    //确认，发送ajax请求删除
+                    $.ajax({
+                        url:"${APP_PATH}/deleteProblem",
+                        type:"POST",
+                        data:data,
+                        success:function (result) {
+                            if(result.code==100) {
+                                alert("删除成功");
+                                to_page(currentPage);
+                            }else{
+                                alert("删除失败");
+                                to_page(currentPage);
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -189,30 +222,29 @@
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                // layer.confirm('真的删除行么', function (index) {
-                //     obj.del();
-                //     layer.close(index);
-                // });
-                var datas={
-                    "problemId":data.id//
-                };
-                $.ajax({
-                    cache: false,
-                    url:"${APP_PATH}/deleteProblem",
-                    type:"POST",
-                    async:false,
-                    data:datas,
-                    success:function (result) {
-                        if(result.code==200){
-                            //执行有错误时候的判断
-                            layer.msg('删除题目失败！');
-                        }else{
-                            layer.msg('删除题目成功！', {icon:1,time:1000},function(){
-                                setTimeout('window.location.reload()',1000);
-                            });
+                if(confirm("确认删除【"+data.id+"】号题目吗？")){
+                    var datas={
+                        "problemId":data.id//
+                    };
+                    $.ajax({
+                        cache: false,
+                        url:"${APP_PATH}/deleteProblem",
+                        type:"POST",
+                        async:false,
+                        data:datas,
+                        success:function (result) {
+                            if(result.code==200){
+                                //执行有错误时候的判断
+                                layer.msg('删除题目失败！');
+                            }else{
+                                layer.msg('删除题目成功！', {icon:1,time:1000},function(){
+                                    setTimeout('window.location.reload()',1000);
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         });
 

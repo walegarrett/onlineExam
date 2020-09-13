@@ -33,19 +33,13 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">标题</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">接收人</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="sex" autocomplete="off" class="layui-input">
+                                <input type="text" name="title" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">内容</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="city" autocomplete="off" class="layui-input">
+                                <input type="text" name="content" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -56,19 +50,19 @@
             </div>
         </fieldset>
 
-<%--        <script type="text/html" id="toolbarDemo">--%>
-<%--            <div class="layui-btn-container">--%>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
 <%--                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>--%>
-<%--                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>--%>
-<%--            </div>--%>
-<%--        </script>--%>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+            </div>
+        </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
-<%--        <script type="text/html" id="currentTableBar">--%>
+        <script type="text/html" id="currentTableBar">
 <%--            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>--%>
-<%--            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>--%>
-<%--        </script>--%>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
 
     </div>
 </div>
@@ -97,7 +91,8 @@
                 {field: 'receiveUserCount', width: 120, title: '接收人数'},
                 {field: 'receiverAccounts', width: 200, title: '接收人'},
                 {field: 'readCount', width: 100, title: '已读数'},
-                {field: 'createTime', width: 160, title: '创建时间'}
+                {field: 'createTime', width: 160, title: '创建时间'},
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
                 ]],
             limits: [1, 4, 7, 10, 13, 16],//数据分页条
             limit: 10,//默认十条数据一页
@@ -108,18 +103,23 @@
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
+
+            var title=$("input[name='title']").val();
+            var content=$("input[name='content']").val();
 
             //执行搜索重载
             table.reload('currentTableId', {
                 page: {
                     curr: 1
-                }
-                , where: {
-                    searchParams: result
-                }
+                },
+                where: {
+                    title:title,
+                    content:content,
+                    teacherId:${userid}
+                    // searchParams: result
+                },
+                url: '${APP_PATH}/searchMessage'//后台做模糊搜索接口路径
+                , method: 'post'
             }, 'data');
 
             return false;
@@ -145,7 +145,37 @@
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var empNames="";
+                var del_idstr="";
+                for(i=0;i<data.length;i++){
+                    //alert(data[i].id);
+                    empNames+=data[i].title+" ,";
+                    //组装员工id的字符串
+                    del_idstr+=data[i].id+"-";
+                }
+                //去除empNames多余的逗号
+                empNames=empNames.substring(0,empNames.length-1);
+                del_idstr=del_idstr.substring(0,del_idstr.length-1);
+                var data={
+                    "messageId":del_idstr
+                };
+                if(confirm("确认删除【"+empNames+"】这些消息吗？")){
+                    //确认，发送ajax请求删除
+                    $.ajax({
+                        url:"${APP_PATH}/deleteMessage",
+                        type:"POST",
+                        data:data,
+                        success:function (result) {
+                            if(result.code==100) {
+                                alert("删除成功");
+                                to_page(currentPage);
+                            }else{
+                                alert("删除失败");
+                                to_page(currentPage);
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -171,10 +201,28 @@
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
-                });
+                if(confirm("确认删除【"+data.title+"】该消息吗？")){
+                    var datas={
+                        "messageId":data.id//
+                    };
+                    $.ajax({
+                        cache: false,
+                        url:"${APP_PATH}/deleteMessage",
+                        type:"POST",
+                        async:false,
+                        data:datas,
+                        success:function (result) {
+                            if(result.code==200){
+                                //执行有错误时候的判断
+                                layer.msg('删除消息失败！');
+                            }else{
+                                layer.msg('删除消息成功！', {icon:1,time:1000},function(){
+                                    setTimeout('window.location.reload()',1000);
+                                });
+                            }
+                        }
+                    });
+                }
             }
         });
 

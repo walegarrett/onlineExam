@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author WaleGarrett
@@ -60,6 +57,31 @@ public class MessageController {
         String jso = "{\"code\":0,\"msg\":\"\",\"count\":"+count+",\"data\":"+js+"}";
         System.out.println(jso);
         return jso;
+    }
+    /**
+     * 删除消息
+     * @param messageId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/deleteMessage")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg deleteMessage(String messageId, HttpSession session){
+        System.out.println("删除消息"+messageId);
+        if(messageId.contains("-")){
+            String[] str_ids=messageId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            messageService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(messageId);
+            messageService.deleteMessage(id);
+        }
+        return Msg.success();
     }
     @RequestMapping("/addMessage")
     @ResponseBody

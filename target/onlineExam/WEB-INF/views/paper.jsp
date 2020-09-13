@@ -212,30 +212,29 @@
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                // layer.confirm('真的删除行么', function (index) {
-                //     obj.del();
-                //     layer.close(index);
-                // });
-                var datas={
-                    "paperId":data.id//
-                };
-                $.ajax({
-                    cache: false,
-                    url:"${APP_PATH}/deletePaper",
-                    type:"POST",
-                    async:false,
-                    data:datas,
-                    success:function (result) {
-                        if(result.code==200){
-                            //执行有错误时候的判断
-                            layer.msg('删除试卷失败！');
-                        }else{
-                            layer.msg('删除试卷成功！', {icon:1,time:1000},function(){
-                                setTimeout('window.location.reload()',1000);
-                            });
+                if(confirm("确认删除【"+data.id+"】号试卷吗？")){
+                    var datas={
+                        "paperId":data.id//
+                    };
+                    $.ajax({
+                        cache: false,
+                        url:"${APP_PATH}/deletePaper",
+                        type:"POST",
+                        async:false,
+                        data:datas,
+                        success:function (result) {
+                            if(result.code==200){
+                                //执行有错误时候的判断
+                                layer.msg('删除试卷失败！');
+                            }else{
+                                layer.msg('删除试卷成功！', {icon:1,time:1000},function(){
+                                    setTimeout('window.location.reload()',1000);
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }else if(obj.event === 'show'){
                 window.open("${APP_PATH}/showPaperDetail?paperId="+data.id+"","_blank");
             }

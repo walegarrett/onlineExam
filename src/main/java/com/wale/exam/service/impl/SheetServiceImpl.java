@@ -660,7 +660,7 @@ public class SheetServiceImpl implements SheetService {
             //更新答案的状态以及分数等信息
             answerService.updateAnswerStatus1AndOtherInfo(studentId,paperId);//将状态设置为未批改
             sheet.setStatus(1);
-            sheet.setScore(0);
+//            sheet.setScore(0);
             sheet.setComment("");
             //更新答卷的状态
             sheetMapper.updateByPrimaryKeySelective(sheet);
@@ -675,7 +675,7 @@ public class SheetServiceImpl implements SheetService {
         //更新答案的状态以及分数等信息
         answerService.updateAnswerStatus1AndOtherInfo(studentId,paperId);//将状态设置为未批改
         sheet.setStatus(1);
-        sheet.setScore(0);
+//        sheet.setScore(0);
         sheet.setComment("");
         //更新答卷的状态
         sheetMapper.updateByPrimaryKeySelective(sheet);
