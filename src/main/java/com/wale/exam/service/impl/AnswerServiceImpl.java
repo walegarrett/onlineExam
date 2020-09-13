@@ -193,4 +193,18 @@ public class AnswerServiceImpl implements AnswerService {
         answerMapper.updateByExampleSelective(answer,answerExample);
     }
 
+    /**
+     * 删除某个学生答卷中包含的所有答题记录
+     * @param paperId
+     * @param userId
+     */
+    @Override
+    public void deleteAnswerByPaperIdAndUserId(Integer paperId, Integer userId) {
+        AnswerExample answerExample=new AnswerExample();
+        AnswerExample.Criteria criteria=answerExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andPaperIdEqualTo(paperId);
+        answerMapper.deleteByExample(answerExample);
+    }
+
 }

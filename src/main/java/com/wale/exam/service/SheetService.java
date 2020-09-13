@@ -63,4 +63,6 @@ public interface SheetService {
     List<Sheet> findSheetWithKeyword(String field, String keyword);
 
     void deleteSheet(Integer sheetId);
+
+    void deleteBatch(List<Integer> del_ids);
 }

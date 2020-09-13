@@ -412,11 +412,34 @@ public class AdminController {
         messageService.updateMessage(message);
         return Msg.success();
     }
+
+    /**
+     * 删除消息
+     * @param messageId
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminDeleteMessage")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminDeleteMessage(Integer messageId, HttpSession session){
+    public Msg adminDeleteMessage(String messageId, HttpSession session){
         System.out.println(messageId);
-        messageService.deleteMessage(messageId);
+//        Integer messageid=Integer.parseInt(messageId);
+//        messageService.deleteMessage(messageid);
+        if(messageId.contains("-")){
+            String[] str_ids=messageId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            messageService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(messageId);
+            messageService.deleteMessage(id);
+        }
+
+
         return Msg.success();
     }
     @RequestMapping("/adminInfoChange")
@@ -543,14 +566,25 @@ public class AdminController {
      */
     @RequestMapping("/adminDeleteSheet")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminDeleteSheet(Integer sheetId, HttpSession session){
+    public Msg adminDeleteSheet(String sheetId, HttpSession session){
         System.out.println(sheetId);
-        Sheet sheet=sheetService.findSheetById(sheetId);
-        //最热考试的score-1
-        String hottestkey="hottest:papers";
-        RedisUtil.zSetincrementScore(hottestkey,sheet.getPaperId(),-1.0);
-        //删除答卷
-        sheetService.deleteSheet(sheetId);
+
+//        //删除答卷
+//        sheetService.deleteSheet(sheetId);
+
+        if(sheetId.contains("-")){
+            String[] str_ids=sheetId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            sheetService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(sheetId);
+            sheetService.deleteSheet(id);
+        }
         return Msg.success();
     }
 }

@@ -60,4 +60,16 @@ function showNoReadCount(apppath,userid){
         });
     }
 }
-
+//完成全选，全不选功能
+$("#check_all").click(function () {
+    //attr获取checked是undefined,dom原生的属性
+    //以后使用prop修改和读取dom原生属性的值
+    //alert($(this).prop("checked"));
+    $(".check_item").prop("checked",$(this).prop("checked"));
+});
+//check_item
+$(document).on("click",".check_item",function () {
+    //判断当前选择的元素是否是5个
+    var flag=$(".check_item:checked").length==$(".check_item").length;
+    $("#check_all").prop("checked",flag);
+});

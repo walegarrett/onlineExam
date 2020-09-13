@@ -240,7 +240,6 @@ public class PaperServiceImpl implements PaperService {
         paperMapper.updateByPrimaryKeySelective(paper);
         //首先删除所有的答题记录--包括answer表和sheet表
         answerService.deleteAnswerByPaperId(paperId);
-        //删除考生作答的相关信息
         sheetService.deleteSheetByPaperId(paperId);
         //其次删除paperQuestion表的paper记录
         paperQuestionService.deleteItemByPaperId(paperId);

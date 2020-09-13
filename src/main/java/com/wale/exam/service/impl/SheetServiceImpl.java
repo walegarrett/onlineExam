@@ -6,6 +6,7 @@ import com.wale.exam.service.AnswerService;
 import com.wale.exam.service.PaperService;
 import com.wale.exam.service.SheetService;
 import com.wale.exam.service.UserService;
+import com.wale.exam.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -588,8 +589,34 @@ public class SheetServiceImpl implements SheetService {
         return list;
     }
 
+    /**
+     * 删除答卷
+     * 同时需要删除answer答题记录
+     * @param sheetId
+     */
     @Override
     public void deleteSheet(Integer sheetId) {
+        Sheet sheet=findSheetById(sheetId);
+        //最热考试的score-1
+        String hottestkey="hottest:papers";
+        RedisUtil.zSetincrementScore(hottestkey,sheet.getPaperId(),-1.0);
+        answerService.deleteAnswerByPaperIdAndUserId(sheet.getPaperId(),sheet.getUserId());
         sheetMapper.deleteByPrimaryKey(sheetId);
     }
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        SheetExample sheetExample=new SheetExample();
+        SheetExample.Criteria criteria=sheetExample.createCriteria();
+        criteria.andIdIn(del_ids);
+        for(Integer sheetId:del_ids){
+            Sheet sheet=findSheetById(sheetId);
+            //最热考试的score-1
+            String hottestkey="hottest:papers";
+            RedisUtil.zSetincrementScore(hottestkey,sheet.getPaperId(),-1.0);
+            //删除答题记录
+            answerService.deleteAnswerByPaperIdAndUserId(sheet.getPaperId(),sheet.getUserId());
+        }
+        sheetMapper.deleteByExample(sheetExample);
+    }
+
 }

@@ -135,4 +135,16 @@ public class MessageServiceImpl implements MessageService {
             list=new ArrayList<>();
         return list.size();
     }
+
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        MessageExample messageExample=new MessageExample();
+        MessageExample.Criteria criteria=messageExample.createCriteria();
+        criteria.andIdIn(del_ids);
+        messageMapper.deleteByExample(messageExample);
+    }
 }

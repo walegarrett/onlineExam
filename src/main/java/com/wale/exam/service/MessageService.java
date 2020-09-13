@@ -30,4 +30,6 @@ public interface MessageService {
     int findAllMessageCount();
 
     int findAllMessageCountWithTeacherId(int userid);
+
+    void deleteBatch(List<Integer> del_ids);
 }

@@ -93,25 +93,29 @@
 <%--                                    <a class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>--%>
 <%--                                    <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>--%>
 <%--                                    <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>--%>
-<%--                                    <a class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i> 删除</a>--%>
+                                    <a class="btn btn-danger" id="emp_delete_all"><i class="mdi mdi-window-close"></i> 删除</a>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <!--显示表格数据-->
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <table class="table table-hover table-bordered" id="users_table">
+                                        <table class="table table-hover table-bordered" id="users_table" style="table-layout: fixed;
+word-break:break-all;">
                                             <thead>
                                             <tr>
-                                                <th width="4%">序号</th>
-                                                <th>标题</th>
-                                                <th>内容</th>
-                                                <th>发送人</th>
-                                                <th width="6%">接收人数</th>
-                                                <th>接收人</th>
-                                                <th width="5%">已读数</th>
-                                                <th width="6%">创建时间</th>
-                                                <th>操作</th>
+                                                <th width="3%">
+                                                    <input type="checkbox" id="check_all">
+                                                </th>
+                                                <th width="5%">序号</th>
+                                                <th width="10%">标题</th>
+                                                <th width="20%">内容</th>
+                                                <th width="7%">发送人</th>
+                                                <th width="8%">接收人数</th>
+                                                <th width="10%">接收人</th>
+                                                <th width="6%">已读数</th>
+                                                <th width="8%">创建时间</th>
+                                                <th width="5%">操作</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -182,6 +186,7 @@
         $("table tbody").empty();
         var users=result.extend.pageInfo.list;
         $.each(users,function (index,item) {
+            var checkBoxTd=$("<td><input type='checkbox' class='check_item'/></td>" );
             var uIdTd = $("<td></td>").append(item.id);
             var uTitleTd = $("<td></td>").append(item.title);
             var uContentTd = $("<td></td>").append(item.content);
@@ -203,6 +208,7 @@
             delBtn.attr("delete-id",item.id);
             var btnTd = $("<td></td>").append(delBtn).append(" ").append(editBtn);
             $("<tr></tr>")
+                .append(checkBoxTd)
                 .append(uIdTd)
                 .append(uTitleTd)
                 .append(uContentTd)
@@ -282,7 +288,7 @@
     $(document).on("click",".delete_btn",function () {
         //弹出是否确认删除的对话框
         // alert($(this).parents("tr").find("td:eq(0)").text());
-        var messageTitle=$(this).parents("tr").find("td:eq(1)").text();
+        var messageTitle=$(this).parents("tr").find("td:eq(2)").text();
         var uId=$(this).attr("delete-id");
         var data=
             {
@@ -369,9 +375,42 @@
             }
         });
     });
-    // layui.use('element', function(){
-    //     var element = layui.element;
-    // });
+    //点击全部删除就批量删除
+    $("#emp_delete_all").click(function () {
+        var empNames="";
+        var del_idstr="";
+        $.each($(".check_item:checked"),function () {
+            //当前遍历的元素
+            //$(this).parents("tr").find("td:eq(2)").text();
+            empNames+=$(this).parents("tr").find("td:eq(2)").text()+" ,";
+            //组装员工id的字符串
+            del_idstr+=$(this).parents("tr").find("td:eq(1)").text()+"-";
+        });
+        //去除empNames多余的逗号
+        empNames=empNames.substring(0,empNames.length-1);
+        del_idstr=del_idstr.substring(0,del_idstr.length-1);
+        var data=
+            {
+                "messageId":del_idstr
+            };
+        if(confirm("确认删除【"+empNames+"】吗？")){
+            //确认，发送ajax请求删除
+            $.ajax({
+                url:"${APP_PATH}/adminDeleteMessage",
+                type:"POST",
+                data:data,
+                success:function (result) {
+                    if(result.code==100) {
+                        alert("删除成功");
+                        to_page(currentPage);
+                    }else{
+                        alert("删除失败");
+                        to_page(currentPage);
+                    }
+                }
+            });
+        }
+    })
 </script>
 </body>
 </html>
