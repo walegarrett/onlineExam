@@ -65,4 +65,8 @@ public interface SheetService {
     void deleteSheet(Integer sheetId);
 
     void deleteBatch(List<Integer> del_ids);
+
+    void redoSheetBatch(List<Integer> del_ids);
+
+    void redoSheet(Integer id);
 }

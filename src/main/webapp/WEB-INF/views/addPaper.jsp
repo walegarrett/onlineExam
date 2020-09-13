@@ -145,6 +145,14 @@
         form.on('submit(saveBtn)', function (data) {
             data=data.field;
             var code=$("#code").val();
+            var isEncry=data.isEncry;
+            if(isEncry==2){//加密
+                var testreg= /(^[A-Za-z0-9_]{1,10}$)/;
+                if(!testreg.test(code)){
+                    layer.msg('邀请码只能包含1-10位的英文字母，数字及下划线');
+                    return false;
+                }
+            }
             //alert(code);
             var datas={
                 "teacherId":${userid},//

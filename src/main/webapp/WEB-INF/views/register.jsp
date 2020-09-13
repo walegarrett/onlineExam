@@ -182,7 +182,7 @@
                         },
                         regexp: { //正则表达式
                             regexp: /^[a-zA-Z0-9_]+$/,
-                            message: '账号只能包含大写、小写、数字和下划线'
+                            message: '账号只能包含英文大写、小写、数字和下划线'
                         },
                         remote: {
                             type:"POST",

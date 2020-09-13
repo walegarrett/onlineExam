@@ -619,4 +619,32 @@ public class SheetServiceImpl implements SheetService {
         sheetMapper.deleteByExample(sheetExample);
     }
 
+    /**
+     * 打回重做
+     * @param del_ids
+     */
+    @Override
+    public void redoSheetBatch(List<Integer> del_ids) {
+        for(Integer sheetId:del_ids){
+            Sheet sheet=findSheetById(sheetId);
+            int paperId=sheet.getPaperId();
+            int studentId=sheet.getUserId();
+            answerService.updateAnswerStatus1(studentId,paperId);//将状态设置为未批改
+            String hottestkey="hottest:papers";
+            RedisUtil.removeZSet(hottestkey,paperId);
+            sheetMapper.deleteByPrimaryKey(sheetId);
+        }
+    }
+
+    @Override
+    public void redoSheet(Integer id) {
+        Sheet sheet=findSheetById(id);
+        int paperId=sheet.getPaperId();
+        int studentId=sheet.getUserId();
+        answerService.updateAnswerStatus1(studentId,paperId);//将状态设置为未批改
+        String hottestkey="hottest:papers";
+        RedisUtil.removeZSet(hottestkey,paperId);
+        sheetMapper.deleteByPrimaryKey(id);
+    }
+
 }

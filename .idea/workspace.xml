@@ -8,20 +8,25 @@
   <component name="ChangeListManager">
     <list default="true" id="27918287-696e-4928-9649-11f4080e31c9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminPaper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminPaper.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminProblem.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/adminUser.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/paper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/paper.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/service/impl/PaperServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/service/impl/PaperServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/impl/PaperServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/impl/PaperServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminPaper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminPaper.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminProblem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminProblem.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/admin/adminUser.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/SheetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/SheetController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/SheetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/SheetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/SheetServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/service/impl/SheetServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/addPaper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/addPaper.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/judge.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/judge.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/register.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/PaperController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/PaperController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/SheetController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/SheetController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/service/SheetService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/service/SheetService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/service/impl/SheetServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/service/impl/SheetServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/PaperController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/PaperController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/SheetController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/SheetController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/SheetService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/SheetService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/impl/SheetServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/impl/SheetServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/paper.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/views/paper.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,7 +154,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="E:/IDEA/IdeaProjects/bbs" />
+    <property name="last_opened_file_path" value="E:/IDEA/IdeaProjects/final" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -427,7 +432,7 @@
       <workItem from="1599872421746" duration="12153000" />
       <workItem from="1599913465386" duration="8627000" />
       <workItem from="1599922757941" duration="1298000" />
-      <workItem from="1599950417483" duration="15415000" />
+      <workItem from="1599950417483" duration="19063000" />
     </task>
     <task id="LOCAL-00001" summary="测试wale分支">
       <created>1599747270426</created>
@@ -548,7 +553,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599964540288</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="教师批量删除试卷">
+      <created>1599966527513</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1599966527513</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -593,6 +605,7 @@
     <MESSAGE value="新增答卷管理功能" />
     <MESSAGE value="修改删除答卷bug" />
     <MESSAGE value="新增试卷的批量删除" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增试卷的批量删除" />
+    <MESSAGE value="教师批量删除试卷" />
+    <option name="LAST_COMMIT_MESSAGE" value="教师批量删除试卷" />
   </component>
 </project>
