@@ -35,6 +35,7 @@ public class MessageServiceImpl implements MessageService {
         MessageExample messageExample=new MessageExample();
         MessageExample.Criteria criteria=messageExample.createCriteria();
         criteria.andSendUserIdEqualTo(sendUserId);
+        messageExample.setOrderByClause("create_time desc");
         List<Message>list= messageMapper.selectByExampleWithPage(messageExample,before,after);
         List<Message>messageList=new ArrayList<>();
         for(Message message:list){
