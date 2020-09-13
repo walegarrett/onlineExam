@@ -629,7 +629,7 @@ public class SheetServiceImpl implements SheetService {
             Sheet sheet=findSheetById(sheetId);
             int paperId=sheet.getPaperId();
             int studentId=sheet.getUserId();
-            answerService.updateAnswerStatus1(studentId,paperId);//将状态设置为未批改
+            answerService.updateAnswerStatus1AndOtherInfo(studentId,paperId);//将状态设置为未批改
             String hottestkey="hottest:papers";
             RedisUtil.removeZSet(hottestkey,paperId);
             sheetMapper.deleteByPrimaryKey(sheetId);
@@ -641,10 +641,44 @@ public class SheetServiceImpl implements SheetService {
         Sheet sheet=findSheetById(id);
         int paperId=sheet.getPaperId();
         int studentId=sheet.getUserId();
-        answerService.updateAnswerStatus1(studentId,paperId);//将状态设置为未批改
+        answerService.updateAnswerStatus1AndOtherInfo(studentId,paperId);//将状态设置为未批改
         String hottestkey="hottest:papers";
         RedisUtil.removeZSet(hottestkey,paperId);
         sheetMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 打回重新批改
+     * @param del_ids
+     */
+    @Override
+    public void reJudgeSheetBatch(List<Integer> del_ids) {
+        for(Integer sheetId:del_ids){
+            Sheet sheet=findSheetById(sheetId);
+            int paperId=sheet.getPaperId();
+            int studentId=sheet.getUserId();
+            //更新答案的状态以及分数等信息
+            answerService.updateAnswerStatus1AndOtherInfo(studentId,paperId);//将状态设置为未批改
+            sheet.setStatus(1);
+            sheet.setScore(0);
+            sheet.setComment("");
+            //更新答卷的状态
+            sheetMapper.updateByPrimaryKeySelective(sheet);
+        }
+    }
+
+    @Override
+    public void reJudgeSheet(Integer sheetId) {
+        Sheet sheet=findSheetById(sheetId);
+        int paperId=sheet.getPaperId();
+        int studentId=sheet.getUserId();
+        //更新答案的状态以及分数等信息
+        answerService.updateAnswerStatus1AndOtherInfo(studentId,paperId);//将状态设置为未批改
+        sheet.setStatus(1);
+        sheet.setScore(0);
+        sheet.setComment("");
+        //更新答卷的状态
+        sheetMapper.updateByPrimaryKeySelective(sheet);
     }
 
 }

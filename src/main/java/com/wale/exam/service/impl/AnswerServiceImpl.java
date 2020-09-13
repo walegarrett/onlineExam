@@ -207,4 +207,22 @@ public class AnswerServiceImpl implements AnswerService {
         answerMapper.deleteByExample(answerExample);
     }
 
+    /**
+     * 更改答题的状态为未批改以及分数等信息
+     * @param studentId
+     * @param paperId
+     */
+    @Override
+    public void updateAnswerStatus1AndOtherInfo(int studentId, int paperId) {
+        AnswerExample answerExample=new AnswerExample();
+        AnswerExample.Criteria criteria=answerExample.createCriteria();
+        criteria.andUserIdEqualTo(studentId);
+        criteria.andPaperIdEqualTo(paperId);
+        Answer answer=new Answer();
+        answer.setStatus(1);
+        answer.setScore(0);
+        answer.setComment("");
+        answerMapper.updateByExampleSelective(answer,answerExample);
+    }
+
 }

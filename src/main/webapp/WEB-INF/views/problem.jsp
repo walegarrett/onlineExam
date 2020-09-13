@@ -113,15 +113,15 @@
             }else id=-1;
             var type=$("input[name='type']").val();
             var typeId=0;
-            if(type=="单选题"){
+            if(type=="单选题"||type=="单选"){
                 typeId=1;
-            }else if(type=="多选题"){
+            }else if(type=="多选题"||type=="多选"){
                 typeId=2;
-            }else if(type=="判断题"){
+            }else if(type=="判断题"||type=="判断"){
                 typeId=3;
-            }else if(type=="填空题"){
+            }else if(type=="填空题"||type=="填空"){
                 typeId=4;
-            }else if(type=="简答题"){
+            }else if(type=="简答题"||type=="简答"){
                 typeId=5;
             }else typeId=0;
             // alert(id+" "+typeId);

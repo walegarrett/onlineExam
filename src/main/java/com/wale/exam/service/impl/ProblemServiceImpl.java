@@ -208,7 +208,8 @@ public class ProblemServiceImpl implements ProblemService {
             criteria.andTypeEqualTo(type);
         }
         if(id==-1&&type==0){
-            return new ArrayList<Problem>();
+            criteria.andIdIsNotNull();
+//            return new ArrayList<Problem>();
         }
         problemExample.setOrderByClause("id");
         List<Problem>list=new ArrayList<>();
@@ -251,7 +252,8 @@ public class ProblemServiceImpl implements ProblemService {
             criteria.andTypeEqualTo(type);
         }
         if(id==-1&&type==0){
-            return 0;
+            criteria.andIdIsNotNull();
+//            return 0;
         }
         List<Problem>list=new ArrayList<>();
         //problemMapper.selectByExampleWithBLOBs()

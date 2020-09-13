@@ -146,7 +146,8 @@ public class SheetController {
         model.addAttribute("studentId",sheet.getUserId());
         //获取总分数
         Integer totalScore;
-        totalScore=answerService.computeTotalScore(userId,paperId);
+//        totalScore=answerService.computeTotalScore(userId,paperId);
+        totalScore=sheet.getScore();
         model.addAttribute("totalScore",totalScore);
         return "examScoreDetail";
     }
@@ -349,6 +350,32 @@ public class SheetController {
             //打回单个记录
             Integer id=Integer.parseInt(sheetId);
             sheetService.redoSheet(id);
+        }
+        return Msg.success();
+    }
+    /**
+     * 打回重新批改
+     * @param sheetId
+     * @param session
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/reJudgeSheet")
+    @ResponseBody
+    public Msg reJudgeSheet(String sheetId, HttpSession session) throws ParseException {
+        System.out.println("打回重批答卷："+sheetId);
+        if(sheetId.contains("-")){
+            String[] str_ids=sheetId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            sheetService.reJudgeSheetBatch(del_ids);
+        }else{
+            //打回单个记录
+            Integer id=Integer.parseInt(sheetId);
+            sheetService.reJudgeSheet(id);
         }
         return Msg.success();
     }

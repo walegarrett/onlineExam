@@ -27,4 +27,6 @@ public interface AnswerService {
     void updateAnswerStatus1(int userid, int paperid);
 
     void deleteAnswerByPaperIdAndUserId(Integer paperId, Integer userId);
+
+    void updateAnswerStatus1AndOtherInfo(int studentId, int paperId);
 }

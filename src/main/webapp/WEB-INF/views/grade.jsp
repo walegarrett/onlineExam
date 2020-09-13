@@ -58,15 +58,17 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 重新批改 </button>
             </div>
         </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
+
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">修改成绩</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">重新批改</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs data-count-show" lay-event="show">批改详情</a>
         </script>
 
     </div>
@@ -152,10 +154,40 @@
                 $(window).on("resize", function () {
                     layer.full(index);
                 });
-            } else if (obj.event === 'delete') {  // 监听删除操作
+            } else if (obj.event === 'delete') {  // 监听重新批改操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var empNames="";
+                var del_idstr="";
+                // layer.alert(JSON.stringify(data));
+                for(i=0;i<data.length;i++){
+                    empNames+=data[i].paperName+" ,";
+                    //组装id的字符串
+                    del_idstr+=data[i].id+"-";
+                }
+                //去除empNames多余的逗号
+                empNames=empNames.substring(0,empNames.length-1);
+                del_idstr=del_idstr.substring(0,del_idstr.length-1);
+                var data= {
+                    "sheetId":del_idstr
+                };
+                if(confirm("确认打回重新批改【"+del_idstr+"】号答卷吗？")){
+                    //确认，发送ajax请求删除
+                    $.ajax({
+                        url:"${APP_PATH}/reJudgeSheet",
+                        type:"POST",
+                        data:data,
+                        success:function (result) {
+                            if(result.code==100) {
+                                alert("打回重批成功");
+                                to_page(currentPage);
+                            }else{
+                                alert("打回重批失败");
+                                to_page(currentPage);
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -181,28 +213,28 @@
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                // layer.confirm('真的删除行么', function (index) {
-                //     obj.del();
-                //     layer.close(index);
-                // });
-                var datas={
-                    "sheetId":data.id//
-                };
-                $.ajax({
-                    cache: false,
-                    url:"${APP_PATH}/deleteGrade",
-                    type:"POST",
-                    async:false,
-                    data:datas,
-                    success:function (result) {
-                        if(result.code==200){
-                            //执行有错误时候的判断
-                            layer.msg('删除成绩失败！');
-                        }else{
-                            layer.msg('删除成绩成功！');
+                if(confirm("确认打回重新批改【"+data.id+"】吗？")){
+                    var data= {
+                        "sheetId":data.id
+                    };
+                    //确认，发送ajax请求删除
+                    $.ajax({
+                        url:"${APP_PATH}/reJudgeSheet",
+                        type:"POST",
+                        data:data,
+                        success:function (result) {
+                            if(result.code==100) {
+                                alert("打回重批成功");
+                                to_page(currentPage);
+                            }else{
+                                alert("打回重批失败");
+                                to_page(currentPage);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            }else if (obj.event === 'show'){//查看批改详情
+                window.open("${APP_PATH}/theScoreSheetRecord?sheetId="+data.id+"","_blank");
             }
         });
 
