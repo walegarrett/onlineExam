@@ -280,9 +280,27 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public void deletePaper(Integer paperId) {
+        String hottestkey="hottest:papers";
+        RedisUtil.removeZSet(hottestkey,paperId);
         paperMapper.deleteByPrimaryKey(paperId);
     }
 
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        PaperExample paperExample=new PaperExample();
+        PaperExample.Criteria criteria=paperExample.createCriteria();
+        criteria.andIdIn(del_ids);
+        for(Integer paperId:del_ids){
+            //删除最热考试
+            String hottestkey="hottest:papers";
+            RedisUtil.removeZSet(hottestkey,paperId);
+        }
+        paperMapper.deleteByExample(paperExample);
+    }
     @Override
     public int findAllPaperCount() {
         PaperExample paperExample=new PaperExample();
@@ -534,4 +552,6 @@ public class PaperServiceImpl implements PaperService {
         paperMapper.deleteByExample(paperExample);
         return true;
     }
+
+
 }

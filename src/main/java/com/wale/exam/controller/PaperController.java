@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -202,6 +204,15 @@ public class PaperController {
         model.addAttribute("avaHour",min/60);
         model.addAttribute("avaMinute",min%60);
         return "online";
+    }
+    //跳转到试卷详情页面
+    @RequestMapping(value = "/showPaperDetail")
+    public  String showPaperDetail(Integer paperId, HttpServletRequest request, HttpSession session, Model model) throws UnsupportedEncodingException {
+        model.addAttribute("paperId",paperId);
+        Paper paper=new Paper();
+        paper=paperService.findPaperByPaperId(paperId);
+        model.addAttribute("paper",paper);
+        return "showPaperDetail";
     }
     /**
      * 找到答卷记录----未修改的

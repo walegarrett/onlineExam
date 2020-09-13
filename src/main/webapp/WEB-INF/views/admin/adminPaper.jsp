@@ -109,7 +109,7 @@
 <%--                                    <a class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>--%>
 <%--                                    <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>--%>
 <%--                                    <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>--%>
-<%--                                    <a class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i> 删除</a>--%>
+                                    <a class="btn btn-danger" id="emp_delete_all"><i class="mdi mdi-window-close"></i> 删除</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -119,6 +119,9 @@
                                         <table class="table table-hover table-bordered" id="users_table">
                                             <thead>
                                             <tr>
+                                                <th>
+                                                    <input type="checkbox" id="check_all">
+                                                </th>
                                                 <th>序号</th>
                                                 <th>试卷名称</th>
                                                 <th>时间限制</th>
@@ -229,6 +232,7 @@
         $("table tbody").empty();
         var users=result.extend.pageInfo.list;
         $.each(users,function (index,item) {
+            var checkBoxTd=$("<td><input type='checkbox' class='check_item'/></td>" );
             var uIdTd = $("<td></td>").append(item.id);
             var uPaperNameTd = $("<td></td>").append(item.paperName);
             var uDurationTimeTd = $("<td></td>").append(item.durationTime);
@@ -250,12 +254,16 @@
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
             var editBtn=$("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
+            var showBtn=$("<button></button>").addClass("btn btn-brown btn-sm show_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("查看");
+            showBtn.attr("paperId",item.id);
             //为编辑按钮添加一个自定义的属性
             editBtn.attr("edit-id",item.id);
             //为删除按钮添加一个自定义的属性来表示当前删除的员工id
             delBtn.attr("delete-id",item.id);
-            var btnTd = $("<td></td>").append(delBtn).append(" ").append(editBtn);
+            var btnTd = $("<td></td>").append(delBtn).append(" ").append(editBtn).append(showBtn);
             $("<tr></tr>")
+                .append(checkBoxTd)
                 .append(uIdTd)
                 .append(uPaperNameTd)
                 .append(uDurationTimeTd)
@@ -361,6 +369,48 @@
                 }
             });
         }
+    });
+    //点击全部删除就批量删除
+    $("#emp_delete_all").click(function () {
+        var empNames="";
+        var del_idstr="";
+        $.each($(".check_item:checked"),function () {
+            //当前遍历的元素
+            //$(this).parents("tr").find("td:eq(2)").text();
+            empNames+=$(this).parents("tr").find("td:eq(2)").text()+" ,";
+            //组装员工id的字符串
+            del_idstr+=$(this).parents("tr").find("td:eq(1)").text()+"-";
+        });
+        //去除empNames多余的逗号
+        empNames=empNames.substring(0,empNames.length-1);
+        del_idstr=del_idstr.substring(0,del_idstr.length-1);
+        var data=
+            {
+                "paperId":del_idstr
+            };
+        if(confirm("确认删除【"+empNames+"】吗？")){
+            //确认，发送ajax请求删除
+            $.ajax({
+                url:"${APP_PATH}/adminDeletePaper",
+                type:"POST",
+                data:data,
+                success:function (result) {
+                    if(result.code==100) {
+                        alert("删除成功");
+                        to_page(currentPage);
+                    }else{
+                        alert("删除失败");
+                        to_page(currentPage);
+                    }
+                }
+            });
+        }
+    });
+    //点击查看按钮事件
+    $(document).on("click",".show_btn",function () {
+        //弹出是否确认删除的对话框
+        var paperId=$(this).attr("paperId");
+        window.open("${APP_PATH}/showPaperDetail?paperId="+paperId+"","_blank");
     });
 
     //点击编辑用户

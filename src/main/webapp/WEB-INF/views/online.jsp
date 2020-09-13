@@ -284,7 +284,7 @@
     $(function () {
         //加载完页面就获取题目
         $.ajax({
-            url:"${APP_PATH}/theAllProblem?paperId=${paperId}",
+            url:"${APP_PATH}/theAllProblem?paperId=${paperId}&userId=${userid}",
             type:"GET",
             async:false,
             success:function(result){

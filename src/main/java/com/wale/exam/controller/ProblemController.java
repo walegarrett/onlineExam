@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -181,8 +183,6 @@ public class ProblemController {
         extend.put("judgeProList",judgeProList);
         extend.put("blankProList",blankProList);
         extend.put("shortProList",shortProList);
-
-
 //        System.out.println(mulProList.toString());
         Msg msg=new Msg();
         msg.setExtend(extend);
@@ -190,6 +190,41 @@ public class ProblemController {
         return msg;
     }
 
+    /**
+     * 查找试卷中的所有题目---分题目类型查询
+     * @param paperId
+     * @param session
+     * @param model
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/showAllProblem")
+    @ResponseBody
+    public Msg showAllProblem(@RequestParam("paperId") Integer paperId, HttpSession session,Model model) throws ParseException {
+        List<Problem>radioProList=new ArrayList<>();
+        List<Problem>mulProList=new ArrayList<>();
+        List<Problem>judgeProList=new ArrayList<>();
+        List<Problem>blankProList=new ArrayList<>();//填空题
+        List<Problem>shortProList=new ArrayList<>();//简答题
+
+        radioProList=problemService.findProblemByPaperIdAndType(paperId,1);
+        mulProList=problemService.findProblemByPaperIdAndType(paperId,2);
+        judgeProList=problemService.findProblemByPaperIdAndType(paperId,3);
+        blankProList=problemService.findProblemByPaperIdAndType(paperId,4);
+        shortProList=problemService.findProblemByPaperIdAndType(paperId,5);
+//        model.addAttribute("radioProList1",radioProList);
+        Map<String, Object> extend=new HashMap<>();
+        extend.put("radioProList",radioProList);
+        extend.put("mulProList",mulProList);
+        extend.put("judgeProList",judgeProList);
+        extend.put("blankProList",blankProList);
+        extend.put("shortProList",shortProList);
+//        System.out.println(mulProList.toString());
+        Msg msg=new Msg();
+        msg.setExtend(extend);
+        msg.setCode(100);
+        return msg;
+    }
     @RequestMapping("/toEditProblem")
     public String toEditProblem(Integer problemId, Model model, HttpSession session){
         System.out.println("编辑题目："+problemId);

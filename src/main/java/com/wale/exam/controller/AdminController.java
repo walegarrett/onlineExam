@@ -214,12 +214,28 @@ public class AdminController {
      */
     @RequestMapping("/adminDeletePaper")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminDeletePaper(Integer paperId, HttpSession session){
+    public Msg adminDeletePaper(String paperId, HttpSession session){
         System.out.println(paperId);
-        //删除最热考试
-        String hottestkey="hottest:papers";
-        RedisUtil.removeZSet(hottestkey,paperId);
-        paperService.deletePaper(paperId);
+//        //删除最热考试
+//        String hottestkey="hottest:papers";
+//        RedisUtil.removeZSet(hottestkey,paperId);
+//        paperService.deletePaper(paperId);
+//        return Msg.success();
+
+        if(paperId.contains("-")){
+            String[] str_ids=paperId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            paperService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(paperId);
+            paperService.deletePaper(id);
+        }
+
         return Msg.success();
     }
 
@@ -237,6 +253,33 @@ public class AdminController {
         //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
         PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
+    }
+    /**
+     * 删除试卷
+     * @param problemId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminDeleteProblem")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminDeleteProblem(String problemId, HttpSession session){
+        System.out.println(problemId);
+//        problemService.deleteProblem(problemId);
+        if(problemId.contains("-")){
+            String[] str_ids=problemId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            problemService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(problemId);
+            problemService.deleteProblem(id);
+        }
+
+        return Msg.success();
     }
     /**
      * 带模糊搜索的查找

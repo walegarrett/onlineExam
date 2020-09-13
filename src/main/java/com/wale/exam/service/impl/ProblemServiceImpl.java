@@ -404,4 +404,43 @@ public class ProblemServiceImpl implements ProblemService {
         }
         return problemList;
     }
+
+    /**
+     * 批量删除题目
+     * @param del_ids
+     */
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        ProblemExample problemExample=new ProblemExample();
+        ProblemExample.Criteria criteria=problemExample.createCriteria();
+        criteria.andIdIn(del_ids);
+        problemMapper.deleteByExample(problemExample);
+    }
+
+    /**
+     * 查找某套试卷的某种题型的所有题目
+     * @param paperId
+     * @param i
+     * @return
+     */
+    @Override
+    public List<Problem> findProblemByPaperIdAndType(Integer paperId, int i) {
+        PaperQuestionExample paperQuestionExample=new PaperQuestionExample();
+        PaperQuestionExample.Criteria criteria=paperQuestionExample.createCriteria();
+        criteria.andPaperIdEqualTo(paperId);
+        List<PaperQuestion>list=new ArrayList<>();
+        list=paperQuestionMapper.selectByExample(paperQuestionExample);
+        List<Problem>problemList=new ArrayList<>();
+        for (PaperQuestion paperQuestion:list) {
+            int questionId=paperQuestion.getQuestionId();
+            Problem problem=new Problem();
+            problem=problemMapper.selectByPrimaryKey(questionId);
+            if(problem.getType()==i){
+                problem.setUserAnswer("");
+                problem.setUserScore(0);
+                problemList.add(problem);
+            }
+        }
+        return problemList;
+    }
 }
