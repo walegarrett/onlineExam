@@ -224,7 +224,7 @@
                 $("#sigAndMulOpts input[name='optionsC']").val(content.questionItemObjects[2].content);
                 $("#sigAndMulOpts input[name='optionsD']").val(content.questionItemObjects[3].content);
                 $("#mulAns").show();
-                var answer=${answer};
+                var answer="${answer}";
                 var items=answer.split(",");
                 $.each(items,function(index,value){
                     $("#mulAns input[value='"+value+"']").attr("checked",true);

@@ -334,9 +334,9 @@ public class ProblemController {
     @ResponseBody
     public Msg deleteProblem(String problemId, HttpSession session) throws ParseException {
         System.out.println("删除题目："+problemId);
-//        problemService.deleteProblem(problemId);
-//        return Msg.success();
+
         if(problemId.contains("-")){
+            System.out.println(1);
             String[] str_ids=problemId.split("-");
             //组装ids的数组
             List<Integer> del_ids=new ArrayList<>();
@@ -345,10 +345,12 @@ public class ProblemController {
             }
             problemService.deleteBatch(del_ids);
         }else{
+            System.out.println(2);
             //删除单个记录
             Integer id=Integer.parseInt(problemId);
             problemService.deleteProblem(id);
         }
+        System.out.println("删除题目成功！！！");
         return Msg.success();
     }
 }

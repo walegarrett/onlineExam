@@ -2,10 +2,7 @@ package com.wale.exam.service.impl;
 
 import com.wale.exam.bean.*;
 import com.wale.exam.dao.SheetMapper;
-import com.wale.exam.service.AnswerService;
-import com.wale.exam.service.PaperService;
-import com.wale.exam.service.SheetService;
-import com.wale.exam.service.UserService;
+import com.wale.exam.service.*;
 import com.wale.exam.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +23,8 @@ public class SheetServiceImpl implements SheetService {
     PaperService paperService;
     @Autowired
     AnswerService answerService;
-
+    @Autowired
+    PaperQuestionService paperQuestionService;
     @Autowired
     UserService userService;
     @Override
@@ -44,8 +42,13 @@ public class SheetServiceImpl implements SheetService {
         sheet.setStatus(1);//1-未批改，2-已批改
         sheet.setUserId(userId);
         sheet.setSubmitTime(new Date());
+        int totalScore=getSheetScoreByPaperIdAndUserId(paperId,userId);
+        sheet.setScore(totalScore);
         sheetMapper.insertSelective(sheet);
+
     }
+
+
 
     /**
      * 首先根据teacherid找到创建的所有试卷，再根据每个paperId找到所有的Sheet即答卷
@@ -681,4 +684,82 @@ public class SheetServiceImpl implements SheetService {
         sheetMapper.updateByPrimaryKeySelective(sheet);
     }
 
+    /**
+     * 更新答卷的总分
+     * 1. 首先找到答卷所属的所有试卷
+     * 2. 遍历试卷，根据试卷id找到所有sheet
+     * 3. 根据sheet的userid找到该题的score
+     * 4. 减去对应sheet的score
+     * @param problemId
+     */
+    @Override
+    public void updateSheetScoreByProblemId(Integer problemId) {
+        List<PaperQuestion>list=paperQuestionService.findItemByProblemId(problemId);
+//        System.out.println("paperlist:"+list);
+        for(PaperQuestion paperQuestion:list){
+            Integer paperId=paperQuestion.getPaperId();
+            List<Sheet> sheetList=findSheetByPaperId(paperId);//找到该包含该试卷所属的答卷
+//            System.out.println("sheetList: "+sheetList+" paperId:"+paperId);
+            for(Sheet sheet:sheetList){
+                Sheet sheet1=new Sheet();
+                sheet1.setId(sheet.getId());
+                Integer userId=sheet.getUserId();
+                Answer answer=answerService.findAnswerByUserProblemPaper(userId,problemId,paperId);
+//                System.out.println("answer: "+answer+" userId:"+userId);
+                if(answer!=null){
+                    int score=0;
+                    int origscore=sheet.getScore();
+                    if(sheet.getScore()>answer.getScore()){
+                        score=sheet.getScore()-answer.getScore();
+                    }
+                    sheet1.setScore(score);
+                    sheetMapper.updateByPrimaryKeySelective(sheet1);//更新该答卷
+                    System.out.println("更新"+userId+"提交的"+paperId+"试卷分数成功！"+score+"分,原来："+origscore+"分");
+                }
+            }
+        }
+    }
+
+    @Override
+    public List<Sheet> findSheetByPaperId(Integer paperId) {
+        SheetExample sheetExample=new SheetExample();
+        SheetExample.Criteria criteria=sheetExample.createCriteria();
+        criteria.andPaperIdEqualTo(paperId);
+        List<Sheet>sheetList=new ArrayList<>();
+        sheetList=sheetMapper.selectByExample(sheetExample);
+        return sheetList;
+    }
+    @Override
+    public int getSheetScoreByPaperIdAndUserId(Integer paperId, Integer userId) {
+        int score=0;
+        List<Answer>answerList=answerService.findAnswerByPaperUser(paperId,userId);
+        for(Answer answer:answerList){
+            score+=answer.getScore();
+        }
+        return score;
+    }
+
+    /**
+     * 更新试卷分数
+     * @param paperId
+     * @param userId
+     */
+    @Override
+    public void updateSheetScoreByPaperIdAndUserId(Integer paperId, Integer userId) {
+        int score=0;
+        List<Answer>answerList=answerService.findAnswerByPaperUser(paperId,userId);
+        for(Answer answer:answerList){
+            score+=answer.getScore();
+        }
+        SheetExample sheetExample=new SheetExample();
+        SheetExample.Criteria criteria=sheetExample.createCriteria();
+        criteria.andPaperIdEqualTo(paperId);
+        criteria.andUserIdEqualTo(userId);
+        List<Sheet>sheetList=new ArrayList<>();
+        sheetList=sheetMapper.selectByExample(sheetExample);
+        for(Sheet sheet:sheetList){
+            sheet.setScore(score);
+            sheetMapper.updateByPrimaryKeySelective(sheet);
+        }
+    }
 }

@@ -180,6 +180,7 @@
                     {
                         "problemId":del_idstr
                     };
+
                 if(confirm("确认删除【"+del_idstr+"】吗？")){
                     //确认，发送ajax请求删除
                     $.ajax({

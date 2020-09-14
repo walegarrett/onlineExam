@@ -73,4 +73,10 @@ public interface SheetService {
     void reJudgeSheetBatch(List<Integer> del_ids);
 
     void reJudgeSheet(Integer id);
+
+    void updateSheetScoreByProblemId(Integer problemId);
+    List<Sheet> findSheetByPaperId(Integer paperId);
+    int getSheetScoreByPaperIdAndUserId(Integer paperId, Integer userId);
+
+    void updateSheetScoreByPaperIdAndUserId(Integer paperId, Integer userId);
 }

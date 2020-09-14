@@ -123,9 +123,12 @@ public class SheetController {
         model.addAttribute("sheet",sheet);
         model.addAttribute("sheetId",sheetId);
         model.addAttribute("studentId",sheet.getUserId());
+        User student=userService.findUserByUserId(sheet.getUserId());
+        model.addAttribute("studentName",student.getUserName());
         //获取总分数
         Integer totalScore;
-        totalScore=answerService.computeTotalScore(userId,paperId);
+        totalScore=sheet.getScore();
+//        totalScore=answerService.computeTotalScore(userId,paperId);
         model.addAttribute("totalScore",totalScore);
 
         return "onJudge";
@@ -144,6 +147,10 @@ public class SheetController {
         model.addAttribute("sheet",sheet);
         model.addAttribute("sheetId",sheetId);
         model.addAttribute("studentId",sheet.getUserId());
+        User student=userService.findUserByUserId(sheet.getUserId());
+        model.addAttribute("studentName",student.getUserName());
+        User teacher=userService.findUserByUserId(paper.getCreaterId());
+        model.addAttribute("teacherName",teacher.getUserName());
         //获取总分数
         Integer totalScore;
 //        totalScore=answerService.computeTotalScore(userId,paperId);

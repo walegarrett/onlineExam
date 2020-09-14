@@ -301,6 +301,27 @@ public class PaperServiceImpl implements PaperService {
         }
         paperMapper.deleteByExample(paperExample);
     }
+
+    /**
+     * 重新计算该试卷的总分数
+     * @param paperId
+     */
+    @Override
+    public void reComputeTotalScoreByPaperId(Integer paperId) {
+        List<PaperQuestion>list=new ArrayList<>();
+        list=paperQuestionService.findItemByPaperId(paperId);
+        Paper paper=new Paper();
+        paper.setId(paperId);
+        int totalScore=0;
+        for(PaperQuestion paperQuestion:list){
+            Problem problem=problemService.findProblemByProblemId(paperQuestion.getQuestionId());
+            totalScore+=problem.getScore();
+        }
+        paper.setTotalScore(totalScore);
+        paperMapper.updateByPrimaryKeySelective(paper);
+    }
+
+
     @Override
     public int findAllPaperCount() {
         PaperExample paperExample=new PaperExample();

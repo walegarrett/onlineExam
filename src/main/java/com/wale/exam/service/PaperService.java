@@ -68,4 +68,6 @@ public interface PaperService {
     boolean deletePaperByCreaterId(Integer userId);
 
     void deleteBatch(List<Integer> del_ids);
+
+    void reComputeTotalScoreByPaperId(Integer paperId);
 }

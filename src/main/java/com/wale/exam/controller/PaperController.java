@@ -6,6 +6,7 @@ import com.wale.exam.bean.*;
 import com.wale.exam.service.PaperQuestionService;
 import com.wale.exam.service.PaperService;
 import com.wale.exam.service.ProblemService;
+import com.wale.exam.service.UserService;
 import com.wale.exam.util.JsonDateValueProcessor;
 import com.wale.exam.util.MyPageInfo;
 import com.wale.exam.util.RedisUtil;
@@ -41,6 +42,8 @@ public class PaperController {
     ProblemService problemService;
     @Autowired
     PaperQuestionService paperQuestionService;
+    @Autowired
+    UserService userService;
     /**
      * 根据创建者的id查找所有该老师创建的试卷
      * @param teacherId
@@ -235,6 +238,8 @@ public class PaperController {
         model.addAttribute("avaHour",min/60);
         model.addAttribute("avaMinute",min%60);
         model.addAttribute("userId",userId);
+        User student=userService.findUserByUserId(userId);
+        model.addAttribute("studentName",student.getUserName());
         return "examDetail";
     }
     @RequestMapping("/checkInviCode")

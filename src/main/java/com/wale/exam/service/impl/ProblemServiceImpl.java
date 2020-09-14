@@ -4,9 +4,7 @@ import com.wale.exam.bean.*;
 import com.wale.exam.dao.PaperMapper;
 import com.wale.exam.dao.PaperQuestionMapper;
 import com.wale.exam.dao.ProblemMapper;
-import com.wale.exam.service.AnswerService;
-import com.wale.exam.service.ProblemService;
-import com.wale.exam.service.UserService;
+import com.wale.exam.service.*;
 import com.wale.exam.util.JsonDateValueProcessor;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -31,6 +29,12 @@ public class ProblemServiceImpl implements ProblemService {
     AnswerService answerService;
     @Autowired
     UserService userService;
+    @Autowired
+    PaperService paperService;
+    @Autowired
+    PaperQuestionService paperQuestionService;
+    @Autowired
+    SheetService sheetService;
     @Override
     public int findProblemCountByTeaId(Integer teacherId) {
         ProblemExample problemExample=new ProblemExample();
@@ -135,6 +139,13 @@ public class ProblemServiceImpl implements ProblemService {
     public void updateProblem(Problem problem) {
 //        System.out.println(problem);
         problemMapper.updateByPrimaryKeySelective(problem);
+        int problemId=problem.getId();
+        List<PaperQuestion>list=paperQuestionService.findItemByProblemId(problemId);
+        //重新计算所属试卷的总分
+        for(PaperQuestion paperQuestion:list){
+            Integer paperId=paperQuestion.getPaperId();
+            paperService.reComputeTotalScoreByPaperId(paperId);
+        }
     }
 
     @Override
@@ -261,10 +272,7 @@ public class ProblemServiceImpl implements ProblemService {
         return list.size();
     }
 
-    @Override
-    public void deleteProblem(Integer problemId) {
-        problemMapper.deleteByPrimaryKey(problemId);
-    }
+
 
     /**
      * 模糊查找
@@ -406,17 +414,46 @@ public class ProblemServiceImpl implements ProblemService {
         }
         return problemList;
     }
+    /**
+     * 删除题目
+     * 首先需要重新计算所属试卷的卷面总分
+     * @param problemId
+     */
+    @Override
+    public void deleteProblem(Integer problemId) {
 
+        List<PaperQuestion>list=paperQuestionService.findItemByProblemId(problemId);
+        //更新答卷的总分
+        sheetService.updateSheetScoreByProblemId(problemId);
+        problemMapper.deleteByPrimaryKey(problemId);
+        //重新计算所属试卷的总分
+        for(PaperQuestion paperQuestion:list){
+            Integer paperId=paperQuestion.getPaperId();
+            paperService.reComputeTotalScoreByPaperId(paperId);
+        }
+
+    }
     /**
      * 批量删除题目
      * @param del_ids
      */
     @Override
     public void deleteBatch(List<Integer> del_ids) {
-        ProblemExample problemExample=new ProblemExample();
-        ProblemExample.Criteria criteria=problemExample.createCriteria();
-        criteria.andIdIn(del_ids);
-        problemMapper.deleteByExample(problemExample);
+//        ProblemExample problemExample=new ProblemExample();
+//        ProblemExample.Criteria criteria=problemExample.createCriteria();
+//        criteria.andIdIn(del_ids);
+//        problemMapper.deleteByExample(problemExample);
+        for(Integer problemId:del_ids){
+            List<PaperQuestion>list=paperQuestionService.findItemByProblemId(problemId);
+            //更新答卷的总分
+            sheetService.updateSheetScoreByProblemId(problemId);
+            problemMapper.deleteByPrimaryKey(problemId);
+            //重新计算所属试卷的总分
+            for(PaperQuestion paperQuestion:list){
+                Integer paperId=paperQuestion.getPaperId();
+                paperService.reComputeTotalScoreByPaperId(paperId);
+            }
+        }
     }
 
     /**

@@ -102,11 +102,13 @@ public class AnswerServiceImpl implements AnswerService {
         if(list==null||list.size()==0){
             //插入
             answerMapper.insertSelective(answer1);
+            sheetService.updateSheetScoreByPaperIdAndUserId(paperId,userId);//更新答卷总分
             return 1;
         }else if(list.size()==1){
             //更新
             answer1.setId(list.get(0).getId());
             answerMapper.updateByPrimaryKeySelective(answer1);
+            sheetService.updateSheetScoreByPaperIdAndUserId(paperId,userId);//更新答卷总分
             return 2;
         }else{
             return 0;
@@ -237,6 +239,30 @@ public class AnswerServiceImpl implements AnswerService {
 //        answer.setScore(0);
         answer.setComment("");
         answerMapper.updateByExampleSelective(answer,answerExample);
+    }
+
+    @Override
+    public Answer findAnswerByUserProblemPaper(Integer userId, Integer problemId, Integer paperId) {
+        AnswerExample answerExample=new AnswerExample();
+        AnswerExample.Criteria criteria=answerExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andPaperIdEqualTo(paperId);
+        criteria.andQuestionIdEqualTo(problemId);
+        List<Answer>answerList=answerMapper.selectByExample(answerExample);
+        if(answerList!=null&&answerList.size()>0){
+            return answerList.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Answer> findAnswerByPaperUser(Integer paperId, Integer userId) {
+        AnswerExample answerExample=new AnswerExample();
+        AnswerExample.Criteria criteria=answerExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andPaperIdEqualTo(paperId);
+        List<Answer>answerList=answerMapper.selectByExample(answerExample);
+        return answerList;
     }
 
 }
