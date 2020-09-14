@@ -83,6 +83,17 @@ public class MessageController {
         }
         return Msg.success();
     }
+
+    /**
+     * 添加新的消息
+     * @param sendUserId
+     * @param title
+     * @param content
+     * @param receivers
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/addMessage")
     @ResponseBody
     public Msg addMessage(Integer sendUserId, String title, String content, String receivers, HttpSession session) throws ParseException {

@@ -17,7 +17,7 @@
     <meta http-equiv="Content-Language" content="zh-CN">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>试卷中心</title>
-    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Logo_40.png" type="image/x-icon">
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <!--Layui-->
     <link href="${APP_PATH}/statics/main/plug/layui/css/layui.css" rel="stylesheet" />
     <!--font-awesome-->
@@ -216,6 +216,7 @@
                 .attr("trueAnswer",item.problem.answer)
                 .attr("answer",item.answer)
                 .attr("score",item.score)
+                .attr("problemScore",item.problem.score)
                 .attr("type",type)
                 .attr("titleContent",proItem.titleContent)
                 .appendTo("#mains_table tbody");
@@ -290,18 +291,41 @@
     $(document).on("mouseover ",".maintr",function () {//mouseover
         $(".showDetail").empty();
         var type=$(this).attr("type");
+        if(type==1){
+            type="单选题";
+        }else if(type==2){
+            type="多选题";
+        }else if(type==3){
+            type="判断题";
+        }else if(type==4){
+            type="填空题";
+        }else{
+            type="简答题";
+        }
         var titleContent=$(this).attr("titleContent");
         var score=$(this).attr("score");
         var trueAnswer=$(this).attr("trueAnswer");
         var answer=$(this).attr("answer");
+        var problemScore=$(this).attr("problemScore");
         // alert(type+" "+titleContent+" "+score+" "+trueAnswer+" "+answer);
         var ul=$("<ul></ul>");
         var typeli=$("<li></li>").append("题目类型："+type);
+        if(titleContent.length>=28){
+            titleContent=titleContent.substring(0,29)+"...";
+        }
         var titleContentli=$("<li></li>").append("题干："+titleContent);
+        var problemScoreli=$("<li></li>").append("满分："+problemScore);
+        if(answer.length>=28){
+            answer=answer.substring(0,28)+"...";
+        }
         var answerli=$("<li></li>").append("您的答案："+answer);
+        if(trueAnswer.length>=28){
+            trueAnswer=trueAnswer.substring(0,28)+"...";
+        }
         var trueAnswerli=$("<li></li>").append("正确答案："+trueAnswer);
+
         var scoreli=$("<li></li>").append("分数："+score);
-        ul.append(typeli).append(typeli).append(titleContentli).append(answerli).append(trueAnswerli).append(scoreli)
+        ul.append(typeli).append(typeli).append(titleContentli).append(problemScoreli).append(answerli).append(trueAnswerli).append(scoreli)
             .appendTo(".showDetail");
     });
     $(document).on("mouseout ","tr",function () {//mouseover

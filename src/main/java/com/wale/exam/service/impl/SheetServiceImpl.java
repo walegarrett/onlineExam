@@ -157,6 +157,11 @@ public class SheetServiceImpl implements SheetService {
         return list;
     }
 
+    /**
+     * 查找用户已经完成的答卷
+     * @param userId
+     * @return
+     */
     @Override
     public List<Sheet> findAllSheetsWithUserHasDone(int userId) {
         List<Sheet>list=new ArrayList<>();
@@ -174,6 +179,13 @@ public class SheetServiceImpl implements SheetService {
         return sheetList;
     }
 
+    /**
+     * 查找已经批改的答卷
+     * @param teacherId
+     * @param before
+     * @param after
+     * @return
+     */
     @Override
     public List<Sheet> findJudgedSheetByTeaId(Integer teacherId, int before, int after) {
         //首先找到该老师创建的所有试卷
@@ -304,6 +316,16 @@ public class SheetServiceImpl implements SheetService {
         return count;
     }
 
+    /**
+     * 根据给定的条件查找试卷
+     * @param sheetId
+     * @param paperName
+     * @param userName
+     * @param teacherId
+     * @param before
+     * @param after
+     * @return
+     */
     @Override
     public List<Sheet> searchJudge(Integer sheetId, String paperName, String userName, Integer teacherId, int before, int after) {
         //首先找到该老师创建的所有试卷

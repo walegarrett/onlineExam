@@ -84,6 +84,14 @@ public class AnswerServiceImpl implements AnswerService {
         else return null;
     }
 
+    /**
+     * 提交教师的每一题判分
+     * @param userId
+     * @param questionId
+     * @param paperId
+     * @param score
+     * @return
+     */
     @Override
     public int insertOrUpdateAnswerSheet(Integer userId, Integer questionId, Integer paperId, Integer score) {
         AnswerExample answerExample=new AnswerExample();

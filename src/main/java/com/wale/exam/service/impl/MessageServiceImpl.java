@@ -84,6 +84,10 @@ public class MessageServiceImpl implements MessageService {
         messageMapper.updateByPrimaryKeySelective(message);
     }
 
+    /**
+     * 查找所有的消息
+     * @return
+     */
     @Override
     public List<Message> findAllMessage() {
         MessageExample messageExample=new MessageExample();

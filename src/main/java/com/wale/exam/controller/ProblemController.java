@@ -72,6 +72,22 @@ public class ProblemController {
         return jso;
     }
 
+    /**
+     * 向数据库中添加题目
+     * @param teacherId
+     * @param titleContent
+     * @param answer
+     * @param score
+     * @param type
+     * @param analysis
+     * @param optionA
+     * @param optionB
+     * @param optionC
+     * @param optionD
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/addProblem")
     @ResponseBody
     public Msg addProblem(Integer teacherId, String titleContent, String answer, Integer score, Integer type, String analysis, String optionA, String optionB, String optionC, String optionD, HttpSession session) throws ParseException {

@@ -23,6 +23,13 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     @Autowired
     PaperService paperService;
+
+    /**
+     * 登录功能
+     * @param username
+     * @param pwd
+     * @return
+     */
     @Override
     public User login(String username, String pwd) {
         User user=new User();
@@ -62,6 +69,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(userid);
     }
 
+    /**
+     * 根据关键字模糊查找用户
+     * @param keyword
+     * @param before
+     * @param after
+     * @return
+     */
 
     @Override
     public List<User> findUserPage(String keyword, int before, int after) {
@@ -88,6 +102,10 @@ public class UserServiceImpl implements UserService {
         return list.size();
     }
 
+    /**
+     * 查找所有用户
+     * @return
+     */
     @Override
     public List<User> findAllUser() {
         UserExample userExample=new UserExample();
@@ -102,6 +120,10 @@ public class UserServiceImpl implements UserService {
         userMapper.updateByPrimaryKeySelective(user);
     }
 
+    /**
+     * 删除一个用户
+     * @param userId
+     */
     @Override
     public void deleteUser(Integer userId) {
         //先删除该用户创建的所有试卷
@@ -134,6 +156,10 @@ public class UserServiceImpl implements UserService {
         return list.size();
     }
 
+    /**
+     * 统计所有日期
+     * @return
+     */
     @Override
     public List<Integer> findDateList() {
         UserExample userExample=new UserExample();
@@ -180,6 +206,12 @@ public class UserServiceImpl implements UserService {
         else return list.get(0);
     }
 
+    /**
+     * 模糊查找用户
+     * @param field
+     * @param keyword
+     * @return
+     */
     @Override
     public List<User> searchUserByKeyword(String field, String keyword) {
         UserExample userExample=new UserExample();

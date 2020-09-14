@@ -45,6 +45,13 @@ public class ProblemServiceImpl implements ProblemService {
         return list.size();
     }
 
+    /**
+     * 根据创建者id查找题目
+     * @param teacherId
+     * @param before
+     * @param after
+     * @return
+     */
     @Override
     public List<Problem> findProblemByTeaId(Integer teacherId, int before, int after) {
         ProblemExample problemExample=new ProblemExample();
@@ -150,6 +157,10 @@ public class ProblemServiceImpl implements ProblemService {
         }
     }
 
+    /**
+     * 查找所有题目
+     * @return
+     */
     @Override
     public List<Problem> findAllProblem() {
         ProblemExample problemExample=new ProblemExample();
@@ -376,6 +387,12 @@ public class ProblemServiceImpl implements ProblemService {
         return problemList;
     }
 
+    /**
+     * 根据关键词查找题目
+     * @param field
+     * @param keyword
+     * @return
+     */
     @Override
     public List<Problem> findProblemsWithKeyword(String field, String keyword) {
         ProblemExample problemExample=new ProblemExample();

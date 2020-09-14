@@ -247,6 +247,17 @@ public class SheetController {
         PageInfo page= MyPageInfo.getPageInfo(pn,4,list);
         return Msg.success().add("pageInfo",page).add("sheetlist",list);
     }
+
+    /**
+     * 模糊查找答卷
+     * @param sheetId
+     * @param paperName
+     * @param userName
+     * @param teacherId
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping(value="/searchJudge",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchJudge(Integer sheetId, String paperName, String userName, Integer teacherId, int page, int limit){
@@ -265,6 +276,17 @@ public class SheetController {
         String jso = "{\"code\":0,\"msg\":\"\",\"count\":"+count+",\"data\":"+js+"}";
         return jso;
     }
+
+    /**
+     * 根据指定条件查找成绩列表
+     * @param sheetId
+     * @param paperName
+     * @param userName
+     * @param teacherId
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping(value="/searchGrade",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchGrade(Integer sheetId, String paperName, String userName, Integer teacherId, int page, int limit){
@@ -300,6 +322,14 @@ public class SheetController {
         return "editGrade";
     }
 
+    /**
+     * 修改某个答卷的成绩
+     * @param sheetId
+     * @param score
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/updateGrade")
     @ResponseBody
     public Msg updateGrade(Integer sheetId, Integer score, HttpSession session) throws ParseException {

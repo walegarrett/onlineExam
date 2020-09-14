@@ -71,6 +71,18 @@ public class AdminController {
         String jsonStr = mapper.writeValueAsString(hashMap);
         return jsonStr;
     }
+
+    /**
+     * 管理员登录
+     * @param username
+     * @param password
+     * @param code
+     * @param request
+     * @param session
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
     @RequestMapping(value = "/adminLogin")
     @ResponseBody
     public Msg adminLogin(String username, String password, String code, HttpServletRequest request, HttpSession session) throws IOException, ServletException {
@@ -121,6 +133,19 @@ public class AdminController {
         //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
         return Msg.success().add("user",user);
     }
+
+    /**
+     * 管理员更新某个用户的信息
+     * @param id
+     * @param password
+     * @param age
+     * @param realName
+     * @param email
+     * @param role
+     * @param sex
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminUpdateUser")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminUpdateUser(Integer id, String password, Integer age, String realName, String email, Integer role, Integer sex, HttpSession session){
@@ -199,6 +224,19 @@ public class AdminController {
         paper=paperService.findPaperByPaperId(paperId);
         return Msg.success().add("paper",paper);
     }
+
+    /**
+     * 管理员更新试卷
+     * @param id
+     * @param paperName
+     * @param durationTime
+     * @param startTime
+     * @param isEncry
+     * @param inviCode
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/adminUpdatePaper")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminUpdatePaper(Integer id, String paperName, Integer durationTime, String startTime, Integer isEncry, String inviCode, HttpSession session) throws ParseException {
@@ -263,7 +301,7 @@ public class AdminController {
         return Msg.success().add("pageInfo",page);
     }
     /**
-     * 删除试卷
+     * 删除题目
      * @param problemId
      * @param session
      * @return
@@ -286,7 +324,6 @@ public class AdminController {
             Integer id=Integer.parseInt(problemId);
             problemService.deleteProblem(id);
         }
-
         return Msg.success();
     }
     /**
@@ -419,6 +456,14 @@ public class AdminController {
         return Msg.success().add("sheet",sheet);
     }
 
+    /**
+     * 管理员修改成绩
+     * @param id
+     * @param score
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/adminUpdateGrade")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminUpdateGrade(Integer id, Integer score, HttpSession session) throws ParseException {
@@ -452,6 +497,16 @@ public class AdminController {
         message=messageService.findMessageByMessageId(messageId);
         return Msg.success().add("message",message);
     }
+
+    /**
+     * 更新某条消息
+     * @param id
+     * @param messageTitle
+     * @param messageContent
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/adminUpdateMessage")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminUpdateMessage(Integer id, String messageTitle,String messageContent, HttpSession session) throws ParseException {
@@ -493,6 +548,15 @@ public class AdminController {
 
         return Msg.success();
     }
+
+    /**
+     * 修改管理员个人信息
+     * @param userId
+     * @param realName
+     * @param email
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminInfoChange")
     public String userInfoChange(
             @RequestParam("userId") String userId,
@@ -530,6 +594,14 @@ public class AdminController {
                 +new SimpleDateFormat("HH:mm:ss").format(createTime).toString();
         session.setAttribute("createTime",time);
     }
+
+    /**
+     * 更新管理员密码
+     * @param userId
+     * @param newpwd
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminUpdatePassword")
     public String updatePassword(
             @RequestParam("userId") String userId,
@@ -557,6 +629,20 @@ public class AdminController {
         String jsonStr = mapper.writeValueAsString(hashMap);
         return jsonStr;
     }
+
+    /**
+     * 管理员新增用户
+     * @param userName
+     * @param password
+     * @param age
+     * @param realName
+     * @param email
+     * @param role
+     * @param sex
+     * @param phone
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminAddUser")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminAddUser(String userName, String password, Integer age, String realName, String email, Integer role, Integer sex, String phone, HttpSession session){

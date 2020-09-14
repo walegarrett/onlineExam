@@ -129,6 +129,11 @@ public class PaperServiceImpl implements PaperService {
         return list;
     }
 
+    /**
+     * 查找所有的试卷
+     * @param userId
+     * @return
+     */
     @Override
     public List<Paper> findAllPapersWithUser(Integer userId) {
         PaperExample paperExample=new PaperExample();
@@ -149,6 +154,11 @@ public class PaperServiceImpl implements PaperService {
         return listWithHas;
     }
 
+    /**
+     * 查找所有未开始的试卷
+     * @param userId
+     * @return
+     */
     @Override
     public List<Paper> findAllPapersWithUserNotStart(int userId) {
         PaperExample paperExample=new PaperExample();
@@ -170,6 +180,11 @@ public class PaperServiceImpl implements PaperService {
         return listWithHas;
     }
 
+    /**
+     * 查找某个用户已经完成的试卷列表
+     * @param userId
+     * @return
+     */
     @Override
     public List<Paper> findAllPapersWithUserHasEnd(int userId) {
         PaperExample paperExample=new PaperExample();
@@ -191,6 +206,11 @@ public class PaperServiceImpl implements PaperService {
         return listWithHas;
     }
 
+    /**
+     * 查找正在进行考试的试卷
+     * @param userId
+     * @return
+     */
     @Override
     public List<Paper> findAllPapersWithUserDuring(int userId) {
         PaperExample paperExample=new PaperExample();
@@ -485,6 +505,12 @@ public class PaperServiceImpl implements PaperService {
         return list;
     }
 
+    /**
+     * 根据关键词查找试卷
+     * @param field
+     * @param keyword
+     * @return
+     */
     @Override
     public List<Paper> findPaperWithKeyword(String field,String keyword) {
         List<Paper>paperList=new ArrayList<>();

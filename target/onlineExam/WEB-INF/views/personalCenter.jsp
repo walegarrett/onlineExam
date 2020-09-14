@@ -24,7 +24,7 @@
     <meta http-equiv="Content-Language" content="zh-CN">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>在线考试系统-首页</title>
-    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Logo_40.png" type="image/x-icon">
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <!--Layui-->
     <link href="${APP_PATH}/statics/main/plug/layui/css/layui.css" rel="stylesheet" />
     <!--font-awesome-->
