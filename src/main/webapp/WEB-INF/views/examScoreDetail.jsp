@@ -16,7 +16,7 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>分数详情</title>
-
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <link href="${APP_PATH}/statics/online/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="${APP_PATH}/statics/online/css/iconfont.css" rel="stylesheet" type="text/css"/>
     <link href="${APP_PATH}/statics/online/css/test.css" rel="stylesheet" type="text/css"/>

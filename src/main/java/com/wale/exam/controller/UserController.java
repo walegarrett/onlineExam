@@ -498,8 +498,13 @@ public class UserController {
         user.setPassword(new_password);
         userService.updateUser(user);
         changeSession(session,Integer.parseInt(userid));
-        return "redirect:./toWelcome";
+        return "redirect:./toTeacherPassword";
     }
+    @RequestMapping("/toTeacherPassword")
+    public String toTeacherPassword(){
+        return "teacherPassword";
+    }
+
     @RequestMapping("/toWelcome")
     public String toWelcome(){
         return "welcome";

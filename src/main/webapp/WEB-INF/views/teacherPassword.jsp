@@ -39,7 +39,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label required">新的密码</label>
                 <div class="layui-input-block">
-                    <input type="password" name="new_password" lay-verify="required" lay-reqtext="新的密码不能为空" placeholder="请输入新的密码"  value="" class="layui-input">
+                    <input type="password" name="new_password" lay-verify="required|newpwd" lay-reqtext="新的密码不能为空" placeholder="请输入新的密码"  value="" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -90,6 +90,11 @@
                 var password=$("input[name='new_password']").val();
                 if(password!=value){
                     return "确认密码和密码不符！";
+                }
+            },
+            newpwd:function (value) {
+                if(value.length<2||value.length>10){
+                    return "新密码必须在2-10位字符之间！";
                 }
             }
         });

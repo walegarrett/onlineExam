@@ -90,7 +90,7 @@
                 {field: 'answer', title: '正确答案', width: 100},
                 {field: 'analysis', width: 120, title: '答案解析'},
                 {field: 'score', width: 70, title: '分值'},
-                {field: 'createrId', width: 100, title: '创建者', sort: true},
+                {field: 'createrUserName', width: 100, title: '创建者', sort: true},
                 {field: 'createTime', width: 200, title: '创建时间'},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
