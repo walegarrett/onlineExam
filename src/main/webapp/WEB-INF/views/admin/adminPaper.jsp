@@ -16,6 +16,7 @@
     <link href="${APP_PATH}/statics/lightYear/css/bootstrap.min.css" rel="stylesheet">
     <link href="${APP_PATH}/statics/lightYear/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="${APP_PATH}/statics/lightYear/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${APP_PATH}/statics/bootstrapValidator/dist/css/bootstrapValidator.css"/>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
             </div>
             <div class="modal-body">
                 <!--编辑表单-->
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="update-form">
                     <div class="form-group">
                         <label for="paperId_update_static" class="col-sm-2 control-label">试卷id</label>
                         <div class="col-sm-10">
@@ -168,7 +169,7 @@
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/main.min.js"></script>
-
+<script type="text/javascript" src="${APP_PATH}/statics/bootstrapValidator/dist/js/bootstrapValidator.js"></script>
 <!--图表插件-->
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/Chart.js"></script>
 <script type="text/javascript" src="${APP_PATH}/statics/js/common.js"></script>
@@ -470,6 +471,13 @@
         var inviCode=$("#inviCode_update_input").val();
         var isEncry=$("input[name='encry']:checked").val();
         isEncry=parseInt(isEncry);
+        if(isEncry==2){//加密
+            var testreg= /(^[A-Za-z0-9_]{1,10}$)/;
+            if(!testreg.test(inviCode)){
+                alert('邀请码只能包含1-10位的英文字母，数字及下划线');
+                return false;
+            }
+        }
         // alert($(this).attr("edit-id"));
         // alert(uUserid);
         var data={
@@ -499,9 +507,49 @@
             }
         });
     });
-    // layui.use('element', function(){
-    //     var element = layui.element;
-    // });
+    $(document).ready(function() {
+        $('#update-form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                paperName: {
+                    message: '试卷名不符合要求',
+                    validators: {
+                        notEmpty: {
+                            message: '试卷名不能为空'
+                        },
+                        stringLength: {  //长度限制
+                            min: 3,
+                            max: 15,
+                            message: '试卷名长度必须在3到15位之间'
+                        }
+                    }
+                },
+                startTime: {
+                    message: '开始时间不符合要求',
+                    validators: {
+                        notEmpty: {
+                            message: '开始时间不能为空'
+                        }
+                    }
+                },
+                durationTime: {
+                    validators: {
+                        notEmpty: {
+                            message: '建议时长不能为空'
+                        },
+                        regexp: { //正则表达式
+                            regexp: /^[0-9]*$/,
+                            message: '建议时长必须为数字'
+                        }
+                    }
+                }
+            }
+        });
+    });
 </script>
 </body>
 </html>

@@ -27,6 +27,14 @@ public class PaperServiceImpl implements PaperService {
     PaperQuestionService paperQuestionService;
     @Autowired
     UserService userService;
+
+    /**
+     * 根据创建者id查找创建的所有试卷
+     * @param teacherId
+     * @param before
+     * @param after
+     * @return
+     */
     @Override
     public List<Paper> findPaperByTeaId(Integer teacherId, int before, int after) {
         PaperExample paperExample=new PaperExample();
@@ -37,12 +45,14 @@ public class PaperServiceImpl implements PaperService {
         List<Paper>list=new ArrayList<>();
         list=paperMapper.selectByExampleAndPage(paperExample,before,after);
         List<Paper>paperList=new ArrayList<>();
+        User teacher=userService.findUserByUserId(teacherId);
         for(Paper paper:list) {
             if (paper.getIsEncry() == 1) {//未加密
                 paper.setIsEncryString("否");
             }else{
                 paper.setIsEncryString("是");
             }
+            paper.setCreaterUserName(teacher.getUserName());//设置创建者的用户名
             paperList.add(paper);
         }
         return paperList;
@@ -431,6 +441,7 @@ public class PaperServiceImpl implements PaperService {
         List<Paper>list=new ArrayList<>();
         list=paperMapper.selectByExampleAndPage(paperExample,before,after);
         List<Paper>paperList=new ArrayList<>();
+        User teacher=userService.findUserByUserId(teacherId);
         for(Paper paper:list){
             int craterId=paper.getCreaterId();
             User user=userService.findUserByUserId(craterId);
@@ -440,6 +451,7 @@ public class PaperServiceImpl implements PaperService {
             }else{
                 paper.setIsEncryString("是");
             }
+            paper.setCreaterUserName(teacher.getUserName());//设置创建者用户名
             paperList.add(paper);
         }
 

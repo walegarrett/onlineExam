@@ -16,6 +16,8 @@
     <link href="${APP_PATH}/statics/lightYear/css/bootstrap.min.css" rel="stylesheet">
     <link href="${APP_PATH}/statics/lightYear/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="${APP_PATH}/statics/lightYear/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${APP_PATH}/statics/bootstrapValidator/dist/css/bootstrapValidator.css"/>
+
 </head>
 
 <body>
@@ -28,7 +30,7 @@
             </div>
             <div class="modal-body">
                 <!--编辑表单-->
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="update-form">
                     <div class="form-group">
                         <label for="messageId_update_static" class="col-sm-2 control-label">消息ID</label>
                         <div class="col-sm-10">
@@ -150,6 +152,7 @@ word-break:break-all;">
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/main.min.js"></script>
+<script type="text/javascript" src="${APP_PATH}/statics/bootstrapValidator/dist/js/bootstrapValidator.js"></script>
 
 <!--图表插件-->
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/Chart.js"></script>
@@ -410,7 +413,44 @@ word-break:break-all;">
                 }
             });
         }
-    })
+    });
+    $(document).ready(function() {
+        $('#update-form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                messageTitle: {
+                    message: '消息标题不符合要求',
+                    validators: {
+                        notEmpty: {
+                            message: '消息标题不能为空'
+                        },
+                        stringLength: {  //长度限制
+                            min: 2,
+                            max: 15,
+                            message: '消息标题长度必须在2到15位之间'
+                        }
+                    }
+                },
+                messageContent: {
+                    message: '消息内容不符合要求',
+                    validators: {
+                        notEmpty: {
+                            message: '消息内容不能为空'
+                        },
+                        stringLength: {  //长度限制
+                            min: 1,
+                            max: 100,
+                            message: '消息内容长度必须在1到100位之间'
+                        }
+                    }
+                }
+            }
+        });
+    });
 </script>
 </body>
 </html>

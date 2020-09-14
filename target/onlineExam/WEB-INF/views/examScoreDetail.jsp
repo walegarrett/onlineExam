@@ -61,6 +61,22 @@
         .test_time{
             font-size: 18px;
         }
+        .navbar{
+            position:fixed;
+            top:0px;
+            width:70.5%;
+            height:200px!important;
+            z-index:1000;
+            color:black;
+        }
+        .test{
+            margin-top:50px;
+        }
+        .navbar-nav li{
+            width:180px;
+            margin:10px 15px;
+            float:left!important;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +84,20 @@
     <!--nr start-->
     <div class="test_main">
         <div class="nr_left">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><h2>${paper.paperName}</h2></li>
+                            <li><h2>满分：${paper.totalScore}分</h2></li>
+                            <li><h2>答卷人：${studentName}</h2></li>
+                            <li><h2>批卷人：${teacherName}</h2></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+
+            </nav>
             <div class="test">
                 <form action="" method="post" id="onlineForm">
 

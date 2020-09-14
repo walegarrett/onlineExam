@@ -55,8 +55,11 @@
                     </div>
                     <div class="form-group">
                         <label for="score_update_input" class="col-sm-2 control-label">最终分数</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-7">
                             <input type="number" class="form-control" name="paperName" id="score_update_input" placeholder="请输入你要修改后的试卷名称">
+                        </div>
+                        <div class="col-sm-3">
+                            <label id="paperScore">试卷满分为：50分</label>
                         </div>
                     </div>
                 </form>
@@ -169,44 +172,6 @@
 <script src="${APP_PATH}/statics/bootstrap-table/extensions/export/tableExport.js"></script>
 <script src="${APP_PATH}/statics/bootstrap-table/extensions/export/jquery.base64.js"></script>
 <script type="text/javascript">
-    //代码如下，关键代码为最后四行代码
-    // $('#users_table').bootstrapTable('destroy').bootstrapTable({
-    //     columns: [
-    //         {
-    //             field: '',
-    //             title: '序号',
-    //             formatter: function (value, row, index) {
-    //                 return index+1;
-    //             }
-    //         }, {
-    //             field: 'name',
-    //             title: '姓名',
-    //         }, {
-    //             field: 'department',
-    //             title: '部门',
-    //         },{
-    //             field: 'loginCount',
-    //             title: '登录次数',
-    //         },{
-    //             field: 'loginTime',
-    //             title: '登录时间',
-    //         }
-    //     ],
-    //     // data:data,
-    //     striped:true,
-    //     // sortName:sort_name,//按照这个排序
-    //     sortOrder:'desc', //降序排列
-    //     // search:true, //搜索框
-    //     pagination:true,  //设置为 true 会在表格底部显示分页条。
-    //     paginationLoop:false, //设置为 true 启用分页条无限循环的功能。
-    //     pageList:[10,15,20],
-    //     showFooter:true,//显示列脚
-    //     //导出功能设置（关键代码）
-    //     exportDataType:'all',//'basic':当前页的数据, 'all':全部的数据, 'selected':选中的数据
-    //     showExport: true,  //是否显示导出按钮
-    //     buttonsAlign:"right",  //按钮位置
-    //     exportTypes:['excel'],  //导出文件类型，[ 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf']
-    // });
     var totalRecord;//总记录数
     var currentPage;//当前页
     //对于是否需要邀请码
@@ -279,7 +244,7 @@
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
             //为编辑按钮添加一个自定义的属性
             editBtn.attr("edit-id",item.id);
-
+            editBtn.attr("paperScore",item.paperScore);
             //为删除按钮添加一个自定义的属性来表示当前删除的员工id
             delBtn.attr("delete-id",item.id);
             editBtn.attr("paperId",item.paperId);
@@ -382,7 +347,7 @@
 
     //点击编辑用户
     $(document).on("click",".edit_btn",function () {
-        //alert("");
+        $("#paperScore").text("试卷总分为："+$(this).attr("paperScore"));
         //-------------注意以下的逻辑关系，先后次序不能改变
         getUser($(this).attr("edit-id"));
         $("#userUpdateModal").modal({
@@ -390,7 +355,7 @@
         });
         //2.把用户的id传递给模态框的更新按钮
         $("#user_update_btn").attr("edit-id",$(this).attr("edit-id"));
-
+        $("#user_update_btn").attr("paperScore",$(this).attr("paperScore"));
     });
     /**
      * 获取板块信息
@@ -417,8 +382,11 @@
         // var uUserid=$("#uUserid_update_input").val();
         var score=$("#score_update_input").val();
         score=parseInt(score);
-        // alert($(this).attr("edit-id"));
-        // alert(uUserid);
+        var paperScore=parseInt($(this).attr("paperScore"));
+        if(score<0||score>paperScore){
+            alert("分数不能超出试卷满分且不能为负数哦！");
+            return false;
+        }
         var data={
             "id":parseInt($(this).attr("edit-id")),
             "score":score

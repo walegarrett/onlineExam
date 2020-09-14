@@ -329,11 +329,19 @@ public class PaperController {
         return Msg.success().add("paperlist",list);
     }
 
+    /**
+     * 模糊查找某个创建者创建 的试卷
+     * @param teacherId
+     * @param id
+     * @param title
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping(value="/searchPaper",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchPaper(Integer teacherId, Integer id, String title,int page, int limit){
         System.out.println(id+" "+title+" "+page+" "+limit);
-//        int page=1,limit=2;
         int before = limit * (page - 1);
         int after = limit;//page * limit
 

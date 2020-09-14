@@ -57,6 +57,7 @@ public class ProblemServiceImpl implements ProblemService {
         list=problemMapper.selectByExampleWithBLOBsAndPage(problemExample,before,after);
         //list=problemMapper.selectByExampleAndPage(problemExample,before,after);
         List<Problem>problemList=new ArrayList<>();
+        User teacher=userService.findUserByUserId(teacherId);
         for(Problem problem:list){
             Integer type=problem.getType();
             String content=problem.getContent();
@@ -75,6 +76,7 @@ public class ProblemServiceImpl implements ProblemService {
             int start=content.indexOf("titleContent");
             String titleContent=content.substring(start+15,content.length()-2);
             problem.setTitleContent(titleContent);
+            problem.setCreaterUserName(teacher.getUserName());//设置创建问题者的用户名
             problemList.add(problem);
         }
         return problemList;
@@ -207,6 +209,15 @@ public class ProblemServiceImpl implements ProblemService {
         return list.size();
     }
 
+    /**
+     * 模糊查找创建者创建的所有题目
+     * @param teacherId
+     * @param id
+     * @param type
+     * @param before
+     * @param after
+     * @return
+     */
     @Override
     public List<Problem> searchProblem(Integer teacherId, Integer id, Integer type, int before, int after) {
         ProblemExample problemExample=new ProblemExample();
@@ -228,6 +239,7 @@ public class ProblemServiceImpl implements ProblemService {
         list=problemMapper.selectByExampleWithBLOBsAndPage(problemExample,before,after);
         //list=problemMapper.selectByExampleAndPage(problemExample,before,after);
         List<Problem>problemList=new ArrayList<>();
+        User teacher=userService.findUserByUserId(teacherId);
         for(Problem problem:list){
             Integer types=problem.getType();
             String content=problem.getContent();
@@ -246,6 +258,7 @@ public class ProblemServiceImpl implements ProblemService {
             int start=content.indexOf("titleContent");
             String titleContent=content.substring(start+15,content.length()-2);
             problem.setTitleContent(titleContent);
+            problem.setCreaterUserName(teacher.getUserName());//设置创建者的用户名
             problemList.add(problem);
         }
         return problemList;

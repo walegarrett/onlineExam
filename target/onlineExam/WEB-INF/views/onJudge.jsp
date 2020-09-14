@@ -49,6 +49,22 @@
         .commentInput{
             width:380px!important;
         }
+        .navbar{
+            position:fixed;
+            top:0px;
+            width:83.5%;
+            height:200px!important;
+            z-index:1000;
+            color:black;
+        }
+        .test{
+            margin-top:50px;
+        }
+        .navbar-nav li{
+            width:180px;
+            margin:10px 50px;
+            float:left!important;
+        }
     </style>
 </head>
 <body>
@@ -56,12 +72,25 @@
     <!--nr start-->
     <div class="test_main">
         <div class="nr_left">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><h2>${paper.paperName}</h2></li>
+                            <li><h2>满分：${paper.totalScore}分</h2></li>
+                            <li><h2>答题人：${studentName}</h2></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+
+            </nav>
             <div class="test">
                 <form action="" method="post" id="onlineForm">
 
                     <div class="test_title">
                         <p class="test_time">
-                            <label>试卷得分：</label><input type="text" class="score-form-control" name="totalScore" value="${totalScore}" disabled/>
+                            <label>试卷得分：</label><input type="number" class="score-form-control" name="totalScore" value="${totalScore}"/>
                             <label>请填写批语：</label><input type="text" class="score-form-control commentInput" name="comment"/>
                         </p>
                         <font><input type="button" name="test_jiaojuan" value="提交成绩" onclick="doJudge()"></font>
@@ -451,6 +480,11 @@
         }
 
         var score=parseInt($("input[name='totalScore']").val());
+        var paperScore=${paper.totalScore};
+        if(score>paperScore||score<0){
+            alert("您的判卷分数不能超出试卷满分且不能为负分哦！");
+            return false;
+        }
         var comment=$("input[name='comment']").val();
         // alert(score+" "+comment);
         // return false;

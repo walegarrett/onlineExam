@@ -30,7 +30,7 @@
             </div>
             <div class="modal-body">
                 <!--编辑表单-->
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="update-form">
                     <div class="form-group">
                         <label for="uUserid_update_static" class="col-sm-2 control-label">用户账号</label>
                         <div class="col-sm-10">
@@ -249,6 +249,7 @@
 <script type="text/javascript" src="${APP_PATH}/statics/bootstrapValidator/dist/js/bootstrapValidator.js"></script>
 <!--图表插件-->
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/Chart.js"></script>
+<script type="text/javascript" src="${APP_PATH}/statics/js/common.js"></script>
 <script>
     $("#submit-btn").click(function () {
         to_page(1);
@@ -525,7 +526,7 @@
         var sex=$("input[name='uSex']:checked").val();
         role=parseInt(role);
         sex=parseInt(sex);
-        alert($(this).attr("edit-id"));
+        // alert($(this).attr("edit-id"));
         // alert(uUserid);
         var data={
             "id":parseInt($(this).attr("edit-id")),
@@ -687,6 +688,60 @@
                     }
                 },
                 uAge:{
+                    validators:{
+                        notEmpty:{
+                            message:"年龄不能为空"
+                        },
+                        regexp: { //正则表达式
+                            regexp: /^[0-9]+.?[0-9]*$/,
+                            message: '年龄必须为数字'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#update-form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                uName: {
+                    message: '真实姓名不可用',
+                    validators: {
+                        notEmpty: {
+                            message: '真实姓名不能为空'
+                        },
+                        regexp: { //正则表达式
+                            regexp: /^[\u4e00-\u9fa5_a-zA-Z]{2,10}$/,
+                            message: '真实姓名只能是2-10位的中英文的组合'
+                        }
+                    }
+                },
+                uPassword: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },stringLength: {  //长度限制
+                            min: 4,
+                            max: 18,
+                            message: '密码长度必须在4到18位之间'
+                        }
+                    }
+                },
+                uEmail: {
+                    validators: {
+                        notEmpty: {
+                            message: 'email不能为空'
+                        },
+                        emailAddress:{
+                            message:"邮箱格式不正确，邮箱不可用！"
+                        }
+                    }
+                },
+                uNickname:{
                     validators:{
                         notEmpty:{
                             message:"年龄不能为空"

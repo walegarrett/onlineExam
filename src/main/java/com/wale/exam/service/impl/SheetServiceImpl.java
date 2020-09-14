@@ -257,6 +257,7 @@ public class SheetServiceImpl implements SheetService {
             sheet.setUserName(doUser.getUserName());
             sheet.setPaperName(paper.getPaperName());
             sheet.setJudgerName(judgeUser.getUserName());
+            sheet.setPaperScore(paper.getTotalScore());
             list.add(sheet);
         }
         return list;
@@ -276,6 +277,7 @@ public class SheetServiceImpl implements SheetService {
         sheet.setUserName(doUser.getUserName());
         sheet.setPaperName(paper.getPaperName());
         sheet.setJudgerName(judgeUser.getUserName());
+        sheet.setPaperScore(paper.getTotalScore());
         return sheet;
     }
 
@@ -495,6 +497,7 @@ public class SheetServiceImpl implements SheetService {
             sheet.setUserName(doUser.getUserName());
             sheet.setPaperName(paper.getPaperName());
             sheet.setJudgerName(judgeUser.getUserName());
+            sheet.setPaperScore(paper.getTotalScore());
             list.add(sheet);
         }
         return list;
