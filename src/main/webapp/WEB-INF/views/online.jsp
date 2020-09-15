@@ -276,8 +276,9 @@
         var answer="";
         answer=$(this).val();
         // alert(questionId+" "+answer);
-        if(answer.length>1000){
-            alert("填空和简答的答案字数不能超出1000字！！！");
+        if(answer.length>=500){
+            alert("填空和简答的答案字数不能超出500字！！！");
+            return false;
         }
         submitAnswer(questionId,answer);
     });
@@ -644,7 +645,10 @@
         if (!validate) {
             var confir=confirm("你还有题目未作答，一旦交卷无法修改！！！确认交卷？");
             if(confir==false) return false;
-        }else alert("题目已经全部作答完成！！！");
+        }else {
+            var confir=confirm("题目已经全部作答完成，是否确认提交试卷");
+            if(confir==false) return false;
+        }
 
         //return false;
         // $.modal.loading("正在交卷中，请稍后...");
