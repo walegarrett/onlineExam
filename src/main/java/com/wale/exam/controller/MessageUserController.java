@@ -91,4 +91,22 @@ public class MessageUserController {
         PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
     }
+    /**
+     * test-找到所有的某个用户收到的消息
+     * @param pn
+     * @param userId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/testFindAllMessageOfReceiver")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg testFindAllMessageOfReceiver(@RequestParam(value = "pn",defaultValue = "1")Integer pn, Integer userId, HttpSession session){
+        List<MessageUser>list=new ArrayList<>();
+        int receiveUserId=userId;
+        list=messageUserService.findItemByReceiveUserId(receiveUserId);
+        System.out.println("消息数量："+list.size());
+        //分页信息
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
+        return Msg.success().add("pageInfo",page);
+    }
 }
