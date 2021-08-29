@@ -38,7 +38,7 @@ create table exam_paper(
     create_time datetime(0) comment '发布时间',
     start_time datetime(0) comment '开始时间',
     end_time datetime(0) comment '结束时间',
-    duration_time int(0) comment '持续时间',
+    duration_time int(11) comment '持续时间',
     question_count int(11) comment '试题数量',
     is_encry int(11) comment '试卷是否加密',
     invi_code varchar(255) comment '答题邀请码',
