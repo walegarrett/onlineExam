@@ -9,18 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="27918287-696e-4928-9649-11f4080e31c9" name="Default Changelist" comment="修改数据库文件中字段数据类型">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/48fc10fe-35cd-4937-a9f6-84c919f93759.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/48fc10fe-35cd-4937-a9f6-84c919f93759.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/FileUploadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wale/exam/controller/FileUploadController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/MBGTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/FileUploadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wale/exam/controller/FileUploadController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/FileUploadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/onlineExam/WEB-INF/classes/com/wale/exam/controller/FileUploadController.class" afterDir="false" />
-    </list>
+    <list default="true" id="27918287-696e-4928-9649-11f4080e31c9" name="Default Changelist" comment="fix bugs" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -423,7 +412,7 @@
       <workItem from="1630327687887" duration="256000" />
       <workItem from="1640690953419" duration="656000" />
       <workItem from="1646916328695" duration="1880000" />
-      <workItem from="1650887888147" duration="1452000" />
+      <workItem from="1650887888147" duration="1570000" />
     </task>
     <task id="LOCAL-00001" summary="修改数据库文件中字段数据类型">
       <created>1630203176761</created>
@@ -439,7 +428,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630203288723</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix bugs">
+      <created>1650893158767</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1650893158767</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -458,7 +454,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修改数据库文件中字段数据类型" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改数据库文件中字段数据类型" />
+    <MESSAGE value="fix bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

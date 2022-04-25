@@ -150,7 +150,7 @@ public class FileUploadController {
         HttpSession session1=request.getSession();
         int uid= (int) session1.getAttribute("userid");
         String path=request.getSession().getServletContext().getRealPath("/uploads/");
-        path="E:\\wps\\专业实训\\exam\\onlineExam\\upload\\images";
+        path="E:\\IDEA\\IdeaProjects\\onlineExam\\upload\\images";
         //判断，该路径是否存在
         File file=new File(path);
         if(!file.exists()){
