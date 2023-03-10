@@ -52,18 +52,6 @@
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
     </dependency>
-    <!--         mysql-->
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-     <dependency>
-         <groupId>mysql</groupId>
-         <artifactId>mysql-connector-java</artifactId>
-         <version>8.0.11</version>
-     </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.41</version>
-    </dependency>
     <!--        jstl servlet-api junit-->
     <!-- https://mvnrepository.com/artifact/jstl/jstl -->
     <dependency>
