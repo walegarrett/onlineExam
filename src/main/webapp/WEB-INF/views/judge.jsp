@@ -56,18 +56,18 @@
             </div>
         </fieldset>
 
-<%--        <script type="text/html" id="toolbarDemo">--%>
-<%--            <div class="layui-btn-container">--%>
-<%--                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>--%>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-danger layui-btn-sm data-add-btn" lay-event="redo"> 打回重做 </button>
 <%--                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>--%>
-<%--            </div>--%>
-<%--        </script>--%>
+            </div>
+        </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">开始判卷</a>
-<%--            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>--%>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-redo" lay-event="redo">打回</a>
         </script>
 
     </div>
@@ -157,10 +157,40 @@
                 $(window).on("resize", function () {
                     layer.full(index);
                 });
-            } else if (obj.event === 'delete') {  // 监听删除操作
+            } else if (obj.event === 'redo') {  // 监听打回重做操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var empNames="";
+                var del_idstr="";
+                // layer.alert(JSON.stringify(data));
+                for(i=0;i<data.length;i++){
+                    empNames+=data[i].paperName+" ,";
+                    //组装id的字符串
+                    del_idstr+=data[i].id+"-";
+                }
+                //去除empNames多余的逗号
+                empNames=empNames.substring(0,empNames.length-1);
+                del_idstr=del_idstr.substring(0,del_idstr.length-1);
+                var data= {
+                        "sheetId":del_idstr
+                    };
+                if(confirm("确认打回【"+del_idstr+"】吗？")){
+                    //确认，发送ajax请求删除
+                    $.ajax({
+                        url:"${APP_PATH}/redoSheet",
+                        type:"POST",
+                        data:data,
+                        success:function (result) {
+                            if(result.code==100) {
+                                alert("打回成功");
+                                to_page(currentPage);
+                            }else{
+                                alert("打回失败");
+                                to_page(currentPage);
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -185,11 +215,28 @@
                     layer.full(index);
                 });
                 return false;
-            } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
-                });
+            } else if (obj.event === 'redo') {//打回重做
+
+                if(confirm("确认打回【"+data.id+"】吗？")){
+                    var data= {
+                        "sheetId":data.id
+                    };
+                    //确认，发送ajax请求删除
+                    $.ajax({
+                        url:"${APP_PATH}/redoSheet",
+                        type:"POST",
+                        data:data,
+                        success:function (result) {
+                            if(result.code==100) {
+                                alert("打回成功");
+                                to_page(currentPage);
+                            }else{
+                                alert("打回失败");
+                                to_page(currentPage);
+                            }
+                        }
+                    });
+                }
             }
         });
 

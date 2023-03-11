@@ -40,4 +40,10 @@ public interface ProblemService {
     int findProblemCountByTeaId(Integer teacherId,String keyword);
 
     List<Problem> findProblemByTeaId(Integer teacherId, String keyword, int before, int after);
+
+    List<Problem> findProblemsWithKeyword(String field, String keyword);
+
+    void deleteBatch(List<Integer> del_ids);
+
+    List<Problem> findProblemByPaperIdAndType(Integer paperId, int i);
 }

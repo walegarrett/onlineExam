@@ -90,7 +90,7 @@
                 {field: 'answer', title: '正确答案', width: 100},
                 {field: 'analysis', width: 120, title: '答案解析'},
                 {field: 'score', width: 70, title: '分值'},
-                {field: 'createrId', width: 100, title: '创建者', sort: true},
+                {field: 'createrUserName', width: 100, title: '创建者', sort: true},
                 {field: 'createTime', width: 200, title: '创建时间'},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
@@ -113,15 +113,15 @@
             }else id=-1;
             var type=$("input[name='type']").val();
             var typeId=0;
-            if(type=="单选题"){
+            if(type=="单选题"||type=="单选"){
                 typeId=1;
-            }else if(type=="多选题"){
+            }else if(type=="多选题"||type=="多选"){
                 typeId=2;
-            }else if(type=="判断题"){
+            }else if(type=="判断题"||type=="判断"){
                 typeId=3;
-            }else if(type=="填空题"){
+            }else if(type=="填空题"||type=="填空"){
                 typeId=4;
-            }else if(type=="简答题"){
+            }else if(type=="简答题"||type=="简答"){
                 typeId=5;
             }else typeId=0;
             // alert(id+" "+typeId);
@@ -163,7 +163,41 @@
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var empNames="";
+                var del_idstr="";
+                // layer.alert(JSON.stringify(data));
+                for(i=0;i<data.length;i++){
+                    //alert(data[i].id);
+                    empNames+=data[i].paperName+" ,";
+                    //组装员工id的字符串
+                    del_idstr+=data[i].id+"-";
+                }
+
+                //去除empNames多余的逗号
+                empNames=empNames.substring(0,empNames.length-1);
+                del_idstr=del_idstr.substring(0,del_idstr.length-1);
+                var data=
+                    {
+                        "problemId":del_idstr
+                    };
+
+                if(confirm("确认删除【"+del_idstr+"】吗？")){
+                    //确认，发送ajax请求删除
+                    $.ajax({
+                        url:"${APP_PATH}/deleteProblem",
+                        type:"POST",
+                        data:data,
+                        success:function (result) {
+                            if(result.code==100) {
+                                alert("删除成功");
+                                to_page(currentPage);
+                            }else{
+                                alert("删除失败");
+                                to_page(currentPage);
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -189,28 +223,29 @@
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                // layer.confirm('真的删除行么', function (index) {
-                //     obj.del();
-                //     layer.close(index);
-                // });
-                var datas={
-                    "problemId":data.id//
-                };
-                $.ajax({
-                    cache: false,
-                    url:"${APP_PATH}/deleteProblem",
-                    type:"POST",
-                    async:false,
-                    data:datas,
-                    success:function (result) {
-                        if(result.code==200){
-                            //执行有错误时候的判断
-                            layer.msg('删除试卷失败！');
-                        }else{
-                            layer.msg('删除试卷成功！');
+                if(confirm("确认删除【"+data.id+"】号题目吗？")){
+                    var datas={
+                        "problemId":data.id//
+                    };
+                    $.ajax({
+                        cache: false,
+                        url:"${APP_PATH}/deleteProblem",
+                        type:"POST",
+                        async:false,
+                        data:datas,
+                        success:function (result) {
+                            if(result.code==200){
+                                //执行有错误时候的判断
+                                layer.msg('删除题目失败！');
+                            }else{
+                                layer.msg('删除题目成功！', {icon:1,time:1000},function(){
+                                    setTimeout('window.location.reload()',1000);
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         });
 

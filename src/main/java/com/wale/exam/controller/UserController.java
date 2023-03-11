@@ -275,6 +275,13 @@ public class UserController {
             return Msg.fail();
         }
     }
+
+    /**
+     * 校验需要注册的用户名是否已经存在
+     * @param userName
+     * @return
+     * @throws JsonProcessingException
+     */
     @PostMapping(value = "/registerCheckUserName")
     @ResponseBody
     public String registerCheckUserName(String userName) throws JsonProcessingException {
@@ -498,8 +505,13 @@ public class UserController {
         user.setPassword(new_password);
         userService.updateUser(user);
         changeSession(session,Integer.parseInt(userid));
-        return "redirect:./toWelcome";
+        return "redirect:./toTeacherPassword";
     }
+    @RequestMapping("/toTeacherPassword")
+    public String toTeacherPassword(){
+        return "teacherPassword";
+    }
+
     @RequestMapping("/toWelcome")
     public String toWelcome(){
         return "welcome";

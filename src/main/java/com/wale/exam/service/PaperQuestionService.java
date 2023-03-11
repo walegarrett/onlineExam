@@ -16,4 +16,6 @@ public interface PaperQuestionService {
     List<PaperQuestion> findItemByPaperId(Integer paperId);
 
     void deleteItemByPaperId(Integer paperId);
+
+    List<PaperQuestion> findItemByProblemId(Integer problemId);
 }

@@ -5,6 +5,7 @@ import com.wale.exam.bean.Sheet;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author WaleGarrett
@@ -52,4 +53,30 @@ public interface SheetService {
     int searchGradeCount(Integer sheetId, String paperName, String userName, Integer teacherId);
 
     boolean checkIsAnbswered(Integer userId, Integer paperId);
+
+    List<Sheet> findSheetWithJudgedAndKeyword(String field, String keyword);
+
+    Map<Integer, Integer> findHottestPaperInSheets();
+
+    List<Sheet> findAllSheet();
+
+    List<Sheet> findSheetWithKeyword(String field, String keyword);
+
+    void deleteSheet(Integer sheetId);
+
+    void deleteBatch(List<Integer> del_ids);
+
+    void redoSheetBatch(List<Integer> del_ids);
+
+    void redoSheet(Integer id);
+
+    void reJudgeSheetBatch(List<Integer> del_ids);
+
+    void reJudgeSheet(Integer id);
+
+    void updateSheetScoreByProblemId(Integer problemId);
+    List<Sheet> findSheetByPaperId(Integer paperId);
+    int getSheetScoreByPaperIdAndUserId(Integer paperId, Integer userId);
+
+    void updateSheetScoreByPaperIdAndUserId(Integer paperId, Integer userId);
 }

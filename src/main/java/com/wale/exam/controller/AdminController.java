@@ -4,8 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.wale.exam.bean.*;
+import com.wale.exam.bean.question.QuestionItemObject;
+import com.wale.exam.bean.question.QuestionObject;
 import com.wale.exam.service.*;
+import com.wale.exam.util.JsonDateValueProcessor;
 import com.wale.exam.util.MyPageInfo;
+import com.wale.exam.util.RedisUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author WaleGarrett
@@ -68,6 +71,18 @@ public class AdminController {
         String jsonStr = mapper.writeValueAsString(hashMap);
         return jsonStr;
     }
+
+    /**
+     * 管理员登录
+     * @param username
+     * @param password
+     * @param code
+     * @param request
+     * @param session
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
     @RequestMapping(value = "/adminLogin")
     @ResponseBody
     public Msg adminLogin(String username, String password, String code, HttpServletRequest request, HttpSession session) throws IOException, ServletException {
@@ -118,6 +133,19 @@ public class AdminController {
         //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
         return Msg.success().add("user",user);
     }
+
+    /**
+     * 管理员更新某个用户的信息
+     * @param id
+     * @param password
+     * @param age
+     * @param realName
+     * @param email
+     * @param role
+     * @param sex
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminUpdateUser")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminUpdateUser(Integer id, String password, Integer age, String realName, String email, Integer role, Integer sex, HttpSession session){
@@ -135,9 +163,22 @@ public class AdminController {
     }
     @RequestMapping("/adminDeleteUser")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminDeleteUser(Integer userId, HttpSession session){
+    public Msg adminDeleteUser(String userId, HttpSession session){
         System.out.println(userId);
-        userService.deleteUser(userId);
+//        userService.deleteUser(userId);
+        if(userId.contains("-")){
+            String[] str_ids=userId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            userService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(userId);
+            userService.deleteUser(id);
+        }
         return Msg.success();
     }
 
@@ -166,11 +207,13 @@ public class AdminController {
      */
     @RequestMapping("/adminPaperManageSearch")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminPaperManageSearch(String field, String keyword, HttpSession session){
+    public Msg adminPaperManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn,String field, String keyword, HttpSession session){
         List<Paper> list=new ArrayList<>();
-        list=paperService.findPaperWithKeyword(field,keyword);
+        if(keyword==null||keyword.equals(""))
+            list=paperService.findAllPaper();
+        else list=paperService.findPaperWithKeyword(field,keyword);
         //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
-        PageInfo page= MyPageInfo.getPageInfo(1,list.size()+1,list);
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
     }
 
@@ -181,6 +224,19 @@ public class AdminController {
         paper=paperService.findPaperByPaperId(paperId);
         return Msg.success().add("paper",paper);
     }
+
+    /**
+     * 管理员更新试卷
+     * @param id
+     * @param paperName
+     * @param durationTime
+     * @param startTime
+     * @param isEncry
+     * @param inviCode
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/adminUpdatePaper")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminUpdatePaper(Integer id, String paperName, Integer durationTime, String startTime, Integer isEncry, String inviCode, HttpSession session) throws ParseException {
@@ -196,15 +252,36 @@ public class AdminController {
         Date start = formatter.parse(startTimes);
         paper.setStartTime(start);
         paper.setDurationTime(durationTime);
-        paper.setEndTime(new Date((new Date()).getTime()+start.getTime()));
+        paper.setEndTime(new Date(start.getTime()+1000*60*durationTime));
         paperService.updatePaper(paper);
         return Msg.success();
     }
+
+    /**
+     * 删除试卷
+     * @param paperId
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminDeletePaper")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminDeletePaper(Integer paperId, HttpSession session){
+    public Msg adminDeletePaper(String paperId, HttpSession session){
         System.out.println(paperId);
-        paperService.deletePaper(paperId);
+
+        if(paperId.contains("-")){
+            String[] str_ids=paperId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            paperService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(paperId);
+            paperService.deletePaper(id);
+        }
+
         return Msg.success();
     }
 
@@ -223,7 +300,118 @@ public class AdminController {
         PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
     }
+    /**
+     * 删除题目
+     * @param problemId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminDeleteProblem")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminDeleteProblem(String problemId, HttpSession session){
+        System.out.println(problemId);
+//        problemService.deleteProblem(problemId);
+        if(problemId.contains("-")){
+            String[] str_ids=problemId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            problemService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(problemId);
+            problemService.deleteProblem(id);
+        }
+        return Msg.success();
+    }
+    /**
+     * 带模糊搜索的查找
+     * @param pn
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminProblemManageSearch")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminProblemManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn, String field, String keyword, HttpSession session){
+        List<Problem> list=new ArrayList<>();
+        if(keyword==null||keyword.equals("")){
+            list=problemService.findAllProblem();
+        }else{
+            list=problemService.findProblemsWithKeyword(field,keyword);
+        }
 
+        //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
+        return Msg.success().add("pageInfo",page);
+    }
+    /**
+     * 根据题目id获取题目
+     * @param problemId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminGetProblem")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminGetProblem(Integer problemId, HttpSession session){
+        Problem problem=new Problem();
+        problem=problemService.findProblemByProblemId(problemId);
+        return Msg.success().add("problem",problem);
+    }
+
+    /**
+     * 更新题目
+     * @param problemId
+     * @param titleContent
+     * @param answer
+     * @param score
+     * @param type
+     * @param analysis
+     * @param optionA
+     * @param optionB
+     * @param optionC
+     * @param optionD
+     * @param session
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/adminUpdateProblem")
+    @ResponseBody
+    public Msg adminUpdateProblem(Integer problemId, String titleContent, String answer, Integer score, Integer type, String analysis, String optionA, String optionB, String optionC, String optionD, HttpSession session) throws ParseException {
+        System.out.println("更新题目："+" "+titleContent+" "+answer+" "+type+" "+score+" "+analysis);
+
+        Map<String,Object> map=new HashMap<>();//用来存储错误的字段
+        Problem problem=new Problem();
+        problem.setAnswer(answer);
+        problem.setType(type);
+        problem.setScore(score);
+//        problem.setCreateTime(new Date());
+        problem.setAnalysis(analysis);
+        String content;
+        QuestionObject questionObject=new QuestionObject();
+        questionObject.setTitleContent(titleContent);
+        questionObject.setAnalyze(analysis);
+        questionObject.setCorrect(answer);
+        List<QuestionItemObject>questionItemObjectList=new ArrayList<>();
+        questionItemObjectList.add(new QuestionItemObject("A",optionA,0));
+        questionItemObjectList.add(new QuestionItemObject("B",optionB,0));
+        questionItemObjectList.add(new QuestionItemObject("C",optionC,0));
+        questionItemObjectList.add(new QuestionItemObject("D",optionD,0));
+        questionObject.setQuestionItemObjects(questionItemObjectList);
+        //用json来传值
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.registerJsonValueProcessor(Date.class , new JsonDateValueProcessor());
+        JSONArray json = JSONArray.fromObject(questionObject, jsonConfig);
+        String js = json.toString();
+        String jso = js.substring(1,js.length()-1);
+        System.out.println(jso);
+        problem.setContent(jso);
+        problem.setId(problemId);
+
+        problemService.updateProblem(problem);
+        return Msg.success();
+    }
     /**
      * 成绩管理
      * @param pn
@@ -240,6 +428,26 @@ public class AdminController {
         return Msg.success().add("pageInfo",page);
     }
 
+    /**
+     * 带模糊搜索的成绩管理查找
+     * @param pn
+     * @param field
+     * @param keyword
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminGradeManageSearch")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminGradeManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn, String field, String keyword,HttpSession session){
+        System.out.println(field+" "+keyword);
+        List<Sheet> list=new ArrayList<>();
+        if(keyword==null||keyword.equals(""))
+            list=sheetService.findAllSheetWithJudged();
+        else list=sheetService.findSheetWithJudgedAndKeyword(field,keyword);
+        //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
+        return Msg.success().add("pageInfo",page);
+    }
     @RequestMapping("/adminGetGrade")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminGetGrade(Integer sheetId, HttpSession session){
@@ -248,6 +456,14 @@ public class AdminController {
         return Msg.success().add("sheet",sheet);
     }
 
+    /**
+     * 管理员修改成绩
+     * @param id
+     * @param score
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/adminUpdateGrade")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminUpdateGrade(Integer id, Integer score, HttpSession session) throws ParseException {
@@ -281,6 +497,16 @@ public class AdminController {
         message=messageService.findMessageByMessageId(messageId);
         return Msg.success().add("message",message);
     }
+
+    /**
+     * 更新某条消息
+     * @param id
+     * @param messageTitle
+     * @param messageContent
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/adminUpdateMessage")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminUpdateMessage(Integer id, String messageTitle,String messageContent, HttpSession session) throws ParseException {
@@ -292,13 +518,45 @@ public class AdminController {
         messageService.updateMessage(message);
         return Msg.success();
     }
+
+    /**
+     * 删除消息
+     * @param messageId
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminDeleteMessage")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminDeleteMessage(Integer messageId, HttpSession session){
+    public Msg adminDeleteMessage(String messageId, HttpSession session){
         System.out.println(messageId);
-        messageService.deleteMessage(messageId);
+//        Integer messageid=Integer.parseInt(messageId);
+//        messageService.deleteMessage(messageid);
+        if(messageId.contains("-")){
+            String[] str_ids=messageId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            messageService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(messageId);
+            messageService.deleteMessage(id);
+        }
+
+
         return Msg.success();
     }
+
+    /**
+     * 修改管理员个人信息
+     * @param userId
+     * @param realName
+     * @param email
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminInfoChange")
     public String userInfoChange(
             @RequestParam("userId") String userId,
@@ -336,6 +594,14 @@ public class AdminController {
                 +new SimpleDateFormat("HH:mm:ss").format(createTime).toString();
         session.setAttribute("createTime",time);
     }
+
+    /**
+     * 更新管理员密码
+     * @param userId
+     * @param newpwd
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminUpdatePassword")
     public String updatePassword(
             @RequestParam("userId") String userId,
@@ -363,6 +629,20 @@ public class AdminController {
         String jsonStr = mapper.writeValueAsString(hashMap);
         return jsonStr;
     }
+
+    /**
+     * 管理员新增用户
+     * @param userName
+     * @param password
+     * @param age
+     * @param realName
+     * @param email
+     * @param role
+     * @param sex
+     * @param phone
+     * @param session
+     * @return
+     */
     @RequestMapping("/adminAddUser")
     @ResponseBody//记得一定要加上这个注解
     public Msg adminAddUser(String userName, String password, Integer age, String realName, String email, Integer role, Integer sex, String phone, HttpSession session){
@@ -385,11 +665,63 @@ public class AdminController {
 
     @RequestMapping("/adminUserManageSearch")
     @ResponseBody//记得一定要加上这个注解
-    public Msg adminUserManageSearch(String field, String keyword, HttpSession session){
+    public Msg adminUserManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn,String field, String keyword, HttpSession session){
         List<User> list=new ArrayList<>();
-        list=userService.searchUserByKeyword(field,keyword);
+        if(keyword==null||keyword.equals(""))
+            list=userService.findAllUser();
+        else
+            list=userService.searchUserByKeyword(field,keyword);
         //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
-        PageInfo page= MyPageInfo.getPageInfo(1,list.size()+1,list);
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
         return Msg.success().add("pageInfo",page);
+    }
+    /**
+     * 带模糊搜索的成绩管理查找
+     * @param pn
+     * @param field
+     * @param keyword
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminSheetManageSearch")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminSheetManageSearch(@RequestParam(value = "pn",defaultValue = "1")Integer pn, String field, String keyword,HttpSession session){
+        System.out.println(field+" "+keyword);
+        List<Sheet> list=new ArrayList<>();
+        if(keyword==null||keyword.equals(""))
+            list=sheetService.findAllSheet();
+        else list=sheetService.findSheetWithKeyword(field,keyword);
+        //使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就可以了
+        PageInfo page= MyPageInfo.getPageInfo(pn,10,list);
+        return Msg.success().add("pageInfo",page);
+    }
+    /**
+     * 删除答卷
+     * @param sheetId
+     * @param session
+     * @return
+     */
+    @RequestMapping("/adminDeleteSheet")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg adminDeleteSheet(String sheetId, HttpSession session){
+        System.out.println(sheetId);
+
+//        //删除答卷
+//        sheetService.deleteSheet(sheetId);
+
+        if(sheetId.contains("-")){
+            String[] str_ids=sheetId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            sheetService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(sheetId);
+            sheetService.deleteSheet(id);
+        }
+        return Msg.success();
     }
 }

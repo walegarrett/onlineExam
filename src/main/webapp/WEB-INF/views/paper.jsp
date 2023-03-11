@@ -62,6 +62,7 @@
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-xs layui-btn-warm data-count-show" lay-event="show">查看</a>
         </script>
 
     </div>
@@ -95,7 +96,7 @@
                 {field: 'startTime', width: 160, title: '开始时间'},
                 {field: 'endTime', width: 160, title: '关闭时间'},
 
-                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+                {title: '操作', minWidth: 180, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [1, 4, 7, 10, 13, 16],//数据分页条
             limit: 10,//默认十条数据一页
@@ -152,7 +153,40 @@
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var empNames="";
+                var del_idstr="";
+                // layer.alert(JSON.stringify(data));
+                for(i=0;i<data.length;i++){
+                    //alert(data[i].id);
+                    empNames+=data[i].paperName+" ,";
+                    //组装员工id的字符串
+                    del_idstr+=data[i].id+"-";
+                }
+
+                //去除empNames多余的逗号
+                empNames=empNames.substring(0,empNames.length-1);
+                del_idstr=del_idstr.substring(0,del_idstr.length-1);
+                var data=
+                    {
+                        "paperId":del_idstr
+                    };
+                if(confirm("确认删除【"+empNames+"】吗？")){
+                    //确认，发送ajax请求删除
+                    $.ajax({
+                        url:"${APP_PATH}/deletePaper",
+                        type:"POST",
+                        data:data,
+                        success:function (result) {
+                            if(result.code==100) {
+                                alert("删除成功");
+                                to_page(currentPage);
+                            }else{
+                                alert("删除失败");
+                                to_page(currentPage);
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -178,28 +212,31 @@
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                // layer.confirm('真的删除行么', function (index) {
-                //     obj.del();
-                //     layer.close(index);
-                // });
-                var datas={
-                    "paperId":data.id//
-                };
-                $.ajax({
-                    cache: false,
-                    url:"${APP_PATH}/deletePaper",
-                    type:"POST",
-                    async:false,
-                    data:datas,
-                    success:function (result) {
-                        if(result.code==200){
-                            //执行有错误时候的判断
-                            layer.msg('删除试卷失败！');
-                        }else{
-                            layer.msg('删除试卷成功！');
+                if(confirm("确认删除【"+data.id+"】号试卷吗？")){
+                    var datas={
+                        "paperId":data.id//
+                    };
+                    $.ajax({
+                        cache: false,
+                        url:"${APP_PATH}/deletePaper",
+                        type:"POST",
+                        async:false,
+                        data:datas,
+                        success:function (result) {
+                            if(result.code==200){
+                                //执行有错误时候的判断
+                                layer.msg('删除试卷失败！');
+                            }else{
+                                layer.msg('删除试卷成功！', {icon:1,time:1000},function(){
+                                    setTimeout('window.location.reload()',1000);
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
+            }else if(obj.event === 'show'){
+                window.open("${APP_PATH}/showPaperDetail?paperId="+data.id+"","_blank");
             }
         });
 

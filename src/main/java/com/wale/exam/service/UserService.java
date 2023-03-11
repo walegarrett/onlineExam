@@ -38,4 +38,6 @@ public interface UserService {
     User findUserByUserNameAndPassword(String username, String password);
 
     List<User> searchUserByKeyword(String field, String keyword);
+
+    void deleteBatch(List<Integer> del_ids);
 }

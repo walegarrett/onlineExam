@@ -27,29 +27,28 @@
                     <input type="text" name="userid" value="${userid}" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label required">管理账号</label>
+            <div class="layui-form-item layui-disabled">
+                <label class="layui-form-label">账号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="required" lay-reqtext="管理账号不能为空" placeholder="请输入管理账号"  value="${username}" class="layui-input">
-                    <tip>填写自己管理账号的名称。</tip>
+                    <input type="text" name="username" placeholder="请输入管理账号"  value="${username}" class="layui-input layui-disabled">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label required">真实姓名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="realname" lay-verify="required" lay-reqtext="真实姓名不能为空" placeholder="请输入真实姓名"  value="${user.realName}" class="layui-input">
+                    <input type="text" name="realname" lay-verify="required|trueName" lay-reqtext="真实姓名不能为空" placeholder="请输入真实姓名"  value="${user.realName}" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label required">手机</label>
                 <div class="layui-input-block">
-                    <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机"  value="${user.phone}" class="layui-input">
+                    <input type="number" name="phone" lay-verify="required|phone" lay-reqtext="手机不能为空" placeholder="请输入手机"  value="${user.phone}" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">邮箱</label>
+                <label class="layui-form-label required">邮箱</label>
                 <div class="layui-input-block">
-                    <input type="email" name="email"  placeholder="请输入邮箱"  value="${user.email}" class="layui-input">
+                    <input type="email" name="email" lay-verify="required|email" lay-reqtext="邮箱不能为空" placeholder="请输入邮箱"  value="${user.email}" class="layui-input">
                 </div>
             </div>
 
@@ -77,7 +76,25 @@
             });
             return true;
         });
-
+        // 验证
+        form.verify({
+            content: function (value) {
+                if (value.length>200) {
+                    return "输入的内容过长，请减少字数！！！";
+                }
+            },
+            trueName:function (value) {
+                // alert(value);
+                if(!/^[\u4e00-\u9fa5_a-zA-Z]{2,10}$/.test(value)){
+                    return "真实姓名只能是2-10位的中英文的组合";
+                }
+            },
+            phone:function (value) {
+                if(!/^1[34578]\d{9}$/.test(value)){
+                    return '电话号码必须为11位纯数字';
+                }
+            }
+        });
     });
 </script>
 </body>

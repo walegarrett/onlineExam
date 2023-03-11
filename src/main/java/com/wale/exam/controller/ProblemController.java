@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -70,6 +72,22 @@ public class ProblemController {
         return jso;
     }
 
+    /**
+     * 向数据库中添加题目
+     * @param teacherId
+     * @param titleContent
+     * @param answer
+     * @param score
+     * @param type
+     * @param analysis
+     * @param optionA
+     * @param optionB
+     * @param optionC
+     * @param optionD
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/addProblem")
     @ResponseBody
     public Msg addProblem(Integer teacherId, String titleContent, String answer, Integer score, Integer type, String analysis, String optionA, String optionB, String optionC, String optionD, HttpSession session) throws ParseException {
@@ -162,13 +180,13 @@ public class ProblemController {
      */
     @RequestMapping("/theAllProblem")
     @ResponseBody
-    public Msg theAllProblem(@RequestParam("paperId") Integer paperId, HttpSession session,Model model) throws ParseException {
+    public Msg theAllProblem(@RequestParam("paperId") Integer paperId, @RequestParam("userId") Integer userId, HttpSession session,Model model) throws ParseException {
         List<Problem>radioProList=new ArrayList<>();
         List<Problem>mulProList=new ArrayList<>();
         List<Problem>judgeProList=new ArrayList<>();
         List<Problem>blankProList=new ArrayList<>();//填空题
         List<Problem>shortProList=new ArrayList<>();//简答题
-        Integer userid=(Integer)session.getAttribute("userid");
+        Integer userid=userId;
         radioProList=problemService.findProblemByPaperIdAndType(paperId,1,userid);
         mulProList=problemService.findProblemByPaperIdAndType(paperId,2,userid);
         judgeProList=problemService.findProblemByPaperIdAndType(paperId,3,userid);
@@ -181,8 +199,6 @@ public class ProblemController {
         extend.put("judgeProList",judgeProList);
         extend.put("blankProList",blankProList);
         extend.put("shortProList",shortProList);
-
-
 //        System.out.println(mulProList.toString());
         Msg msg=new Msg();
         msg.setExtend(extend);
@@ -190,6 +206,41 @@ public class ProblemController {
         return msg;
     }
 
+    /**
+     * 查找试卷中的所有题目---分题目类型查询
+     * @param paperId
+     * @param session
+     * @param model
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/showAllProblem")
+    @ResponseBody
+    public Msg showAllProblem(@RequestParam("paperId") Integer paperId, HttpSession session,Model model) throws ParseException {
+        List<Problem>radioProList=new ArrayList<>();
+        List<Problem>mulProList=new ArrayList<>();
+        List<Problem>judgeProList=new ArrayList<>();
+        List<Problem>blankProList=new ArrayList<>();//填空题
+        List<Problem>shortProList=new ArrayList<>();//简答题
+
+        radioProList=problemService.findProblemByPaperIdAndType(paperId,1);
+        mulProList=problemService.findProblemByPaperIdAndType(paperId,2);
+        judgeProList=problemService.findProblemByPaperIdAndType(paperId,3);
+        blankProList=problemService.findProblemByPaperIdAndType(paperId,4);
+        shortProList=problemService.findProblemByPaperIdAndType(paperId,5);
+//        model.addAttribute("radioProList1",radioProList);
+        Map<String, Object> extend=new HashMap<>();
+        extend.put("radioProList",radioProList);
+        extend.put("mulProList",mulProList);
+        extend.put("judgeProList",judgeProList);
+        extend.put("blankProList",blankProList);
+        extend.put("shortProList",shortProList);
+//        System.out.println(mulProList.toString());
+        Msg msg=new Msg();
+        msg.setExtend(extend);
+        msg.setCode(100);
+        return msg;
+    }
     @RequestMapping("/toEditProblem")
     public String toEditProblem(Integer problemId, Model model, HttpSession session){
         System.out.println("编辑题目："+problemId);
@@ -230,7 +281,7 @@ public class ProblemController {
         problem.setAnswer(answer);
         problem.setType(type);
         problem.setScore(score);
-        problem.setCreateTime(new Date());
+//        problem.setCreateTime(new Date());
         problem.setCreaterId(teacherId);
         problem.setAnalysis(analysis);
         String content;
@@ -253,11 +304,19 @@ public class ProblemController {
         System.out.println(jso);
         problem.setContent(jso);
         problem.setId(problemId);
-
         problemService.updateProblem(problem);
         return Msg.success();
     }
 
+    /**
+     * 模糊查找问题
+     * @param teacherId
+     * @param id
+     * @param type
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping(value="/searchProblem",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchProblem(Integer teacherId, Integer id, Integer type,int page, int limit){
@@ -279,11 +338,35 @@ public class ProblemController {
         String jso = "{\"code\":0,\"msg\":\"\",\"count\":"+count+",\"data\":"+js+"}";
         return jso;
     }
+
+    /**
+     * 批量或者单独删除题目
+     * @param problemId
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/deleteProblem")
     @ResponseBody
-    public Msg deleteProblem(Integer problemId, HttpSession session) throws ParseException {
+    public Msg deleteProblem(String problemId, HttpSession session) throws ParseException {
         System.out.println("删除题目："+problemId);
-        problemService.deleteProblem(problemId);
+
+        if(problemId.contains("-")){
+            System.out.println(1);
+            String[] str_ids=problemId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            problemService.deleteBatch(del_ids);
+        }else{
+            System.out.println(2);
+            //删除单个记录
+            Integer id=Integer.parseInt(problemId);
+            problemService.deleteProblem(id);
+        }
+        System.out.println("删除题目成功！！！");
         return Msg.success();
     }
 }

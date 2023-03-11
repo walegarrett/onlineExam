@@ -17,7 +17,7 @@
     <meta http-equiv="Content-Language" content="zh-CN">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>考试记录</title>
-    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Logo_40.png" type="image/x-icon">
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <!--Layui-->
     <link href="${APP_PATH}/statics/main/plug/layui/css/layui.css" rel="stylesheet" />
     <!--font-awesome-->
@@ -82,68 +82,8 @@
         </div>
     </div>
 </div>
-<!-- 导航 -->
-<nav class="blog-nav layui-header">
-    <div class="blog-container">
-        <!-- QQ互联登陆 -->
 
-<%--        <a href="javascript:;" class="blog-user layui-hide">--%>
-<%--            <img src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" title="Absolutely" />--%>
-<%--        </a>--%>
-        <!-- 不落阁 -->
-        <a class="blog-logo" href="index2.jsp">在线考试系统</a>
-        <!-- 导航菜单 -->
-        <ul class="layui-nav" lay-filter="nav" style="margin-left:170px">
-            <li class="layui-nav-item">
-                <a href="${APP_PATH}/index2.jsp"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="${APP_PATH}/toWhere?where=paperCenter"><i class="fa fa-file-text fa-fw"></i>&nbsp;试卷中心</a>
-            </li>
-            <li class="layui-nav-item layui-this">
-                <a href="${APP_PATH}/toWhere?where=examRecord"><i class="fa fa-tags fa-fw"></i>&nbsp;考试记录</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="${APP_PATH}/toWhere?where=wrongRecord"><i class="fa fa-tags fa-fw"></i>&nbsp;错题记录</a>
-            </li>
-
-            <c:if test="${userid==null}">
-                <li class="layui-nav-item">
-                    <a href="${APP_PATH}/login"><i class="fa fa-info fa-fw"></i>登录</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="${APP_PATH}/register"><i class="fa fa-info fa-fw"></i>注册</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="${APP_PATH}/admin"><i class="fa fa-tags fa-fw"></i>&nbsp;管理员入口</a>
-                </li>
-            </c:if>
-            <c:if test="${userid!=null&&role!=3}">
-                <li class="layui-nav-item dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="${userheadpic}" alt='头像' class="img-circle" width=30px height=30px><span> ${username}</span><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="${APP_PATH}/toWhere?where=personalCenter">个人主页</a></li>
-                        <li id="message">
-                            <a href="${APP_PATH}/toReadMessage?userId=${userid}">
-                                个人消息<span id="msgNum" class="ii">4</span></a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="${APP_PATH}/userExit">退出登录</a></li>
-                    </ul>
-                </li>
-            </c:if>
-            <c:if test="${userid!=null&&role==3}">
-                <li class="layui-nav-item">
-                    <a href="${APP_PATH}/admin"><i class="fa fa-tags fa-fw"></i>&nbsp;管理员入口</a>
-                </li>
-            </c:if>
-        </ul>
-        <!-- 手机和平板的导航开关 -->
-        <a class="blog-navicon" href="javascript:;">
-            <i class="fa fa-navicon"></i>
-        </a>
-    </div>
-</nav>
+<%@include file="nav-top.jsp"%>
 <!-- 主体（一般只改变这里的内容） -->
 <div class="blog-body">
     <div class="blog-container">
@@ -188,67 +128,7 @@
         </div>
     </div>
 </div>
-<!-- 底部 -->
-<footer class="blog-footer">
-    <p><span>Copyright</span><span>&copy;</span><span>2020</span><a href="">郭观辉</a><span>Design By Guanhui Guo</span></p>
-    <p><a href="http://www.miibeian.gov.cn/" target="_blank">南昌大学</a></p>
-</footer>
-<!--侧边导航-->
-<ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
-    <li class="layui-nav-item">
-        <a href="${APP_PATH}index2.jsp"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-    </li>
-    <li class="layui-nav-item">
-        <a href="${APP_PATH}/toWhere?where=paperCenter"><i class="fa fa-file-text fa-fw"></i>&nbsp;试卷中心</a>
-    </li>
-    <li class="layui-nav-item layui-this">
-        <a href="${APP_PATH}/toWhere?where=examRecord"><i class="fa fa-tags fa-fw"></i>&nbsp;考试记录</a>
-    </li>
-    <li class="layui-nav-item">
-        <a href="${APP_PATH}/toWhere?where=wrongRecord"><i class="fa fa-tags fa-fw"></i>&nbsp;错题记录</a>
-    </li>
-
-    <c:if test="${userid==null}">
-        <li class="layui-nav-item">
-            <a href="${APP_PATH}/login"><i class="fa fa-info fa-fw"></i>登录</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="${APP_PATH}/register"><i class="fa fa-info fa-fw"></i>注册</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="${APP_PATH}/admin"><i class="fa fa-tags fa-fw"></i>&nbsp;管理员入口</a>
-        </li>
-    </c:if>
-    <c:if test="${userid!=null&&role!=3}">
-        <li class="layui-nav-item dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <img src="${userheadpic}" alt='头像' class="img-circle" width=30px height=30px><span> ${username}</span><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="${APP_PATH}/jumpwang/toSelfInfo">个人主页</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="${APP_PATH}/userExit">退出登录</a></li>
-            </ul>
-        </li>
-    </c:if>
-    <c:if test="${userid!=null&&role==3}">
-        <li class="layui-nav-item">
-            <a href="${APP_PATH}/admin"><i class="fa fa-tags fa-fw"></i>&nbsp;管理员入口</a>
-        </li>
-    </c:if>
-</ul>
-<!--分享窗体-->
-<div class="blog-share layui-hide">
-    <div class="blog-share-body">
-        <div style="width: 200px;height:100%;">
-            <div class="bdsharebuttonbox">
-                <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-                <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-                <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-            </div>
-        </div>
-    </div>
-</div>
+<%@include file="nav-bottom.jsp"%>
 <!--遮罩-->
 <div class="blog-mask animated layui-hide"></div>
 <!-- layui.js -->
@@ -260,34 +140,7 @@
 <script src="${APP_PATH}/statics/layuimini/lib/layui-v2.5.5/lay/modules/layer.js" charset="utf-8"></script>
 
 <script>
-    function showNoReadCount(){
-        if("${userid}"==""){
-            $("#msgNum").text("");
-            $("#msgNum").hide();
-        }else{
-            var userid="${userid}";
-            userid=parseInt(userid);
-            var data={
-                "userId":userid
-            };
-            $.ajax({
-                url:"${APP_PATH}/findNoReadCount",
-                data:data,
-                type:"get",
-                success:function (result) {
-                    //console.log(result);
-                    var noReadCount=result.extend.noReadCount;
-                    if(noReadCount==0){
-                        $("#msgNum").text("");
-                        $("#msgNum").hide();
-                    }else{
-                        $("#msgNum").text(""+noReadCount);
-                        $("#msgNum").show();
-                    }
-                }
-            });
-        }
-    }
+
     function buildPaperPage(result){
         //首先清空所有内容
         $(".resource-main").empty();
@@ -318,7 +171,7 @@
                 var sectionC=$("<a class='layui-btn layui-btn-small layui-btn-primary'>未批改</a>")
                     .append($("<i class='fa fa-eye fa-fw'></i>"));
                 sectionC.attr("inviCode",item.inviCode);
-                var sectionD=$("<a class='layui-btn layui-btn-small layui-btn-primary' target='_blank'  href=\"${APP_PATH}/theSheetRecord?paperId="+item.paperId+"\">查看详情</a>")
+                var sectionD=$("<a class='layui-btn layui-btn-small layui-btn-primary' target='_blank'  href=\"${APP_PATH}/theSheetRecord?paperId="+item.paperId+"&userId=${userid}\">查看详情</a>")
                     .append($("<i class='fa fa-download fa-fw'></i>"));
             } else {//已批改
                 var sectionC=$("<a class='layui-btn layui-btn-small layui-btn-primary' id='"+item.id+"'>已批改</a>")
@@ -344,8 +197,10 @@
     }
 
     $(function () {
+        $("#examrecordli").addClass("layui-this");
+        $("#examrecordli1").addClass("layui-this");
         to_page(1);
-        showNoReadCount();
+        showNoReadCount("${APP_PATH}","${userid}");
     });
     function to_page(pn){
         $.ajax({

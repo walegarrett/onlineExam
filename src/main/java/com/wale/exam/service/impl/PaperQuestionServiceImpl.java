@@ -43,4 +43,14 @@ public class PaperQuestionServiceImpl implements PaperQuestionService {
         criteria.andPaperIdEqualTo(paperId);
         paperQuestionMapper.deleteByExample(paperQuestionExample);
     }
+
+    @Override
+    public List<PaperQuestion> findItemByProblemId(Integer problemId) {
+        PaperQuestionExample paperQuestionExample=new PaperQuestionExample();
+        PaperQuestionExample.Criteria criteria=paperQuestionExample.createCriteria();
+        criteria.andQuestionIdEqualTo(problemId);
+
+        List<PaperQuestion>list=paperQuestionMapper.selectByExample(paperQuestionExample);
+        return list;
+    }
 }

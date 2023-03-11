@@ -3,13 +3,11 @@ package com.wale.exam.service.impl;
 import com.wale.exam.bean.*;
 import com.wale.exam.dao.PaperMapper;
 import com.wale.exam.service.*;
+import com.wale.exam.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author WaleGarrett
@@ -29,6 +27,14 @@ public class PaperServiceImpl implements PaperService {
     PaperQuestionService paperQuestionService;
     @Autowired
     UserService userService;
+
+    /**
+     * 根据创建者id查找创建的所有试卷
+     * @param teacherId
+     * @param before
+     * @param after
+     * @return
+     */
     @Override
     public List<Paper> findPaperByTeaId(Integer teacherId, int before, int after) {
         PaperExample paperExample=new PaperExample();
@@ -39,12 +45,14 @@ public class PaperServiceImpl implements PaperService {
         List<Paper>list=new ArrayList<>();
         list=paperMapper.selectByExampleAndPage(paperExample,before,after);
         List<Paper>paperList=new ArrayList<>();
+        User teacher=userService.findUserByUserId(teacherId);
         for(Paper paper:list) {
             if (paper.getIsEncry() == 1) {//未加密
                 paper.setIsEncryString("否");
             }else{
                 paper.setIsEncryString("是");
             }
+            paper.setCreaterUserName(teacher.getUserName());//设置创建者的用户名
             paperList.add(paper);
         }
         return paperList;
@@ -121,6 +129,11 @@ public class PaperServiceImpl implements PaperService {
         return list;
     }
 
+    /**
+     * 查找所有的试卷
+     * @param userId
+     * @return
+     */
     @Override
     public List<Paper> findAllPapersWithUser(Integer userId) {
         PaperExample paperExample=new PaperExample();
@@ -141,6 +154,11 @@ public class PaperServiceImpl implements PaperService {
         return listWithHas;
     }
 
+    /**
+     * 查找所有未开始的试卷
+     * @param userId
+     * @return
+     */
     @Override
     public List<Paper> findAllPapersWithUserNotStart(int userId) {
         PaperExample paperExample=new PaperExample();
@@ -162,6 +180,11 @@ public class PaperServiceImpl implements PaperService {
         return listWithHas;
     }
 
+    /**
+     * 查找某个用户已经完成的试卷列表
+     * @param userId
+     * @return
+     */
     @Override
     public List<Paper> findAllPapersWithUserHasEnd(int userId) {
         PaperExample paperExample=new PaperExample();
@@ -183,6 +206,11 @@ public class PaperServiceImpl implements PaperService {
         return listWithHas;
     }
 
+    /**
+     * 查找正在进行考试的试卷
+     * @param userId
+     * @return
+     */
     @Override
     public List<Paper> findAllPapersWithUserDuring(int userId) {
         PaperExample paperExample=new PaperExample();
@@ -242,7 +270,6 @@ public class PaperServiceImpl implements PaperService {
         paperMapper.updateByPrimaryKeySelective(paper);
         //首先删除所有的答题记录--包括answer表和sheet表
         answerService.deleteAnswerByPaperId(paperId);
-        //删除考生作答的相关信息
         sheetService.deleteSheetByPaperId(paperId);
         //其次删除paperQuestion表的paper记录
         paperQuestionService.deleteItemByPaperId(paperId);
@@ -283,8 +310,47 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public void deletePaper(Integer paperId) {
+        String hottestkey="hottest:papers";
+        RedisUtil.removeZSet(hottestkey,paperId);
         paperMapper.deleteByPrimaryKey(paperId);
     }
+
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        PaperExample paperExample=new PaperExample();
+        PaperExample.Criteria criteria=paperExample.createCriteria();
+        criteria.andIdIn(del_ids);
+        for(Integer paperId:del_ids){
+            //删除最热考试
+            String hottestkey="hottest:papers";
+            RedisUtil.removeZSet(hottestkey,paperId);
+        }
+        paperMapper.deleteByExample(paperExample);
+    }
+
+    /**
+     * 重新计算该试卷的总分数
+     * @param paperId
+     */
+    @Override
+    public void reComputeTotalScoreByPaperId(Integer paperId) {
+        List<PaperQuestion>list=new ArrayList<>();
+        list=paperQuestionService.findItemByPaperId(paperId);
+        Paper paper=new Paper();
+        paper.setId(paperId);
+        int totalScore=0;
+        for(PaperQuestion paperQuestion:list){
+            Problem problem=problemService.findProblemByProblemId(paperQuestion.getQuestionId());
+            totalScore+=problem.getScore();
+        }
+        paper.setTotalScore(totalScore);
+        paperMapper.updateByPrimaryKeySelective(paper);
+    }
+
 
     @Override
     public int findAllPaperCount() {
@@ -395,6 +461,7 @@ public class PaperServiceImpl implements PaperService {
         List<Paper>list=new ArrayList<>();
         list=paperMapper.selectByExampleAndPage(paperExample,before,after);
         List<Paper>paperList=new ArrayList<>();
+        User teacher=userService.findUserByUserId(teacherId);
         for(Paper paper:list){
             int craterId=paper.getCreaterId();
             User user=userService.findUserByUserId(craterId);
@@ -404,6 +471,7 @@ public class PaperServiceImpl implements PaperService {
             }else{
                 paper.setIsEncryString("是");
             }
+            paper.setCreaterUserName(teacher.getUserName());//设置创建者用户名
             paperList.add(paper);
         }
 
@@ -437,6 +505,12 @@ public class PaperServiceImpl implements PaperService {
         return list;
     }
 
+    /**
+     * 根据关键词查找试卷
+     * @param field
+     * @param keyword
+     * @return
+     */
     @Override
     public List<Paper> findPaperWithKeyword(String field,String keyword) {
         List<Paper>paperList=new ArrayList<>();
@@ -460,4 +534,83 @@ public class PaperServiceImpl implements PaperService {
         }
         return list;
     }
+
+    /**
+     * 查找答卷人数最多的试卷
+     * @return
+     */
+    @Override
+    public List<Paper> findHottestPaper() {
+        //paperId - 人数
+
+        Map<Integer,Integer> map=sheetService.findHottestPaperInSheets();
+        List<Paper> paperList=new ArrayList<>();
+        int index=0;
+        for (Map.Entry<Integer, Integer> detail:map.entrySet()){
+            Integer paperId=detail.getKey();
+            Integer num=detail.getValue();
+            Paper paper=new Paper();
+            paper=paperMapper.selectByPrimaryKey(paperId);
+            paperList.add(paper);
+            if(++index>20)
+                break;
+        }
+        return paperList;
+    }
+
+    @Override
+    public List<Paper> findHottestPaperWithRedis() {
+        List<Paper> paperList=new ArrayList<>();
+        String hottestkey="hottest:papers";
+        //paperId - 人数
+        if(RedisUtil.hasKey(hottestkey)){
+            //取出最热考试试卷
+            Set<Integer> hottestSet=RedisUtil.getZSetReverse(hottestkey,0,20);
+            for(Integer paperId:hottestSet){
+                Paper paper=new Paper();
+                paper=paperMapper.selectByPrimaryKey(paperId);
+                paperList.add(paper);
+            }
+        }else{
+            Map<Integer,Integer> map=sheetService.findHottestPaperInSheets();
+            int index=0;
+            for (Map.Entry<Integer, Integer> detail:map.entrySet()){
+                Integer paperId=detail.getKey();
+                Integer num=detail.getValue();
+                Paper paper=new Paper();
+                paper=paperMapper.selectByPrimaryKey(paperId);
+                paperList.add(paper);
+                RedisUtil.addZSet(hottestkey,paperId,num);
+                if(++index>20)
+                    break;
+            }
+            //设置过期时间
+            RedisUtil.setExp(hottestkey,7*24*60*60);//一个礼拜的过期时间7*24*60*60
+        }
+        return paperList;
+    }
+
+    /**
+     * 根据创建者id来删除试卷
+     * @param userId
+     * @return
+     */
+    @Override
+    public boolean deletePaperByCreaterId(Integer userId) {
+
+        PaperExample paperExample=new PaperExample();
+        PaperExample.Criteria criteria=paperExample.createCriteria();
+        criteria.andCreaterIdEqualTo(userId);
+        List<Paper>list=paperMapper.selectByExample(paperExample);
+        for(Paper paper:list){
+            int paperId=paper.getId();
+            //删除最热考试
+            String hottestkey="hottest:papers";
+            RedisUtil.removeZSet(hottestkey,paperId);
+        }
+        paperMapper.deleteByExample(paperExample);
+        return true;
+    }
+
+
 }

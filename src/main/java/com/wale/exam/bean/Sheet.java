@@ -26,6 +26,15 @@ public class Sheet {
     private String realName;//答题者真实姓名
 
     private String judgerName;//批改人账号
+    private Integer paperScore;//试卷的原始满分
+
+    public Integer getPaperScore() {
+        return paperScore;
+    }
+
+    public void setPaperScore(Integer paperScore) {
+        this.paperScore = paperScore;
+    }
 
     public String getRealName() {
         return realName;

@@ -6,8 +6,10 @@ import com.wale.exam.bean.*;
 import com.wale.exam.service.PaperQuestionService;
 import com.wale.exam.service.PaperService;
 import com.wale.exam.service.ProblemService;
+import com.wale.exam.service.UserService;
 import com.wale.exam.util.JsonDateValueProcessor;
 import com.wale.exam.util.MyPageInfo;
+import com.wale.exam.util.RedisUtil;
 import com.wale.exam.util.dateUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -38,6 +42,8 @@ public class PaperController {
     ProblemService problemService;
     @Autowired
     PaperQuestionService paperQuestionService;
+    @Autowired
+    UserService userService;
     /**
      * 根据创建者的id查找所有该老师创建的试卷
      * @param teacherId
@@ -202,6 +208,15 @@ public class PaperController {
         model.addAttribute("avaMinute",min%60);
         return "online";
     }
+    //跳转到试卷详情页面
+    @RequestMapping(value = "/showPaperDetail")
+    public  String showPaperDetail(Integer paperId, HttpServletRequest request, HttpSession session, Model model) throws UnsupportedEncodingException {
+        model.addAttribute("paperId",paperId);
+        Paper paper=new Paper();
+        paper=paperService.findPaperByPaperId(paperId);
+        model.addAttribute("paper",paper);
+        return "showPaperDetail";
+    }
     /**
      * 找到答卷记录----未修改的
      * @param paperId
@@ -209,7 +224,7 @@ public class PaperController {
      * @return
      */
     @RequestMapping("/theSheetRecord")
-    public String theSheetRecord(@RequestParam("paperId")Integer paperId, Model model){
+    public String theSheetRecord(@RequestParam("paperId")Integer paperId,@RequestParam("userId")Integer userId, Model model){
         Paper paper=new Paper();
         paper=paperService.findPaperByPaperId(paperId);
         model.addAttribute("paper",paper);
@@ -222,6 +237,9 @@ public class PaperController {
         long min = diff /60/1000;// 计算差多少分钟
         model.addAttribute("avaHour",min/60);
         model.addAttribute("avaMinute",min%60);
+        model.addAttribute("userId",userId);
+        User student=userService.findUserByUserId(userId);
+        model.addAttribute("studentName",student.getUserName());
         return "examDetail";
     }
     @RequestMapping("/checkInviCode")
@@ -280,24 +298,50 @@ public class PaperController {
         Date endTime=new Date(start.getTime()+1000*60*durationTime);
         paper.setEndTime(endTime);
         paper.setPaperName(paperName);
-        paper.setCreateTime(new Date());
+//        paper.setCreateTime(new Date());
         paper.setIsEncry(isEncry);
         paperService.updatePaper(paper,problems);
         return Msg.success();
     }
 
+    /**
+     * 查找最近创建的帖子
+     * @param session
+     * @return
+     */
     @RequestMapping("/findPaperInIndex")
     @ResponseBody//记得一定要加上这个注解
     public Msg findPaperInIndex(HttpSession session){
-        List<Paper> list=paperService.findAllPaperWithNoEncry();
+        List<Paper> list=paperService.findAllPaper();
+//        List<Paper> list=paperService.findAllPaperWithNoEncry();
+        return Msg.success().add("paperlist",list);
+    }
+    /**
+     * 查找最热的帖子
+     * @param session
+     * @return
+     */
+    @RequestMapping("/findPaperHottest")
+    @ResponseBody//记得一定要加上这个注解
+    public Msg findPaperHottest(HttpSession session){
+//        List<Paper> list=paperService.findHottestPaper();
+        List<Paper> list=paperService.findHottestPaperWithRedis();
         return Msg.success().add("paperlist",list);
     }
 
+    /**
+     * 模糊查找某个创建者创建 的试卷
+     * @param teacherId
+     * @param id
+     * @param title
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping(value="/searchPaper",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchPaper(Integer teacherId, Integer id, String title,int page, int limit){
         System.out.println(id+" "+title+" "+page+" "+limit);
-//        int page=1,limit=2;
         int before = limit * (page - 1);
         int after = limit;//page * limit
 
@@ -314,11 +358,35 @@ public class PaperController {
         String jso = "{\"code\":0,\"msg\":\"\",\"count\":"+count+",\"data\":"+js+"}";
         return jso;
     }
+
+    /**
+     * 删除试卷
+     * @param paperId
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/deletePaper")
     @ResponseBody
-    public Msg deletePaper(Integer paperId, HttpSession session) throws ParseException {
+    public Msg deletePaper(String paperId, HttpSession session) throws ParseException {
         System.out.println("删除试卷："+paperId);
-        paperService.deletePaper(paperId);
+//        //删除最热考试缓存
+//        String hottestkey="hottest:papers";
+//        RedisUtil.removeZSet(hottestkey,paperId);
+//        paperService.deletePaper(paperId);
+        if(paperId.contains("-")){
+            String[] str_ids=paperId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            paperService.deleteBatch(del_ids);
+        }else{
+            //删除单个记录
+            Integer id=Integer.parseInt(paperId);
+            paperService.deletePaper(id);
+        }
         return Msg.success();
     }
 }

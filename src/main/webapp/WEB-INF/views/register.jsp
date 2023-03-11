@@ -14,7 +14,7 @@
         //这个的路径是以斜线开始的，不以斜线结束
         pageContext.setAttribute("APP_PATH",request.getContextPath());
     %>
-
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <!--
         web路径：
         1.不以/开始的相对路径，找资源，以当前资源的路径为基准，经常容易出问题
@@ -182,7 +182,7 @@
                         },
                         regexp: { //正则表达式
                             regexp: /^[a-zA-Z0-9_]+$/,
-                            message: '账号只能包含大写、小写、数字和下划线'
+                            message: '账号只能包含英文大写、小写、数字和下划线'
                         },
                         remote: {
                             type:"POST",

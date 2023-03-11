@@ -5,6 +5,7 @@ import com.wale.exam.bean.*;
 import com.wale.exam.service.*;
 import com.wale.exam.util.JsonDateValueProcessor;
 import com.wale.exam.util.MyPageInfo;
+import com.wale.exam.util.RedisUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class SheetController {
     @ResponseBody
     public Msg submitPaper(Integer userId, Integer paperId, HttpSession session){
         System.out.println(userId+" "+paperId);
+        //加入缓存
+        String hottestkey="hottest:papers";
+        RedisUtil.zSetincrementScore(hottestkey,paperId,1.0);
         sheetService.addSheet(userId,paperId);
         return Msg.success();
     }
@@ -119,9 +123,12 @@ public class SheetController {
         model.addAttribute("sheet",sheet);
         model.addAttribute("sheetId",sheetId);
         model.addAttribute("studentId",sheet.getUserId());
+        User student=userService.findUserByUserId(sheet.getUserId());
+        model.addAttribute("studentName",student.getUserName());
         //获取总分数
         Integer totalScore;
-        totalScore=answerService.computeTotalScore(userId,paperId);
+        totalScore=sheet.getScore();
+//        totalScore=answerService.computeTotalScore(userId,paperId);
         model.addAttribute("totalScore",totalScore);
 
         return "onJudge";
@@ -140,11 +147,15 @@ public class SheetController {
         model.addAttribute("sheet",sheet);
         model.addAttribute("sheetId",sheetId);
         model.addAttribute("studentId",sheet.getUserId());
+        User student=userService.findUserByUserId(sheet.getUserId());
+        model.addAttribute("studentName",student.getUserName());
+        User teacher=userService.findUserByUserId(paper.getCreaterId());
+        model.addAttribute("teacherName",teacher.getUserName());
         //获取总分数
         Integer totalScore;
-        totalScore=answerService.computeTotalScore(userId,paperId);
+//        totalScore=answerService.computeTotalScore(userId,paperId);
+        totalScore=sheet.getScore();
         model.addAttribute("totalScore",totalScore);
-
         return "examScoreDetail";
     }
 
@@ -236,6 +247,17 @@ public class SheetController {
         PageInfo page= MyPageInfo.getPageInfo(pn,4,list);
         return Msg.success().add("pageInfo",page).add("sheetlist",list);
     }
+
+    /**
+     * 模糊查找答卷
+     * @param sheetId
+     * @param paperName
+     * @param userName
+     * @param teacherId
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping(value="/searchJudge",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchJudge(Integer sheetId, String paperName, String userName, Integer teacherId, int page, int limit){
@@ -254,6 +276,17 @@ public class SheetController {
         String jso = "{\"code\":0,\"msg\":\"\",\"count\":"+count+",\"data\":"+js+"}";
         return jso;
     }
+
+    /**
+     * 根据指定条件查找成绩列表
+     * @param sheetId
+     * @param paperName
+     * @param userName
+     * @param teacherId
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping(value="/searchGrade",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String searchGrade(Integer sheetId, String paperName, String userName, Integer teacherId, int page, int limit){
@@ -289,6 +322,14 @@ public class SheetController {
         return "editGrade";
     }
 
+    /**
+     * 修改某个答卷的成绩
+     * @param sheetId
+     * @param score
+     * @param session
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("/updateGrade")
     @ResponseBody
     public Msg updateGrade(Integer sheetId, Integer score, HttpSession session) throws ParseException {
@@ -322,5 +363,57 @@ public class SheetController {
             return Msg.success();
         }
         return Msg.fail();
+    }
+    /**
+     * 删除试卷
+     * @param sheetId
+     * @param session
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/redoSheet")
+    @ResponseBody
+    public Msg redoSheet(String sheetId, HttpSession session) throws ParseException {
+        System.out.println("打回答卷："+sheetId);
+        if(sheetId.contains("-")){
+            String[] str_ids=sheetId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            sheetService.redoSheetBatch(del_ids);
+        }else{
+            //打回单个记录
+            Integer id=Integer.parseInt(sheetId);
+            sheetService.redoSheet(id);
+        }
+        return Msg.success();
+    }
+    /**
+     * 打回重新批改
+     * @param sheetId
+     * @param session
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/reJudgeSheet")
+    @ResponseBody
+    public Msg reJudgeSheet(String sheetId, HttpSession session) throws ParseException {
+        System.out.println("打回重批答卷："+sheetId);
+        if(sheetId.contains("-")){
+            String[] str_ids=sheetId.split("-");
+            //组装ids的数组
+            List<Integer> del_ids=new ArrayList<>();
+            for(String string:str_ids){
+                del_ids.add(Integer.parseInt(string));
+            }
+            sheetService.reJudgeSheetBatch(del_ids);
+        }else{
+            //打回单个记录
+            Integer id=Integer.parseInt(sheetId);
+            sheetService.reJudgeSheet(id);
+        }
+        return Msg.success();
     }
 }

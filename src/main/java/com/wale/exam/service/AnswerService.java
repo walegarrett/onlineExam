@@ -25,4 +25,12 @@ public interface AnswerService {
     void deleteAnswerByPaperId(Integer paperId);
 
     void updateAnswerStatus1(int userid, int paperid);
+
+    void deleteAnswerByPaperIdAndUserId(Integer paperId, Integer userId);
+
+    void updateAnswerStatus1AndOtherInfo(int studentId, int paperId);
+
+    Answer findAnswerByUserProblemPaper(Integer userId, Integer problemId, Integer paperId);
+
+    List<Answer> findAnswerByPaperUser(Integer paperId, Integer userId);
 }

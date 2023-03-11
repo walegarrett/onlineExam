@@ -3,6 +3,7 @@ package com.wale.exam.service.impl;
 import com.wale.exam.bean.User;
 import com.wale.exam.bean.UserExample;
 import com.wale.exam.dao.UserMapper;
+import com.wale.exam.service.PaperService;
 import com.wale.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    PaperService paperService;
 
+    /**
+     * 登录功能
+     * @param username
+     * @param pwd
+     * @return
+     */
     @Override
     public User login(String username, String pwd) {
         User user=new User();
@@ -60,6 +69,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(userid);
     }
 
+    /**
+     * 根据关键字模糊查找用户
+     * @param keyword
+     * @param before
+     * @param after
+     * @return
+     */
 
     @Override
     public List<User> findUserPage(String keyword, int before, int after) {
@@ -86,6 +102,10 @@ public class UserServiceImpl implements UserService {
         return list.size();
     }
 
+    /**
+     * 查找所有用户
+     * @return
+     */
     @Override
     public List<User> findAllUser() {
         UserExample userExample=new UserExample();
@@ -100,11 +120,31 @@ public class UserServiceImpl implements UserService {
         userMapper.updateByPrimaryKeySelective(user);
     }
 
+    /**
+     * 删除一个用户
+     * @param userId
+     */
     @Override
     public void deleteUser(Integer userId) {
-        userMapper.deleteByPrimaryKey(userId);
+        //先删除该用户创建的所有试卷
+        if(paperService.deletePaperByCreaterId(userId)){
+            userMapper.deleteByPrimaryKey(userId);
+        }
     }
 
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        for(Integer userId:del_ids){
+            //先删除该用户创建的所有试卷
+            if(paperService.deletePaperByCreaterId(userId)){
+                userMapper.deleteByPrimaryKey(userId);
+            }
+        }
+    }
     @Override
     public int findAllUserCount() {
         UserExample userExample=new UserExample();
@@ -116,6 +156,10 @@ public class UserServiceImpl implements UserService {
         return list.size();
     }
 
+    /**
+     * 统计所有日期
+     * @return
+     */
     @Override
     public List<Integer> findDateList() {
         UserExample userExample=new UserExample();
@@ -162,6 +206,12 @@ public class UserServiceImpl implements UserService {
         else return list.get(0);
     }
 
+    /**
+     * 模糊查找用户
+     * @param field
+     * @param keyword
+     * @return
+     */
     @Override
     public List<User> searchUserByKeyword(String field, String keyword) {
         UserExample userExample=new UserExample();
@@ -174,4 +224,6 @@ public class UserServiceImpl implements UserService {
         List<User>list=userMapper.selectByExample(userExample);
         return list;
     }
+
+
 }

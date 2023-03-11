@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>成绩管理</title>
-    <link rel="icon" href="${APP_PATH}/statics/lightYear/favicon.ico" type="image/ico">
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
     <meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
     <meta name="author" content="yinqi">
@@ -54,9 +54,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="score_update_input" class="col-sm-2 control-label">试卷名称</label>
-                        <div class="col-sm-10">
+                        <label for="score_update_input" class="col-sm-2 control-label">最终分数</label>
+                        <div class="col-sm-7">
                             <input type="number" class="form-control" name="paperName" id="score_update_input" placeholder="请输入你要修改后的试卷名称">
+                        </div>
+                        <div class="col-sm-3">
+                            <label id="paperScore">试卷满分为：50分</label>
                         </div>
                     </div>
                 </form>
@@ -70,207 +73,7 @@
 </div>
 <div class="lyear-layout-web">
     <div class="lyear-layout-container">
-        <!--左侧导航-->
-        <aside class="lyear-layout-sidebar">
-
-            <!-- logo -->
-            <div id="logo" class="sidebar-header" style="margin-bottom:22px;margin-top:15px;">
-                <a href="${APP_PATH}/admin" style="font-size:22px;">在线考试后台管理系统</a>
-            </div>
-            <div class="lyear-layout-sidebar-scroll">
-                <nav class="sidebar-main">
-                    <ul class="nav nav-drawer">
-                        <li class="nav-item active">
-                            <a href="${APP_PATH}/admin"><i class="mdi mdi-home"></i> 后台首页</a> </li>
-                        <li class="nav-item nav-item-has-subnav">
-                            <a href="${APP_PATH}/toWhere?where=admin/adminUser"><i class="mdi mdi-palette"></i> 用户管理 </a>
-                        </li>
-                        <li class="nav-item nav-item-has-subnav layui-this">
-                            <a href="${APP_PATH}/toWhere?where=admin/adminPaper"><i class="mdi mdi-format-align-justify"></i> 试卷管理</a>
-                        </li>
-                        <li class="nav-item nav-item-has-subnav">
-                            <a href="${APP_PATH}/toWhere?where=admin/adminProblem"><i class="mdi mdi-file-outline"></i> 题目管理</a>
-                        </li>
-                        <li class="nav-item nav-item-has-subnav">
-                            <a href="${APP_PATH}/toWhere?where=admin/adminGrade"><i class="mdi mdi-file-music"></i> 成绩管理</a>
-                        </li>
-                        <li class="nav-item nav-item-has-subnav">
-                            <a href="${APP_PATH}/toWhere?where=admin/adminMessage"><i class="mdi mdi-language-javascript"></i> 消息管理</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="sidebar-footer">
-                    <p class="copyright">Copyright &copy; 2020. <a target="_blank" href="http://lyear.itshubao.com">郭观辉</a> All rights reserved.</p>
-                </div>
-            </div>
-
-        </aside>
-        <!--End 左侧导航-->
-
-        <!--头部信息-->
-        <header class="lyear-layout-header">
-
-            <nav class="navbar navbar-default">
-                <div class="topbar">
-
-                    <div class="topbar-left">
-                        <div class="lyear-aside-toggler">
-                            <span class="lyear-toggler-bar"></span>
-                            <span class="lyear-toggler-bar"></span>
-                            <span class="lyear-toggler-bar"></span>
-                        </div>
-                        <span class="navbar-page-title"> 后台首页 </span>
-                    </div>
-
-                    <ul class="topbar-right">
-                        <li class="dropdown dropdown-profile">
-                            <a href="javascript:void(0)" data-toggle="dropdown">
-                                <img class="img-avatar img-avatar-48 m-r-10" src="${userheadpic}" alt="笔下光年" />
-                                <span>${user.userName} <span class="caret"></span></span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li> <a href="${APP_PATH}/toWhere?where=admin/adminProfile"><i class="mdi mdi-account"></i> 个人信息</a> </li>
-                                <li> <a href="${APP_PATH}/toWhere?where=admin/adminPassword"><i class="mdi mdi-lock-outline"></i> 修改密码</a> </li>
-                                <li> <a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
-                                <li class="divider"></li>
-                                <li> <a href="${APP_PATH}/userExit"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
-                            </ul>
-                        </li>
-                        <!--切换主题配色-->
-                        <li class="dropdown dropdown-skin">
-                            <span data-toggle="dropdown" class="icon-palette"><i class="mdi mdi-palette"></i></span>
-                            <ul class="dropdown-menu dropdown-menu-right" data-stopPropagation="true">
-                                <li class="drop-title"><p>主题</p></li>
-                                <li class="drop-skin-li clearfix">
-                  <span class="inverse">
-                    <input type="radio" name="site_theme" value="default" id="site_theme_1" checked>
-                    <label for="site_theme_1"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="site_theme" value="dark" id="site_theme_2">
-                    <label for="site_theme_2"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="site_theme" value="translucent" id="site_theme_3">
-                    <label for="site_theme_3"></label>
-                  </span>
-                                </li>
-                                <li class="drop-title"><p>LOGO</p></li>
-                                <li class="drop-skin-li clearfix">
-                  <span class="inverse">
-                    <input type="radio" name="logo_bg" value="default" id="logo_bg_1" checked>
-                    <label for="logo_bg_1"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="logo_bg" value="color_2" id="logo_bg_2">
-                    <label for="logo_bg_2"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="logo_bg" value="color_3" id="logo_bg_3">
-                    <label for="logo_bg_3"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="logo_bg" value="color_4" id="logo_bg_4">
-                    <label for="logo_bg_4"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="logo_bg" value="color_5" id="logo_bg_5">
-                    <label for="logo_bg_5"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="logo_bg" value="color_6" id="logo_bg_6">
-                    <label for="logo_bg_6"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="logo_bg" value="color_7" id="logo_bg_7">
-                    <label for="logo_bg_7"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="logo_bg" value="color_8" id="logo_bg_8">
-                    <label for="logo_bg_8"></label>
-                  </span>
-                                </li>
-                                <li class="drop-title"><p>头部</p></li>
-                                <li class="drop-skin-li clearfix">
-                  <span class="inverse">
-                    <input type="radio" name="header_bg" value="default" id="header_bg_1" checked>
-                    <label for="header_bg_1"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="header_bg" value="color_2" id="header_bg_2">
-                    <label for="header_bg_2"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="header_bg" value="color_3" id="header_bg_3">
-                    <label for="header_bg_3"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="header_bg" value="color_4" id="header_bg_4">
-                    <label for="header_bg_4"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="header_bg" value="color_5" id="header_bg_5">
-                    <label for="header_bg_5"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="header_bg" value="color_6" id="header_bg_6">
-                    <label for="header_bg_6"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="header_bg" value="color_7" id="header_bg_7">
-                    <label for="header_bg_7"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="header_bg" value="color_8" id="header_bg_8">
-                    <label for="header_bg_8"></label>
-                  </span>
-                                </li>
-                                <li class="drop-title"><p>侧边栏</p></li>
-                                <li class="drop-skin-li clearfix">
-                  <span class="inverse">
-                    <input type="radio" name="sidebar_bg" value="default" id="sidebar_bg_1" checked>
-                    <label for="sidebar_bg_1"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="sidebar_bg" value="color_2" id="sidebar_bg_2">
-                    <label for="sidebar_bg_2"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="sidebar_bg" value="color_3" id="sidebar_bg_3">
-                    <label for="sidebar_bg_3"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="sidebar_bg" value="color_4" id="sidebar_bg_4">
-                    <label for="sidebar_bg_4"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="sidebar_bg" value="color_5" id="sidebar_bg_5">
-                    <label for="sidebar_bg_5"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="sidebar_bg" value="color_6" id="sidebar_bg_6">
-                    <label for="sidebar_bg_6"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="sidebar_bg" value="color_7" id="sidebar_bg_7">
-                    <label for="sidebar_bg_7"></label>
-                  </span>
-                                    <span>
-                    <input type="radio" name="sidebar_bg" value="color_8" id="sidebar_bg_8">
-                    <label for="sidebar_bg_8"></label>
-                  </span>
-                                </li>
-                            </ul>
-                        </li>
-                        <!--切换主题配色-->
-                    </ul>
-
-                </div>
-            </nav>
-
-        </header>
-        <!--End 头部信息-->
+        <%@include file="admin-nav.jsp"%>
 
         <!--页面主要内容-->
         <main class="lyear-layout-content">
@@ -280,21 +83,24 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-toolbar clearfix">
-                                <form class="pull-right search-bar" method="get" action="#!" role="form">
+                                <div class="pull-right search-bar">
                                     <div class="input-group">
                                         <div class="input-group-btn">
-                                            <input type="hidden" name="search_field" id="search-field" value="title">
+                                            <input type="hidden" name="search_field" id="search-field" value="paperName">
                                             <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
-                                                标题 <span class="caret"></span>
+                                                试卷名称 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
-                                                <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                                                <li> <a tabindex="-1" href="javascript:void(0)" data-field="paperName">试卷名称</a> </li>
+                                                <li> <a tabindex="-1" href="javascript:void(0)" data-field="studentAccount">学生账号</a> </li>
                                             </ul>
                                         </div>
-                                        <input type="text" class="form-control" value="" name="keyword" placeholder="请输入名称">
+                                        <input type="text" class="form-control" value="" id="keyword" name="keyword" placeholder="请输入名称">
                                     </div>
-                                </form>
+                                    <button class="pull-right btn btn-cyan" id="submit-btn" type="button">
+                                        搜索
+                                    </button>
+                                </div>
                                 <div class="toolbar-btn-action">
 <%--                                    <a class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>--%>
 <%--                                    <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>--%>
@@ -306,7 +112,7 @@
                                 <!--显示表格数据-->
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <table class="table table-hover" id="users_table">
+                                        <table class="table table-hover table-bordered" id="users_table">
                                             <thead>
                                             <tr>
                                                 <th>序号</th>
@@ -358,6 +164,13 @@
 <script type="text/javascript" src="${APP_PATH}/statics/lightYear/js/Chart.js"></script>
 <script type="text/javascript" src="${APP_PATH}/statics/js/common.js"></script>
 
+<!--bootstrap-table-->
+<script src="${APP_PATH}/statics/bootstrap-table/bootstrap-table.js"></script>
+<link rel="stylesheet" href="${APP_PATH}/statics/bootstrap-table/bootstrap-table.css" />
+<script src="${APP_PATH}/statics/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+<script src="${APP_PATH}/statics/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+<script src="${APP_PATH}/statics/bootstrap-table/extensions/export/tableExport.js"></script>
+<script src="${APP_PATH}/statics/bootstrap-table/extensions/export/jquery.base64.js"></script>
 <script type="text/javascript">
     var totalRecord;//总记录数
     var currentPage;//当前页
@@ -371,13 +184,30 @@
     });
     //1.页面加载请完成后，直接发送一个ajax求，拿到分页信息
     $(function(){
+        $("#gradeli").addClass("active");
+        $('.search-bar .dropdown-menu a').click(function() {
+            var field = $(this).data('field') || '';
+            $('#search-field').val(field);
+            $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
+        });
         to_page(1);//首次加载页面时显示第一页
+    });
+    $("#submit-btn").click(function () {
+        to_page(1);
     });
     //跳转到页面
     function to_page(pn){
+        var searchField=$('#search-field').val();
+        var keyword=$("#keyword").val();
+        // alert(searchField+" "+keyword);
+        var data={
+            "pn":pn,
+            "field":searchField,
+            "keyword":keyword
+        };
         $.ajax({
-            url:"${APP_PATH}/adminGradeManage",
-            data:"pn="+pn,
+            url:"${APP_PATH}/adminGradeManageSearch",
+            data:data,
             type:"get",
             success:function (result) {
                 //console.log(result);
@@ -409,14 +239,18 @@
             var uJudgerNameTd = $("<td></td>").append(item.judgerName);
 
             var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
-                .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
+                .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("查看");
             var editBtn=$("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
             //为编辑按钮添加一个自定义的属性
             editBtn.attr("edit-id",item.id);
+            editBtn.attr("paperScore",item.paperScore);
             //为删除按钮添加一个自定义的属性来表示当前删除的员工id
             delBtn.attr("delete-id",item.id);
-            var btnTd = $("<td></td>").append(editBtn);//.append(" ").append(delBtn);
+            editBtn.attr("paperId",item.paperId);
+            editBtn.attr("userId",item.userId);
+            editBtn.attr("status",item.status);
+            var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
             $("<tr></tr>")
                 .append(uIdTd)
                 .append(uPaperIdTd)
@@ -498,34 +332,22 @@
     $(document).on("click",".delete_btn",function () {
         //弹出是否确认删除的对话框
         // alert($(this).parents("tr").find("td:eq(0)").text());
-        var paperName=$(this).parents("tr").find("td:eq(1)").text();
-        var uId=$(this).attr("delete-id");
-        var data=
-            {
-                "paperId":uId
-            };
-        if(confirm("确认删除"+paperName+"吗？")){
-            //确认，发送ajax请求删除
-            $.ajax({
-                url:"${APP_PATH}/adminDeletePaper",
-                type:"POST",
-                data:data,
-                success:function (result) {
-                    if(result.code==100) {
-                        alert("删除成功");
-                        to_page(currentPage);
-                    }else{
-                        alert("删除失败");
-                        to_page(currentPage);
-                    }
-                }
-            });
+        var sheetid=$(this).attr("delete-id");
+        var status=$(this).attr("status");
+        var userid=$(this).attr("userId");
+        var paperid=$(this).attr("paperId");
+        if(status==1){
+            window.open("${APP_PATH}/theSheetRecord?paperId="+paperid+"&userId="+userid+"","_blank");
+            <%--top.location.href="${APP_PATH}/theSheetRecord?paperId="+paperid+"&userId="+userid+"";--%>
+        }else{
+            window.open("${APP_PATH}/theScoreSheetRecord?sheetId="+sheetid+"","_blank");
+            <%--top.location.href="${APP_PATH}/theScoreSheetRecord?sheetId="+sheetid+"";--%>
         }
     });
 
     //点击编辑用户
     $(document).on("click",".edit_btn",function () {
-        //alert("");
+        $("#paperScore").text("试卷总分为："+$(this).attr("paperScore"));
         //-------------注意以下的逻辑关系，先后次序不能改变
         getUser($(this).attr("edit-id"));
         $("#userUpdateModal").modal({
@@ -533,7 +355,7 @@
         });
         //2.把用户的id传递给模态框的更新按钮
         $("#user_update_btn").attr("edit-id",$(this).attr("edit-id"));
-
+        $("#user_update_btn").attr("paperScore",$(this).attr("paperScore"));
     });
     /**
      * 获取板块信息
@@ -560,8 +382,11 @@
         // var uUserid=$("#uUserid_update_input").val();
         var score=$("#score_update_input").val();
         score=parseInt(score);
-        alert($(this).attr("edit-id"));
-        // alert(uUserid);
+        var paperScore=parseInt($(this).attr("paperScore"));
+        if(score<0||score>paperScore){
+            alert("分数不能超出试卷满分且不能为负数哦！");
+            return false;
+        }
         var data={
             "id":parseInt($(this).attr("edit-id")),
             "score":score

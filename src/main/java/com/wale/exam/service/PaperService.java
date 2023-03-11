@@ -60,4 +60,14 @@ public interface PaperService {
     List<Paper> findPaperByCreaterIdBlur(Integer teacherId, String paperName);
 
     List<Paper> findPaperWithKeyword(String field,String keyword);
+
+    List<Paper> findHottestPaper();
+
+    List<Paper> findHottestPaperWithRedis();
+
+    boolean deletePaperByCreaterId(Integer userId);
+
+    void deleteBatch(List<Integer> del_ids);
+
+    void reComputeTotalScoreByPaperId(Integer paperId);
 }

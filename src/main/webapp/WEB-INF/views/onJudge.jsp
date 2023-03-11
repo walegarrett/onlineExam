@@ -49,6 +49,22 @@
         .commentInput{
             width:380px!important;
         }
+        .navbar{
+            position:fixed;
+            top:0px;
+            width:83.5%;
+            height:200px!important;
+            z-index:1000;
+            color:black;
+        }
+        .test{
+            margin-top:50px;
+        }
+        .navbar-nav li{
+            width:180px;
+            margin:10px 50px;
+            float:left!important;
+        }
     </style>
 </head>
 <body>
@@ -56,12 +72,25 @@
     <!--nr start-->
     <div class="test_main">
         <div class="nr_left">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><h2>${paper.paperName}</h2></li>
+                            <li><h2>满分：${paper.totalScore}分</h2></li>
+                            <li><h2>答题人：${studentName}</h2></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+
+            </nav>
             <div class="test">
                 <form action="" method="post" id="onlineForm">
 
                     <div class="test_title">
                         <p class="test_time">
-                            <label>试卷得分：</label><input type="text" class="score-form-control" name="totalScore" value="${totalScore}" disabled/>
+                            <label>试卷得分：</label><input type="number" class="score-form-control" name="totalScore" value="${totalScore}"/>
                             <label>请填写批语：</label><input type="text" class="score-form-control commentInput" name="comment"/>
                         </p>
                         <font><input type="button" name="test_jiaojuan" value="提交成绩" onclick="doJudge()"></font>
@@ -175,7 +204,7 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
 
             var blankAndShort=$("<div class=\"blankAndShort\"></div>");
@@ -217,7 +246,7 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var blankAndShort=$("<div class=\"blankAndShort\"></div>");
             var optionA=$("<input type=\"text\" class=\"form-control\" name=\"answer"+item.id+"\" id=\"3_answer_"+item.id+"_option_1\" value=\""+lastAnswer+"\" disabled/>");
@@ -263,19 +292,19 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
             if(A==true)
                 var optionA=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_1\" value=\"A\" checked disabled/>" +
-                    "<label for=\"2_answer_"+item.id+"_option_1\">是. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
+                    "<label for=\"2_answer_"+item.id+"_option_1\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
             else var optionA=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_1\" value=\"A\" disabled/>" +
-                "<label for=\"2_answer_"+item.id+"_option_1\">是. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_1\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
             if(B==true)
                 var optionB=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_2\" value=\"B\" checked disabled/>" +
-                    "<label for=\"2_answer_"+item.id+"_option_2\">否. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
+                    "<label for=\"2_answer_"+item.id+"_option_2\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
             else var optionB=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_2\" value=\"B\" disabled/>" +
-                "<label for=\"2_answer_"+item.id+"_option_2\">否. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_2\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
             ul.append(optionA).append(optionB);
             nr_main.append(ul);
             li1.append(nr_main);
@@ -323,7 +352,7 @@
             //转换String为Json格式
             var proItem = JSON.parse(obj);
 
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
 
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
@@ -391,7 +420,7 @@
             //转换String为Json格式
             var proItem = JSON.parse(obj);
 
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
 
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
@@ -451,6 +480,11 @@
         }
 
         var score=parseInt($("input[name='totalScore']").val());
+        var paperScore=${paper.totalScore};
+        if(score>paperScore||score<0){
+            alert("您的判卷分数不能超出试卷满分且不能为负分哦！");
+            return false;
+        }
         var comment=$("input[name='comment']").val();
         // alert(score+" "+comment);
         // return false;

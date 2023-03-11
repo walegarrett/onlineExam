@@ -16,7 +16,7 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>答题详情</title>
-
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <link href="${APP_PATH}/statics/online/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="${APP_PATH}/statics/online/css/iconfont.css" rel="stylesheet" type="text/css"/>
     <link href="${APP_PATH}/statics/online/css/test.css" rel="stylesheet" type="text/css"/>
@@ -39,7 +39,22 @@
             border-color:#ff5500;
             border-radius: 5px;
         }
-
+        .navbar{
+            position:fixed;
+            top:0px;
+            width:70.5%;
+            height:200px!important;
+            z-index:1000;
+            color:black;
+        }
+        .test{
+            margin-top:50px;
+        }
+        .navbar-nav li{
+            width:200px;
+            margin:10px 50px;
+            float:left!important;
+        }
     </style>
 
 </head>
@@ -48,6 +63,19 @@
     <!--nr start-->
     <div class="test_main">
         <div class="nr_left">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><h2>${paper.paperName}</h2></li>
+                            <li><h2>满分：${paper.totalScore}分</h2></li>
+                            <li><h2>答卷人：${studentName}</h2></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+
+            </nav>
             <div class="test">
                 <form action="" method="post" id="onlineForm">
 
@@ -177,8 +205,9 @@
     });
     $(function () {
         //加载完页面就获取题目
+
         $.ajax({
-            url:"${APP_PATH}/theAllProblem?paperId=${paperId}",
+            url:"${APP_PATH}/theAllProblem?paperId=${paperId}&userId=${userId}",
             type:"GET",
             success:function(result){
                 //alert(radioProList.Problem[0].content+" "+mulProList+" "+judgeProList+" "+blankProList+" "+shortProList);
@@ -230,7 +259,7 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
 
             var blankAndShort=$("<div class=\"blankAndShort\"></div>");
@@ -265,7 +294,7 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var blankAndShort=$("<div class=\"blankAndShort\"></div>");
             var optionA=$("<input type=\"text\" class=\"form-control\" name=\"answer"+item.id+"\" id=\"3_answer_"+item.id+"_option_1\" value=\""+lastAnswer+"\" disabled/>");
@@ -305,19 +334,19 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
             if(A==true)
                 var optionA=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_1\" value=\"A\" mtype=\"judge\" checked disabled/>" +
-                    "<label for=\"2_answer_"+item.id+"_option_1\">是. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
+                    "<label for=\"2_answer_"+item.id+"_option_1\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
             else var optionA=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_1\" value=\"A\" mtype=\"judge\" disabled/>" +
-                "<label for=\"2_answer_"+item.id+"_option_1\">是. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_1\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
             if(B==true)
                 var optionB=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_2\" value=\"B\" mtype=\"judge\" checked disabled/>" +
-                    "<label for=\"2_answer_"+item.id+"_option_2\">否. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
+                    "<label for=\"2_answer_"+item.id+"_option_2\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
             else var optionB=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_2\" value=\"B\" mtype=\"judge\" disabled/>" +
-                "<label for=\"2_answer_"+item.id+"_option_2\">否. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_2\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
             ul.append(optionA).append(optionB);
             nr_main.append(ul);
             li1.append(nr_main);
@@ -359,7 +388,7 @@
             //转换String为Json格式
             var proItem = JSON.parse(obj);
 
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
 
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
@@ -421,7 +450,7 @@
             //转换String为Json格式
             var proItem = JSON.parse(obj);
 
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
 
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");

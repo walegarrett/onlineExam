@@ -16,6 +16,7 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
     <%
         //这个的路径是以斜线开始的，不以斜线结束
         pageContext.setAttribute("APP_PATH",request.getContextPath());
@@ -24,7 +25,7 @@
     <meta http-equiv="Content-Language" content="zh-CN">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>在线考试系统-首页</title>
-    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Logo_40.png" type="image/x-icon">
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <!--Layui-->
     <link href="${APP_PATH}/statics/main/plug/layui/css/layui.css" rel="stylesheet" />
     <!--font-awesome-->
@@ -59,16 +60,45 @@
             color: #FFF;
             z-index: 99999;
         }
+        .img-circles{
+            border-radius: 100%;
+        }
     </style>
 </head>
 <body>
+<!-- 编辑板块模态框 -->
+<div class="modal fade" id="inviCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">邀请码</h4>
+            </div>
+            <div class="modal-body">
+                <!--编辑表单-->
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="input_code" class="col-sm-2 control-label">请填写邀请码：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="input_code" id="input_code" placeholder="请填写邀请码">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-primary btn-sm" id="code_btn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- 导航 -->
 <nav class="blog-nav layui-header">
     <div class="blog-container">
         <!-- QQ互联登陆 -->
-<%--        <a href="javascript:;" class="blog-user layui-hide">--%>
-<%--            <img src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" title="Absolutely" />--%>
-<%--        </a>--%>
+        <%--        <a href="javascript:;" class="blog-user layui-hide">--%>
+        <%--            <img src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" title="Absolutely" />--%>
+        <%--        </a>--%>
         <!-- 不落阁 -->
         <a class="blog-logo" href="index2.jsp">在线考试系统</a>
         <!-- 导航菜单 -->
@@ -184,7 +214,7 @@
             <div class="blog-main-right">
                 <div class="blogerinfo shadow">
                     <div class="blogerinfo-figure">
-                        <img class="img-circle" src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" width="150px" height="150px"/>
+                        <img class="img-circles" src="${APP_PATH}/statics/main/images/Absolutely.jpg" alt="Absolutely" width="150px" height="150px"/>
                     </div>
                     <p class="blogerinfo-nickname">在线考试系统</p>
                     <p class="blogerinfo-introduce">南昌大学-专业实训项目-面向学校老师和学生的在线考试及管理系统</p>
@@ -193,7 +223,7 @@
                 </div>
                 <div></div><!--占位-->
                 <div class="blog-module shadow" style="height:80%;">
-                    <div class="blog-module-title">最近考试</div>
+                    <div class="blog-module-title">最热考试</div>
                     <ul class="fa-ul blog-module-ul">
                         <li><i class="fa-li fa fa-hand-o-right"></i><a href="http://pan.baidu.com/s/1c1BJ6Qc" target="_blank">Canvas</a></li>
                         <li><i class="fa-li fa fa-hand-o-right"></i><a href="http://pan.baidu.com/s/1kVK8UhT" target="_blank">pagesize.js</a></li>
@@ -242,6 +272,9 @@
                 <img src="${userheadpic}" alt='头像' class="img-circle" width=30px height=30px><span> ${username}</span><span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="${APP_PATH}/toWhere?where=personalCenter">个人主页</a></li>
+                <li id="message1">
+                    <a href="${APP_PATH}/toReadMessage?userId=${userid}">
+                        个人消息<span id="msgNum1" class="ii">4</span></a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="${APP_PATH}/userExit">退出登录</a></li>
             </ul>
@@ -277,34 +310,7 @@
 <script src="${APP_PATH}/statics/main/js/home.js"></script>
 <script src="${APP_PATH}/statics/js/common.js"></script>
 <script>
-    function showNoReadCount(){
-        if("${userid}"==""){
-            $("#msgNum").text("");
-            $("#msgNum").hide();
-        }else{
-            var userid="${userid}";
-            userid=parseInt(userid);
-            var data={
-                "userId":userid
-            };
-            $.ajax({
-                url:"${APP_PATH}/findNoReadCount",
-                data:data,
-                type:"get",
-                success:function (result) {
-                    //console.log(result);
-                    var noReadCount=result.extend.noReadCount;
-                    if(noReadCount==0){
-                        $("#msgNum").text("");
-                        $("#msgNum").hide();
-                    }else{
-                        $("#msgNum").text(""+noReadCount);
-                        $("#msgNum").show();
-                    }
-                }
-            });
-        }
-    }
+
     /*
     显示主页的考试
      */
@@ -321,6 +327,7 @@
                 href.attr("paperId",item.id);
                 href.attr("startTime",item.startTime);
                 href.attr("endTime",item.endTime);
+                href.attr("inviCode",item.inviCode);
                 articletitle.append(href);
                 var startTime=item.startTime;
                 var time1=formatDate(startTime);
@@ -352,21 +359,52 @@
                 href.attr("paperId",item.id);
                 href.attr("startTime",item.startTime);
                 href.attr("endTime",item.endTime);
+                href.attr("inviCode",item.inviCode);
                 li.append(href);
                 li.appendTo(".blog-module-ul");
             }
+        });
+    }
+    function checkHasDoExam(paperId,userId,inviCode){
+        // alert(paperId);
+        if(inviCode!=""){//参加这次考试需要邀请码
+            $("#inviCodeModal").modal({
+                backdrop:"static"
+            });
+        }else{
+            window.open("${APP_PATH}/thePaper?paperId="+paperId);
+        }
+        $("#code_btn").click(function () {
+            var code=$("#input_code").val();
+            // var paperId=parseInt($(this).attr("paperId"));
+            // alert(paperId);
+            $.ajax({
+                data: {"paperId": paperId,"code":code},
+                url: "${APP_PATH}/checkInviCode",
+                async: false, //异步提交
+                type: "post",
+                success: function (result) {
+                    if(result.code==200){
+                        alert("输入的邀请码不正确，请重新输入！！！");
+                        return false;
+                    }else{
+                        window.location.href="${APP_PATH}/thePaper?paperId="+paperId;
+                        return true;
+                    }
+                }
+            });
         });
     }
     $(document).on('click',".paperlink",function () {
         var paperId=$(this).attr("paperId");
         paperId=parseInt(paperId);
         var userid="${userid}";
+        var inviCode=$(this).attr("inviCode");
         if(userid==undefined||userid==""||userid==null){
             alert("您还未登录，无法进行答题！！！");
             return;
         }
         userid=parseInt(userid);
-
         var startTime=$(this).attr("startTime");
         var endTime=$(this).attr("endTime");
         var now=new Date();
@@ -399,19 +437,30 @@
         if(!flag)
             return false;
         // alert(paperId+" "+startTime+" "+endTime+" "+now.getTime());
-        window.location.href="${APP_PATH}/thePaper?paperId="+paperId;
+        <%--window.location.href="${APP_PATH}/thePaper?paperId="+paperId;--%>
+        checkHasDoExam(paperId,userid,inviCode);
         return false;
     });
     $(function(){
         $.ajax({
             url:"${APP_PATH}/findPaperInIndex",
             type:"GET",
+            async:false,
             success:function(result){
                 buildNoEncryAndNum(result);
+                // buildRecentExam(result);
+            }
+        });
+        $.ajax({
+            url:"${APP_PATH}/findPaperHottest",
+            type:"GET",
+            async:false,
+            success:function(result){
+                // buildNoEncryAndNum(result);
                 buildRecentExam(result);
             }
         });
-        showNoReadCount();
+        showNoReadCount("${APP_PATH}","${userid}");
     });
 </script>
 </body>

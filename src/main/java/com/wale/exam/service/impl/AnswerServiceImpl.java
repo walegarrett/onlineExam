@@ -26,6 +26,15 @@ public class AnswerServiceImpl implements AnswerService {
     SheetService sheetService;
     @Autowired
     ProblemService problemService;
+
+    /**
+     * 更新试卷答案
+     * @param userid
+     * @param questionId
+     * @param paperId
+     * @param answer
+     * @return
+     */
     @Override
     public int insertOrUpdateAnswer(Integer userid, Integer questionId, Integer paperId, String answer) {
         AnswerExample answerExample=new AnswerExample();
@@ -40,7 +49,12 @@ public class AnswerServiceImpl implements AnswerService {
         answer1.setPaperId(paperId);
         answer1.setQuestionId(questionId);
         answer1.setUserId(userid);
-        answer1.setScore(0);//分数设置为0
+        //自动判卷
+        Problem problem=problemService.findProblemByProblemId(questionId);
+        if(answer.equals(problem.getAnswer())){
+            answer1.setScore(problem.getScore());//分数设置为0
+        }else
+            answer1.setScore(0);//分数设置为0
         answer1.setStatus(1);//设置为未批改
         if(list==null||list.size()==0){
             //插入
@@ -70,6 +84,14 @@ public class AnswerServiceImpl implements AnswerService {
         else return null;
     }
 
+    /**
+     * 提交教师的每一题判分
+     * @param userId
+     * @param questionId
+     * @param paperId
+     * @param score
+     * @return
+     */
     @Override
     public int insertOrUpdateAnswerSheet(Integer userId, Integer questionId, Integer paperId, Integer score) {
         AnswerExample answerExample=new AnswerExample();
@@ -88,11 +110,13 @@ public class AnswerServiceImpl implements AnswerService {
         if(list==null||list.size()==0){
             //插入
             answerMapper.insertSelective(answer1);
+            sheetService.updateSheetScoreByPaperIdAndUserId(paperId,userId);//更新答卷总分
             return 1;
         }else if(list.size()==1){
             //更新
             answer1.setId(list.get(0).getId());
             answerMapper.updateByPrimaryKeySelective(answer1);
+            sheetService.updateSheetScoreByPaperIdAndUserId(paperId,userId);//更新答卷总分
             return 2;
         }else{
             return 0;
@@ -191,6 +215,62 @@ public class AnswerServiceImpl implements AnswerService {
         Answer answer=new Answer();
         answer.setStatus(1);
         answerMapper.updateByExampleSelective(answer,answerExample);
+    }
+
+    /**
+     * 删除某个学生答卷中包含的所有答题记录
+     * @param paperId
+     * @param userId
+     */
+    @Override
+    public void deleteAnswerByPaperIdAndUserId(Integer paperId, Integer userId) {
+        AnswerExample answerExample=new AnswerExample();
+        AnswerExample.Criteria criteria=answerExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andPaperIdEqualTo(paperId);
+        answerMapper.deleteByExample(answerExample);
+    }
+
+    /**
+     * 更改答题的状态为未批改以及分数等信息
+     * @param studentId
+     * @param paperId
+     */
+    @Override
+    public void updateAnswerStatus1AndOtherInfo(int studentId, int paperId) {
+        AnswerExample answerExample=new AnswerExample();
+        AnswerExample.Criteria criteria=answerExample.createCriteria();
+        criteria.andUserIdEqualTo(studentId);
+        criteria.andPaperIdEqualTo(paperId);
+        Answer answer=new Answer();
+        answer.setStatus(1);
+//        answer.setScore(0);
+        answer.setComment("");
+        answerMapper.updateByExampleSelective(answer,answerExample);
+    }
+
+    @Override
+    public Answer findAnswerByUserProblemPaper(Integer userId, Integer problemId, Integer paperId) {
+        AnswerExample answerExample=new AnswerExample();
+        AnswerExample.Criteria criteria=answerExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andPaperIdEqualTo(paperId);
+        criteria.andQuestionIdEqualTo(problemId);
+        List<Answer>answerList=answerMapper.selectByExample(answerExample);
+        if(answerList!=null&&answerList.size()>0){
+            return answerList.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Answer> findAnswerByPaperUser(Integer paperId, Integer userId) {
+        AnswerExample answerExample=new AnswerExample();
+        AnswerExample.Criteria criteria=answerExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andPaperIdEqualTo(paperId);
+        List<Answer>answerList=answerMapper.selectByExample(answerExample);
+        return answerList;
     }
 
 }

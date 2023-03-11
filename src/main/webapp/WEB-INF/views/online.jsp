@@ -16,7 +16,7 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>在线考试</title>
-
+    <link rel="shortcut icon" href="${APP_PATH}/statics/main/images/Absolutely.jpg" type="image/x-icon">
     <link href="${APP_PATH}/statics/online/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="${APP_PATH}/statics/online/css/iconfont.css" rel="stylesheet" type="text/css"/>
     <link href="${APP_PATH}/statics/online/css/test.css" rel="stylesheet" type="text/css"/>
@@ -89,10 +89,9 @@
                 <form action="" method="post" id="onlineForm">
 
                     <div class="test_title">
-                        <p class="test_time">
-<%--                            <i class="glyphicon glyphicon-time"></i>--%>
-                            <b class="alt-1">${avaHour}:${avaMinute}</b>
-                        </p>
+<%--                        <p class="test_time">--%>
+<%--                            <b class="alt-1">${avaHour}:${avaMinute}</b>--%>
+<%--                        </p>--%>
                         <font><input type="button" name="test_jiaojuan" value="交卷" onclick="doPaper()"></font>
                     </div>
 
@@ -183,9 +182,9 @@
         $('.alt-1').countDown({
             css_class: 'countdown-alt-1'
         });
-        $('.alt-2').countDown({
-            css_class: 'countdown-alt-2'
-        });
+        // $('.alt-2').countDown({
+        //     css_class: 'countdown-alt-2'
+        // });
     });
     function submitAnswer(questionId, answer) {
         $.ajax({
@@ -277,15 +276,16 @@
         var answer="";
         answer=$(this).val();
         // alert(questionId+" "+answer);
-        if(answer.length>1000){
-            alert("填空和简答的答案字数不能超出1000字！！！");
+        if(answer.length>=500){
+            alert("填空和简答的答案字数不能超出500字！！！");
+            return false;
         }
         submitAnswer(questionId,answer);
     });
     $(function () {
         //加载完页面就获取题目
         $.ajax({
-            url:"${APP_PATH}/theAllProblem?paperId=${paperId}",
+            url:"${APP_PATH}/theAllProblem?paperId=${paperId}&userId=${userid}",
             type:"GET",
             async:false,
             success:function(result){
@@ -349,7 +349,7 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
 
             var blankAndShort=$("<div class=\"blankAndShort\"></div>");
@@ -385,7 +385,7 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var blankAndShort=$("<div class=\"blankAndShort\"></div>");
             var optionA=$("<input type=\"text\" class=\"form-control\" name=\"answer"+item.id+"\" id=\"3_answer_"+item.id+"_option_1\" value=\""+lastAnswer+"\"/>");
@@ -425,19 +425,19 @@
             var obj=item.content;
             //转换String为Json格式
             var proItem = JSON.parse(obj);
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
             if(A==true)
                 var optionA=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_1\" value=\"A\" mtype=\"judge\" checked/>" +
-                "<label for=\"2_answer_"+item.id+"_option_1\">是. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_1\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
             else var optionA=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_1\" value=\"A\" mtype=\"judge\"/>" +
-                "<label for=\"2_answer_"+item.id+"_option_1\">是. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_1\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[0].content+"</p></label></li>");
             if(B==true)
                 var optionB=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_2\" value=\"B\" mtype=\"judge\" checked/>" +
-                "<label for=\"2_answer_"+item.id+"_option_2\">否. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_2\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
             else var optionB=$("<li class=\"option\"><input type=\"radio\" class=\"radioOrCheck\" name=\"answer"+item.id+"\" id=\"2_answer_"+item.id+"_option_2\" value=\"B\" mtype=\"judge\"/>" +
-                "<label for=\"2_answer_"+item.id+"_option_2\">否. <p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
+                "<label for=\"2_answer_"+item.id+"_option_2\"><p class=\"ue\" style=\"display: inline;\">"+proItem.questionItemObjects[1].content+"</p></label></li>");
             ul.append(optionA).append(optionB);
             nr_main.append(ul);
             li1.append(nr_main);
@@ -479,7 +479,7 @@
             //转换String为Json格式
             var proItem = JSON.parse(obj);
 
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
 
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
@@ -541,7 +541,7 @@
             //转换String为Json格式
             var proItem = JSON.parse(obj);
 
-            li1.append($("<div class=\"test_content_nr_tt\"><i>"+item.id+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
+            li1.append($("<div class=\"test_content_nr_tt\"><i>"+(index+1)+"</i><span>("+item.score+"分)</span><font>"+proItem.titleContent+"</font><b class=\"glyphicon glyphicon-pencil\"></b></div>"));
 
             var nr_main=$("<div class=\"test_content_nr_main\"></div>");
             var ul=$("<ul></ul>");
@@ -645,7 +645,10 @@
         if (!validate) {
             var confir=confirm("你还有题目未作答，一旦交卷无法修改！！！确认交卷？");
             if(confir==false) return false;
-        }else alert("题目已经全部作答完成！！！");
+        }else {
+            var confir=confirm("题目已经全部作答完成，是否确认提交试卷");
+            if(confir==false) return false;
+        }
 
         //return false;
         // $.modal.loading("正在交卷中，请稍后...");

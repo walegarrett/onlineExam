@@ -1,9 +1,6 @@
 package com.wale.exam.service.impl;
 
-import com.wale.exam.bean.Message;
-import com.wale.exam.bean.MessageExample;
-import com.wale.exam.bean.MessageUser;
-import com.wale.exam.bean.User;
+import com.wale.exam.bean.*;
 import com.wale.exam.dao.MessageMapper;
 import com.wale.exam.service.MessageService;
 import com.wale.exam.service.MessageUserService;
@@ -35,6 +32,7 @@ public class MessageServiceImpl implements MessageService {
         MessageExample messageExample=new MessageExample();
         MessageExample.Criteria criteria=messageExample.createCriteria();
         criteria.andSendUserIdEqualTo(sendUserId);
+        messageExample.setOrderByClause("create_time desc");
         List<Message>list= messageMapper.selectByExampleWithPage(messageExample,before,after);
         List<Message>messageList=new ArrayList<>();
         for(Message message:list){
@@ -86,6 +84,10 @@ public class MessageServiceImpl implements MessageService {
         messageMapper.updateByPrimaryKeySelective(message);
     }
 
+    /**
+     * 查找所有的消息
+     * @return
+     */
     @Override
     public List<Message> findAllMessage() {
         MessageExample messageExample=new MessageExample();
@@ -133,6 +135,64 @@ public class MessageServiceImpl implements MessageService {
         List<Message>list=messageMapper.selectByExample(messageExample);
         if(list==null)
             list=new ArrayList<>();
+        return list.size();
+    }
+
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        MessageExample messageExample=new MessageExample();
+        MessageExample.Criteria criteria=messageExample.createCriteria();
+        criteria.andIdIn(del_ids);
+        messageMapper.deleteByExample(messageExample);
+    }
+
+    /**
+     * 根据标题和内容模糊查找
+     * @param teacherId
+     * @param title
+     * @param content
+     * @param before
+     * @param after
+     * @return
+     */
+    @Override
+    public List<Message> searchMessage(Integer teacherId, String title, String content, int before, int after) {
+        MessageExample messageExample=new MessageExample();
+        MessageExample.Criteria criteria=messageExample.createCriteria();
+        criteria.andSendUserIdEqualTo(teacherId);
+        if(title!=null&&!title.equals("")){
+            criteria.andTitleLike("%"+title+"%");
+        }
+        if(content!=null&&!content.equals("")){
+            criteria.andContentLike("%"+content+"%");
+        }
+        messageExample.setOrderByClause("create_time desc");
+        List<Message>list= messageMapper.selectByExampleWithPage(messageExample,before,after);
+        List<Message>messageList=new ArrayList<>();
+        for(Message message:list){
+            Integer messageId=message.getId();
+            List<MessageUser>messageUserList=messageUserService.findItemByMessageId(messageId);
+            String recevierAccounts="";
+            for(MessageUser messageUser:messageUserList){
+                recevierAccounts+=messageUser.getReceiveUserName();
+                recevierAccounts+=",";
+            }
+            message.setReceiverAccounts(recevierAccounts.substring(0,recevierAccounts.length()-1));
+            messageList.add(message);
+        }
+        return messageList;
+    }
+
+    @Override
+    public int searchMessageCount(Integer teacherId, String title, String content) {
+        MessageExample messageExample=new MessageExample();
+        MessageExample.Criteria criteria=messageExample.createCriteria();
+        criteria.andSendUserIdEqualTo(teacherId);
+        List<Message>list=messageMapper.selectByExample(messageExample);
         return list.size();
     }
 }
